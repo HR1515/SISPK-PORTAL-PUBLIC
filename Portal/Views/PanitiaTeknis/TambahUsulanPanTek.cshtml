@@ -1,0 +1,163 @@
+﻿@using Portal.Helpers;
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">Panitia Teknis</a></li>
+        <li class="active">Usulan Panitia Teknis</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+
+            </ul>
+            <br />
+            <br />
+            <div class="form-info">
+                <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                <p>
+                    Lengkapi form isian, download template untuk data anggota kemudaian upload file nya dalam bentuk image / pdf.
+                <p>Terimakasih</p>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Form Pengajuan Usulan Panitia Teknis
+                    </div>
+                </div>
+                <div class="portlet-body form">
+
+                   <form class="form-horizontal form-bordered" id="frmRegistrasi" action="" method="post" enctype="multipart/form-data">
+                        <div class="form-body">
+                            <div class="alert alert-danger display-hide">
+                                Ada beberapa field kosong yang terlewatkan, silahkan isi field tersebut 
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname" class="col-lg-2 control-label">Nama Panitia Teknis <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control wajib" name="T_KOMTEK_NAME" id="T_KOMTEK_NAME" placeholder="Nama Panitia Teknis ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">Sekretariat <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control wajib" id="T_KOMTEK_SEKRETARIAT" name="T_KOMTEK_SEKRETARIAT" placeholder="Sekretariat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">Alamat <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control wajib" id="T_KOMTEK_ADDRESS" name="T_KOMTEK_ADDRESS" placeholder="Alamat Sekretariat">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">No. Telp <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control wajib" id="T_KOMTEK_PHONE" name="T_KOMTEK_PHONE" placeholder="No. telp dengan format xxx-xxxxxx">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">No. Fax</label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control" id="T_KOMTEK_FAX" name="T_KOMTEK_FAX" placeholder="No. fax dengan forma xxx-xxxxxx">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail12" class="col-lg-2 control-label">Email  <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="email" class="form-control wajib" id="T_KOMTEK_EMAIL" name="T_KOMTEK_EMAIL" placeholder="Alamat email">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="stakeholder" class="col-lg-2 control-label">Lingkup (ICS) <span class="require">*</span></label>
+                                <div class="col-lg-10">
+                                    <select multiple class="form-control select2me wajib" id="ics" name="ics" placeholder="Pilih ICS">
+                                        @foreach (var ics in ViewBag.listICS)
+                                        {
+                                            var sep = "";
+                                            if (ics.TIPE == 1)
+                                            {
+                                            <option value="@ics.ICS_ID">@ics.ICS_CODE @ics.ICS_NAME</option>
+                                            }
+                                            else if (ics.TIPE == 2)
+                                            { 
+                                            <option value="@ics.ICS_ID">&emsp; @ics.ICS_CODE @ics.ICS_NAME</option>
+                                            }
+                                            else
+                                            {
+                                            <option value="@ics.ICS_ID">&emsp;&emsp;&emsp;&emsp; @ics.ICS_CODE @ics.ICS_NAME</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">Keterangan </label>
+                                <div class="col-lg-10">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <textarea class="form-control" id="T_KOMTEK_DESCRIPTION" name="T_KOMTEK_DESCRIPTION" placeholder=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-lg-2 control-label">Lampiran Anggota</label>
+                                <div class="col-lg-10">
+                                    <input type="file" class="form-control" id="lampirananggota" name="lampirananggota">
+                                    <span><a href="/Files/FormUsulanAnggota.docx">download template</a></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" class="col-lg-2 control-label"></label>
+                                <div class="col-lg-10">
+
+                                    <div class="g-recaptcha" data-sitekey="6Ley6g0TAAAAAHmtlDyvrh9BlNFDJ3iL8ytBHTyh" id="recaptcha"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <div class="row ">
+                                    <div class="col-lg-10 col-md-offset-3 padding-left-0 padding-top-20">
+                                        <button type="submit" class="btn btn-primary" id="btn-daftar"><i class="fa fa-check"></i>&nbsp;&nbsp;Simpan Data</button>
+                                        <a style="text-decoration:none;color:white;" href="javascript:;" onclick="window.location='@Url.Content("~/PanitiaTeknis/UsulanPantek")'" class="btn btn-danger">Batal</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+    });
+
+</script>

@@ -1,0 +1,145 @@
+﻿@using Portal.Helpers;
+@{
+    var Detail = ViewBag.DataPantek;
+}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">Komisi Teknis</a></li>
+        <li class="active">Detil Komisi Teknis</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />
+        </div>
+
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Detil Usulan Panitia Teknis
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <form class="form-horizontal form-bordered" id="frmRegistrasi" method="post" enctype="multipart/form-data">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Nama Paniti Teknis</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_NAME
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">Sekretariat</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_SEKRETARIAT
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">Alamat</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_ADDRESS
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">No. Telp</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_PHONE
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">No. Fax</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_FAX
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail12" class="control-label col-md-3">Email </label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_EMAIL
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">Keterangan </label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @Detail.KOMTEK_DESCRIPTION
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="control-label col-md-3">Lampiran Anggota</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    <span><a href="/Upload/UsulanKomtek/@Detail.KOMTEK_ATTACHMENT">list anggota</a></span>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <a class="btn btn-danger" type="button" href="@Url.Action("UsulanPantek")">Kembali</a>
+                                        <a class="btn btn-danger" type="button" href="@Url.Action("~/Export")">Print</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align: left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("input.tags").tagsInput({
+            'defaultText': 'Tambah',
+            'width': '100%'
+        });
+    });
+    function set_jalur(ini) {
+        var value = $(ini).val();
+        if ($(ini).is(":checked")) {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(1);
+                $('.adopsi').slideDown();
+            }
+        } else {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(0);
+                $('.adopsi').slideUp();
+            }
+        }
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+
+    }
+
+    function cekjenis(ini) {
+        var inivalue = parseInt($(ini).val());
+        if (inivalue == 2 || inivalue == 3) {
+            $('.revisilist').slideDown();
+        } else {
+            //$('.revisilist').slideUp();
+        }
+    }
+</script>
+
+
+

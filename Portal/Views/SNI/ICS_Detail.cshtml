@@ -1,0 +1,132 @@
+﻿@using Portal.Helpers;
+@{
+   
+    var ics = ViewBag.ics;
+    }
+<style>
+    
+    .judul {
+        text-align:left !important;
+        font-weight:bold;
+    }
+    .isi {
+        padding-top:5px;
+        padding-bottom:5px;
+    }
+    
+</style>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">SNI</a></li>
+        <li class="active">Detail ICS</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />           
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Detail ICS
+                </div> 
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal form-bordered ng-pristine ng-valid" id="form-username" action="Create" method="post">
+                    <div class="form-body">
+                         
+                      <div class="form-group">
+                            <label class="control-label col-md-3">Kode ICS</label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                  <label class="isi">@ics.ICS_CODE</label> 
+                                </div>
+                            </div>
+                        </div>        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nama ICS (Indonesia)</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@ics.ICS_NAME_IND</label> 
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-md-3">Nama ICS (English)</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@ics.ICS_NAME</label> 
+                                </div>
+                            </div>
+                        </div>
+
+                                                                                               
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">                                  
+                                    <a href="@Url.Action("DaftarList")" class="btn btn-default">Kembali</a>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align :left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("input.tags").tagsInput({
+            'defaultText': 'Tambah',
+            'width': '100%'
+        });
+    });
+    function set_jalur(ini) {
+        var value = $(ini).val();
+        if ($(ini).is(":checked")) {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(1);
+                $('.adopsi').slideDown();
+            }
+        } else {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(0);
+                $('.adopsi').slideUp();
+            }
+        }
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+
+    }
+
+    function cekjenis(ini) {
+        var inivalue = parseInt($(ini).val());
+        if (inivalue == 2 || inivalue == 3) {
+            $('.revisilist').slideDown();
+        } else {
+            //$('.revisilist').slideUp();
+        }
+    }
+</script>
+
+
+

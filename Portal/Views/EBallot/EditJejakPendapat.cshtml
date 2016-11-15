@@ -1,0 +1,319 @@
+﻿@using Portal.Helpers;
+@{
+    var poll_us = 0;
+    var date = ViewBag.DataProposal.POLLING_FULL_DATE_NAME.ToString().Replace("<br>", " ");
+    int no = 1;
+    }
+    
+    @if (Session["USER_ID"] != null)
+{  
+
+<style type="text/css">
+.comment-list .row {
+  margin-bottom: 0px;
+}
+.comment-list .panel .panel-heading {
+  padding: 4px 15px;
+  position: absolute;
+  border:none;
+  /*Panel-heading border radius*/
+  border-top-right-radius:0px;
+  top: 1px;
+}
+.comment-list .panel .panel-heading.right {
+  border-right-width: 0px;
+  /*Panel-heading border radius*/
+  border-top-left-radius:0px;
+  right: 16px;
+}
+.comment-list .panel .panel-heading .panel-body {
+  padding-top: 6px;
+}
+.comment-list figcaption {
+  /*For wrapping text in thumbnail*/
+  word-wrap: break-word;
+}
+
+.comment-list .comment-post {
+  margin-top: 6px;
+}
+.panel-body{
+	padding: 15px 15px 0;
+}
+.ganjil{
+	background:#fcf8e3 none repeat scroll 0 0;
+}
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">E-Ballot</a></li>
+        <li class="active">Jejak Pendapat</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+        
+       
+        <div class="col-md-12">
+          <!-- BEGIN SAMPLE FORM PORTLET-->
+          <div class="portlet box green">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-comments"></i> Jajak Pendapat
+              </div>
+            </div>
+            <div class="portlet-body" style='padding:10px 10px 1px;'>
+              <form class="form form-horizontal form-bordered" role="form" id="frmLogin" action="" method="post" enctype="multipart/form-data">
+              	<div class="form-group">
+              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Kode PNPS</strong></label>
+              		<div class="col-md-10">
+              			<span class="form-control-static">
+              				@ViewBag.DataProposal.PROPOSAL_NO_SNI_PROPOSAL
+              			</span>
+              		</div>
+              	</div>
+              	<div class="form-group">
+              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Komite Teknis</strong></label>
+              		<div class="col-md-10">
+              			<span class="form-control-static">
+              				@ViewBag.DataProposal.KOMTEK_CODE @ViewBag.DataProposal.KOMTEK_NAME
+              			</span>
+              		</div>
+              	</div>
+              	<div class="form-group">
+              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Judul PNPS</strong></label>
+              		<div class="col-md-10">
+              			<span class="form-control-static">
+              				 @ViewBag.DataProposal.PROPOSAL_JUDUL_PNPS 
+              			</span>
+              		</div>
+              	</div>
+              	<div class="form-group">
+              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Ruang Lingkup</strong></label>
+              		<div class="col-md-10">
+              			<span class="form-control-static">
+              				  @ViewBag.DataProposal.PROPOSAL_RUANG_LINGKUP
+              			</span>
+              		</div>
+              	</div>
+              	<div class="form-group">
+              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Attachment</strong></label>
+              		<div class="col-md-10">
+              		
+                    @if (ViewBag.DataProposal.PROPOSAL_LAMPIRAN_FILE_PATH != "" && ViewBag.DataProposal.PROPOSAL_LAMPIRAN_FILE_PATH != null)
+                    { 
+                        <div class="help-block">
+                            <a class="form-control-static" href="~/Upload/Usulan/@ViewBag.DataProposal.PROPOSAL_LAMPIRAN_FILE_PATH" target="_blank" style="color:green;">Download Data RSNI</a>
+                        </div>   
+                    }
+                    else {
+                            <div class="help-block">
+                                <p>No Attachment</p>
+                            </div>
+                            }
+
+              		</div>
+              	</div>
+              	<div class="blog-item text-right">
+              		<ul class="blog-info" style='margin:10px 0;'>
+              			<li><i class="fa fa-user"></i> Pusat Perumusan Standarisasi</li>
+              			<li><i class="fa fa-calendar"></i> @date</li>
+              			<li><i class="fa fa-clock-o"></i> @ViewBag.DataProposal.POLLING_MONITORING_NAME</li>
+              			<li><i class="fa fa-comments"></i> @ViewBag.JML_POLLING</li>
+              		</ul>
+              	</div>
+              	<div class='form-group'>
+              		<div class="col-md-12">
+              			<article class="row"><div class="col-md-12 col-sm-12 col-xs-12">
+              				<div class="panel panel-default arrow left">
+              					<div class="panel-body">
+              						<div class="form-group">
+              							<label class="col-md-2 control-label"><strong>Tipe Komentar</strong></label>
+              							<div class="col-md-10" style="padding-left:0px;">
+              								<span class="form-control-static">
+                                                  <input type="hidden" name="POLLING_DETAIL_ID" id="POLLING_DETAIL_ID" value="@ViewBag.polling.POLLING_DETAIL_ID"/>
+                                                  <input type="hidden" name="POLLING_DETAIL_POLLING_ID" id="POLLING_DETAIL_POLLING_ID" value="@ViewBag.polling.POLLING_DETAIL_POLLING_ID"/>
+                                                  @ViewBag.polling.PILIHAN
+
+              								</span>
+              							</div>
+              						</div>
+              						<div class="form-group">
+              							<label class="col-md-2 control-label"><strong>Pasal</strong></label>
+              							<div class="col-md-2">
+              								<span class="form-control-static"> @ViewBag.polling.POLLING_DETAIL_PASAL</span>
+              							</div>
+              						</div>
+              						
+              						<div class="form-group">
+              							<div class="col-md-12">
+              								<textarea id="POLLING_DETAIL_REASON" name="POLLING_DETAIL_REASON" class="wajib">@ViewBag.polling.POLLING_DETAIL_REASON</textarea>
+              							</div>
+              						</div>
+
+                                     <div class='form-group'>
+                                            
+                                            <div class="col-md-4">
+                                               <div class='input-group-addon' style="text-align:left;width:40%;background-color:#eee">
+                                                     <img alt="Captcha" id="showchaptcha" src="/Auth/CaptchaImage" style="" />
+                                               </div>
+                                               <div class='input-group-addon' style="width:60%;background-color:#eee">
+                                                     <input type='text' style="padding:0px 0px 0px 6px;font-size:18px;" class='form-control' name='jawaban' id='jawaban' placeholder='Jawaban' autocomplete='off' /> 
+                                               </div>                                                                   
+                                            </div>
+                                        </div>
+                                        @if (@ViewBag.Error != "")
+                                            { 
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" style="color: #FF655F; text-align: left; "><i class="fa fa-info-circle"></i> @ViewBag.Error</label>
+                                                </div>
+                                            }
+                                    @*<div class="form-group">
+              							
+              							<div class="col-md-12">
+              								 <div class="g-recaptcha" data-sitekey="6Ley6g0TAAAAAHmtlDyvrh9BlNFDJ3iL8ytBHTyh"></div>
+              							</div>
+              						</div>*@
+              						<div class="form-group">
+              							<div class="col-md-12">
+              								<button class='btn btn-success' type='submit' id="kirim_dulu">Kirim Pendapat</button>
+              							</div>
+              						</div>
+              					</div>
+              				</div>
+              			</article>
+                        <div class="col-md-12"> 
+                            @TempData["NotifikasiText"]
+                        </div>
+              		</div>
+                      
+              	</div>
+              	<div class="blog-item text-right">
+              		<ul class="blog-info" style='margin:10px 0;'>
+              			<li style='color:#e84d1c'><i class="fa fa-comments"></i> Daftar Komentar</li>
+              		</ul>
+              	</div>
+              	<div class='form-group'>
+                	<div class="col-md-12">
+                        @foreach(var dt in @ViewBag.jp_list){
+                            var ganjil = "";
+                            var edit = "";
+                            if (no % 2 == 1) {
+                                ganjil = "ganjil";
+                            }
+                            if (dt.POLLING_DETAIL_CREATE_BY == Convert.ToInt32(Session["USER_ID"].ToString()))
+                            {
+                                edit = "<a href='/EBallot/EditJejakPendapat/" + dt.POLLING_DETAIL_ID + "' ><i class='fa fa-pencil'></i> edit</a><br /><br />";
+                            }
+                		<article class="row">
+                			<div class="col-md-12 col-sm-12 col-xs-12">
+                				<div class="panel panel-default arrow left">
+                					<div class="panel-body @ganjil">
+                						<header>
+                							<div class='text-left col-sm-6' style="padding-left:0px;">
+                								<div class="comment-user"><i class="fa fa-user"></i> @dt.USER_PUBLIC_NAMA_LENGKAP</div>
+                								<time class="comment-date" datetime="@dt.POLLING_DETAIL_CREATE_DATE"><i class="fa fa-clock-o"></i> @dt.POLLING_DETAIL_CREATE_DATE </time>
+                								<div class="comment-user"><i class="fa fa-check-square-o"></i> @dt.PILIHAN</div>
+                							</div>
+                							<div class='text-right col-sm-6' style="padding-right:0px;">
+                								<a class="icon-btn" href="javascript:;" style='font-weight:bold;font-size:16px;height:50px;padding:5px 0 0;'>@dt.POLLING_DETAIL_PASAL<div>PASAL</div></a>
+                							</div>
+                						</header>
+
+                						<div class='clearfix'></div>
+                						<div class="comment-post" style='padding-top:10px;'>
+                							@Html.Raw(dt.POLLING_DETAIL_REASON) @Html.Raw(edit)
+                                            
+                						</div>
+                					</div>
+                				</div>
+                			</div>
+                		</article>
+                            no++;
+                            
+                        }
+                       
+                	</div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          <!-- END SAMPLE FORM PORTLET-->
+        </div>
+      </div>
+    </div>
+
+    }                
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        CKEDITOR.disableAutoInline = true;
+        CKEDITOR.config.toolbar_MA = [['Bold', 'Italic', 'Underline', '-', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Undo', 'Redo', 'RemoveFormat', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image']];
+        CKEDITOR.replace('POLLING_DETAIL_REASON',
+            { toolbar: 'MA', height: '150px', skin: 'office2013' }
+         );
+
+        $('#kirim_dulu').click(function () {
+            var value = CKEDITOR.instances['komentar'].getData();
+            if (value == "") {
+                alert("Komentar harus diisi");
+                return false;
+            }
+        });
+
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+
+    }
+    $("#POLLING_DETAIL_PASAL").change(function () {
+        var POLLING_DETAIL_POLLING_ID = $("#POLLING_DETAIL_POLLING_ID").val();
+        var POLLING_DETAIL_PASAL = $("#POLLING_DETAIL_PASAL").val();
+        var POLLING_DETAIL_OPTION = 1;
+        $(".opsi").each(function () {
+            if (this.checked) {
+                POLLING_DETAIL_OPTION = $(this).val();
+            }
+        });
+        $.ajax({
+           url: '@Url.Action("cekdata")',
+           type: "POST",
+           data: 'POLLING_DETAIL_POLLING_ID=' + POLLING_DETAIL_POLLING_ID + '&POLLING_DETAIL_PASAL=' + POLLING_DETAIL_PASAL + '&POLLING_DETAIL_OPTION=' + POLLING_DETAIL_OPTION,
+           success: function (data) {
+               if (data.status != 0) {
+                   alert("Pendapat mengenai nomor pasal dan tipe komentar yang dipilih telah di tambahkan sebelumnya.");
+                   $("#POLLING_DETAIL_PASAL").val("");
+                   return false;
+               }
+           }
+       });
+    });
+    $(".opsi").click(function () {
+        var POLLING_DETAIL_POLLING_ID = $("#POLLING_DETAIL_POLLING_ID").val();
+        var POLLING_DETAIL_PASAL = $("#POLLING_DETAIL_PASAL").val();
+        var POLLING_DETAIL_OPTION = 1;
+        $(".opsi").each(function () {
+            if (this.checked) {
+                POLLING_DETAIL_OPTION = $(this).val();
+            }
+        });
+        $.ajax({
+            url: '@Url.Action("cekdata")',
+             type: "POST",
+             data: 'POLLING_DETAIL_POLLING_ID=' + POLLING_DETAIL_POLLING_ID + '&POLLING_DETAIL_PASAL=' + POLLING_DETAIL_PASAL + '&POLLING_DETAIL_OPTION=' + POLLING_DETAIL_OPTION,
+             success: function (data) {
+                 if (data.status != 0) {
+                     alert("Pendapat mengenai nomor pasal dan tipe komentar yang dipilih telah di tambahkan sebelumnya.");
+                     $("#POLLING_DETAIL_PASAL").val("");
+                     return false;
+                 }
+             }
+         });
+
+    });
+
+</script>

@@ -1,0 +1,290 @@
+﻿@{
+    ViewBag.Title = "Akun Saya";
+    var Model = ViewBag.akun;
+}
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="@("/")">Beranda</a></li>
+        <li class="active">Akun Saya</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/logout")'"><i class="fa fa-angle-right"></i>Logout Member</a></li>
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/list_usulan")'"><i class="fa fa-angle-right"></i>Daftar Usulan </a></li>                
+                @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>My account</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Address book</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Wish list</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Returns</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Newsletter</a></li>*@
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-9">
+            <h1>Akun Saya</h1>
+            <div class="content-form-page">
+                <div class="row">
+                    <div class="col-md-7 col-sm-7">
+                        <form class="form-horizontal" id="frmRegistrasi" method="post" action="">                            
+                            <div class="form-body">
+                                @if (@ViewBag.Error != "")
+                                    { 
+                                        <div class="form-group">
+                                            <label class="col-md-8 col-md-offset-4 control-label" style="color: #FF655F; text-align: left;">@ViewBag.Error</label>
+                                        </div>
+                                    }
+                                <div class="alert alert-danger display-hide">
+                                    @*<button class="close" data-close="alert"></button>*@
+                                    Ada beberapa field kosong yang terlewatkan, silahkan isi field tersebut 
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="firstname" class="col-lg-4 control-label">Nama Lengkap <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control wajib" name="USER_PUBLIC_NAMA_LENGKAP" id="fullname" value="@Model.USER_PUBLIC_NAMA_LENGKAP">
+                                            <input type="hidden" class="form-control wajib" name="USER_PUBLIC_ID" id="" value="@Model.USER_PUBLIC_ID">
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label for="lastname" class="col-lg-4 control-label">Username <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control wajib" id="username" name="USER_NAME" value="@Model.USER_NAME">
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label for="lastname" class="col-lg-4 control-label">No. HP/Telp. <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="text" class="form-control wajib" id="telpon" name="USER_PUBLIC_TELPON" value="@Model.USER_PUBLIC_TELPON">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail12" class="col-lg-4 control-label">Email<span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <div class="input-icon right">
+                                            <i class="fa"></i>
+                                            <input type="email" class="form-control wajib" id="inputEmail12" name="USER_PUBLIC_EMAIL" value="@Model.USER_PUBLIC_EMAIL">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="stakeholder" class="col-lg-4 control-label">Stakeholder <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control input-large select2me wajib" id="stakeholder" name="USER_PUBLIC_STAKEHOLDER" data-placeholder="Pilih Stakeholder">
+                                            <option></option>
+                                            <option value="1" @((Model.USER_PUBLIC_STAKEHOLDER == 1)?"selected":"")>PELAKU USAHA  &nbsp;&nbsp;</option>
+                                            <option value="2" @((Model.USER_PUBLIC_STAKEHOLDER == 2)?"selected":"")>AHLI  &nbsp;&nbsp;</option>
+                                            <option value="3" @((Model.USER_PUBLIC_STAKEHOLDER == 3)?"selected":"")>PEMERINTAH  &nbsp;&nbsp;</option>
+                                            <option value="4" @((Model.USER_PUBLIC_STAKEHOLDER == 4)?"selected":"")>PENDIDIKAN (MHS/DSN)  &nbsp;&nbsp;</option>
+                                            <option value="5" @((Model.USER_PUBLIC_STAKEHOLDER == 5)?"selected":"")>PENDIDIKAN (PELAJAR)  &nbsp;&nbsp;</option>
+                                            <option value="6" @((Model.USER_PUBLIC_STAKEHOLDER == 6)?"selected":"")>LEMBAGA MASYARAKAT BIDANG STANDAR  &nbsp;&nbsp;</option>
+                                            <option value="7" @((Model.USER_PUBLIC_STAKEHOLDER == 7)?"selected":"")>LEMBAGA PENILAIAN KESESUAIAN  &nbsp;&nbsp;</option>
+                                            <option value="8" @((Model.USER_PUBLIC_STAKEHOLDER == 8)?"selected":"")>INTERNAL USE  &nbsp;&nbsp;</option>
+                                            <option value="9" @((Model.USER_PUBLIC_STAKEHOLDER == 9)?"selected":"")>LAIN-LAIN  &nbsp;&nbsp;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provinsi" class="col-lg-4 control-label">Provinsi <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control input-large select2me wajib" id="provinsi" name="USER_PUBLIC_PROVINSI_ID" data-placeholder="Pilih Provinsi">
+                                            <option></option>
+                                            @foreach (var provinsi in ViewBag.Provinsi)
+                                            { 
+                                                <option value="@provinsi.WILAYAH_ID" @((Model.USER_PUBLIC_PROVINSI_ID == provinsi.WILAYAH_ID)?"selected":"")>@provinsi.WILAYAH_NAMA  &nbsp;&nbsp;</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kotakab" class="col-lg-4 control-label">Kota / kabupaten <span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control input-large select2me wajib" id="kotakab" name="USER_PUBLIC_KOTAKAB_ID" data-placeholder="Pilih Kabupaten">
+                                            <option></option>
+                                             @foreach (var Kab in ViewBag.Kab)
+                                            { 
+                                                <option value="@Kab.WILAYAH_ID" @((Model.USER_PUBLIC_KOTAKAB_ID == Kab.WILAYAH_ID)?"selected":"")>@Kab.WILAYAH_NAMA  &nbsp;&nbsp;</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='form-group'>
+                                    <label for="confirm-password" class="col-lg-4 control-label">Kode Recaptcha<span class="require">*</span></label>
+                                    <div class="col-lg-8">
+                                       <div class='input-group-addon' style="text-align:left;width:30%;background-color:#eee">
+                                             <img alt="Captcha" id="showchaptcha" src="/Auth/CaptchaImage" style="" />
+                                       </div>
+                                       <div class='input-group-addon' style="width:70%;background-color:#eee">
+                                             <input type='text' style="padding:0px 0px 0px 6px;font-size:18px;" class='form-control' name='jawaban' id='jawaban' placeholder='Jawaban' autocomplete='off' /> 
+                                       </div>                                                                   
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label for="confirm-password" class="col-lg-4 control-label">Kode Recaptcha<span class="require">*</span></label>
+                                    <div class="col-lg-8">                                        
+                                        <div class="g-recaptcha" data-sitekey="6Ley6g0TAAAAAHmtlDyvrh9BlNFDJ3iL8ytBHTyh" id="recaptcha"></div>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"></label>
+                                    <div class="col-md-8">
+                                        <div class="checkbox-list">
+                                            <label>
+                                                <input type="checkbox" id="check_agreement" name="check_agreement" value="1" class="wajibcheckbox">
+                                                Setuju dengan Syarat & Ketentuan BSN
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row ">
+                                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                                            <button type="submit" class="btn btn-primary" id="btn-daftar"><i class="fa fa-check"></i>&nbsp;&nbsp;Edit Akun</button>
+                                            <a style="text-decoration:none;color:white;" href="javascript:;" onclick="window.location='@Url.Content("~/")'" class="btn btn-danger">Batal</a>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    </form>
+                    </div>
+                    <div class="col-md-5 col-sm-5 pull-right">
+                        <div class="form-info">
+                            <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                            <p>Silahkan isi data anda sesuai dengan yang ada pada form sebelah kiri dengan benar, ketika anda mengklik <b>Setuju dengan Syarat & Ketentuan</b> maka anda mengikuti aturan yang sudah kami tetapkan. Terimakasih</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT -->
+</div>
+<!-- END SIDEBAR & CONTENT -->
+
+<!-- Modal Syarat & Ketentuan -->
+<div id="responsive-agreement" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01ad4e;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" style="font-size: 14px; font-weight: bold; color: #fff;">Syarat dan Ketentuan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scroller" style="height: 400px; width: 80%;" data-always-visible="1" data-rail-visible1="1">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <h4 style="font-weight: bold;">Persetujuan Penggunaan File Artikel Download</h4>
+
+                            <p>
+                                Anda diperbolehkan mendownload SNI melalui SISNI bila menyetujui hal-hal sebagai berikut: 
+                            </p>
+                            <ul>
+                                <li>File dokumen SNI (baik sebagian maupun keseluruhan) tidak boleh digunakan untuk tujuan komersial, diperbanyak, dan/atau didistribusikan untuk tujuan komersial.</li>
+                                <li>Hak Cipta SNI dilindungi oleh UU RI.</li>
+                                <li>Bagi pihak-pihak yang membutuhkan dokumen SNI untuk diperbanyak dan/atau didistribusikan secara luas, maka harus menginformasikan/mengajukan permohonan ke:</li>
+                            </ul>
+
+                            <span style="font-weight: bold;">Badan Standardisasi Nasional, cq. Pusat Informasi dan Dokumentasi Standardisasi
+                                <br />
+                                Gedung I BPPT Lantai 11. Jl. M.H. Thamrin No 8.
+                                <br />
+                                Kebon Sirih Jakarta Pusat 10340 - Indonesia.<br />
+                                Telp : +6221-3927422<br />
+                                Fax : 021-3927528<br />
+                                email:dokinfo@bsn.go.id<br />
+                            </span>
+                            <br />
+                            <p>
+                                Dengan mencentang Setuju dengan Syarat & Ketentuan BSN, pada form registrasi ini, berarti anda menerima persetujuan penggunaan File SNI Download
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn green">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.form-login-isonline').hide();
+
+        $('#check_agreement').click(function () {
+            $('#responsive-agreement').css("z-index", "99999");
+            $('#responsive-agreement').modal();
+        });
+
+        //$('.select2').select2({
+        //    allowClear: true
+        //});
+
+        $('#provinsi').select2({ allowClear: true });
+        $('#provinsi').change(function () {
+            $("#kotakab").select2().val(null).trigger("change");
+            if ($(this).val() != 0) {
+                $('#kotakab').prop('disabled', false);
+                var idParent = $('#provinsi').val();
+                var opt = "<option>Pilih Kabupaten</option>";
+                $.ajax({
+                    type: 'POST',
+                    url: MainUrl + 'main/GetKotaKab/' + idParent,
+                    data: { id: idParent },
+                    cache: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#kotakab').empty();
+                        opt += data.value;
+                        $('#kotakab').addClass("input-large");
+                        $('#kotakab').addClass("select2");
+                        $('#kotakab').html("").append(opt);
+                    }
+                });
+            } else {
+                $('#kotakab').val('');
+                $('#kotakab').empty();
+                $('#kotakab').removeClass("input-large");
+                $('#kotakab').removeClass("select2");
+                $("#kotakab").prop("disabled", true);
+            }
+        });
+
+    });
+    $("#recaptcha").click(function () {
+        LoadImg();
+        $("#jawaban").val("");
+    });
+
+    function LoadImg() {
+        var xmlhttp;
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("showchaptcha").src = "/Auth/CaptchaImage";
+            }
+        };
+        xmlhttp.open("GET", '/Auth/CaptchaImage');
+        xmlhttp.send(null);
+    }
+</script>

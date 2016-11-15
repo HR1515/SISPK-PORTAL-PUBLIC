@@ -1,0 +1,144 @@
+﻿@using Portal.Helpers;
+@{
+    var poll_us = 0;
+    }
+    
+                         @*    @if (Session["USER_ID"] != null)
+                       // {  
+
+*@<style>
+    .polling {
+        box-shadow:none !important;
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">RSNI</a></li>
+        <li><a href="../RSNI3">RSNI 3</a></li>
+        <li class="active">Jajak Pendapat</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />
+        </div>
+
+
+        <div class="col-md-9 col-sm-9">
+            
+        
+            <div class="row">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Jajak Pendapat
+                    </div>                    
+                </div>
+                <div class="portlet-body form">
+
+                    <form class="form-horizontal form-bordered" id="frmRegistrasi"  method="post" enctype="multipart/form-data">
+                        <div class="form-body">
+                            <div class="alert alert-danger display-hide">
+                                Alasan tidak boleh kosong 
+                            </div>
+                            <div class="col-md-12" style="margin-top:20px">
+                                <table width="90%" align="center" style="border:2px #ddd solid ">
+                                    <tr>
+                                        <td>
+                                            <table class="table">
+                                                <tr>
+                                                    <td width="20%">No. SNI</td>
+                                                    <td width="2%">:</td>
+                                                    <td>@ViewBag.DataProposal.PROPOSAL_NO_SNI_PROPOSAL</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="20%">Judul</td>
+                                                    <td width="2%">:</td>
+                                                    <td>@ViewBag.DataProposal.PROPOSAL_JUDUL_PNPS</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="20%">Ruang Lingkup</td>
+                                                    <td width="2%">:</td>
+                                                    <td>@ViewBag.DataProposal.PROPOSAL_RUANG_LINGKUP</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="20%">Attachment</td>
+                                                    <td width="2%">:</td>
+                                                    <td>
+                                                        @if (ViewBag.DataProposal.PROPOSAL_LAMPIRAN_FILE_PATH != "" && ViewBag.DataProposal.PROPOSAL_LAMPIRAN_FILE_PATH != null)
+                                                { 
+                                                    <div class="help-block">
+                                                        <a href="~/Upload/Usulan/@ViewBag.DataProposal.PROPOSAL_INFORMASI_FILE_PATH" target="_blank" style="color:green;">Download Informasi Detail Hasil Penelitian</a>
+                                                    </div>   
+                                                }
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                           
+@*                                @if (@ViewBag.poll_us == 0)
+                                {            
+                            *@<div class="form-group">
+                                <label style="text-align:left;padding-top:20PX" class="col-md-12">Polling SNI : Tanggapan Masyarakat tentang RSNI 3 - @ViewBag.DataProposal.PROPOSAL_JUDUL_PNPS </label>
+                                <div class="col-md-9">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <div class="radio-list">
+                                            <label>
+                                                <input type="radio" name="POLLING_OPTION" id="POLLING_OPTION_1" value="1" onclick="sethakpaten()">
+                                                Setuju</label>
+                                            <label>
+                                                <input type="radio" name="POLLING_OPTION" id="POLLING_OPTION_2" value="0" onclick="sethakpaten()" checked="checked">
+                                                Tidak Setuju
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="POLLING_PROPOSAL_ID" id="POLLING_PROPOSAL_ID" value="@ViewBag.DataProposal.PROPOSAL_ID" />
+                                    <textarea rows="3" class="form-control wajib" id="POLLING_REASON" name="POLLING_REASON" placeholder="Alasan"></textarea>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="col-md-3"></div>
+                                    <button type="submit" class="btn btn-primary" id="btn-daftar"><i class="fa fa-check"></i>&nbsp;&nbsp;SIMPAN</button>                                    
+                                </div>
+                            </div>                            
+                            @*    }*@
+                        </div>
+                    </form>                    
+             
+				
+               </div>
+            </div> 
+                				
+			</div>
+        </div>
+    </div>
+</div>
+                        //}
+<script type="text/javascript">
+    function sethakpaten() {
+        var value = $('input[name="POLLING_OPTION"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+    }
+</script>
+
+
+

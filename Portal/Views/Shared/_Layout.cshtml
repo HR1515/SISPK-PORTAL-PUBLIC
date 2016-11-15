@@ -1,0 +1,304 @@
+﻿@using Portal.Helpers;
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<!-- Head BEGIN -->
+<head>
+  <meta charset="utf-8">
+        <title>Sistem Informasi Standar Nasional Indonesia</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <meta content="Sistem Informasi Standar Nasional Indonesia" name="description">
+        <meta content="bsn, sisni,sispk,mki-sisni" name="keywords">
+        <meta content="" name="author">
+
+        <meta property="og:site_name" content="-CUSTOMER VALUE-">
+        <meta property="og:title" content="-CUSTOMER VALUE-">
+        <meta property="og:description" content="-CUSTOMER VALUE-">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
+        <meta property="og:url" content="-CUSTOMER VALUE-">
+        
+        <!-- Fonts START -->
+        <!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">-->
+        <!-- Fonts END --> 
+        <!-- Global styles START -->          
+        <link href="@Url.Content("~/Assets/global/plugins/font-awesome/css/font-awesome.min.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/global/plugins/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/global/plugins/uniform/css/uniform.default.css")" rel="stylesheet" type="text/css">
+        
+        <!-- Global styles END --> 
+
+        <!-- Page level plugin styles START -->
+        <link href="@Url.Content("~/Assets/global/plugins/fancybox/source/jquery.fancybox.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/global/plugins/carousel-owl-carousel/owl-carousel/owl.carousel.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/global/plugins/slider-revolution-slider/rs-plugin/css/settings.css")" rel="stylesheet">
+        <!-- Page level plugin styles END -->
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css")"/>
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css")"/>
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css")"/>
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/global/plugins/jquery-tags-input/jquery.tagsinput.css")"/>    
+        <!-- Theme styles START -->
+
+        <link href="@Url.Content("~/Assets/global/css/components.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/global/css/plugins.css")" rel="stylesheet">
+        <link href="@Url.Content("~/assets/global/css/components-md.css")" id="style_components" rel="stylesheet" type="text/css"/>
+        <link href="@Url.Content("~/assets/global/css/plugins-md.css")" rel="stylesheet" type="text/css"/>
+        <link href="@Url.Content("~/Assets/frontend/layout/css/style.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/frontend/pages/css/style-revolution-slider.css")" rel="stylesheet"><!-- metronic revo slider styles -->
+        <link href="@Url.Content("~/Assets/frontend/layout/css/style-responsive.css")" rel="stylesheet">
+        <link href="@Url.Content("~/Assets/frontend/layout/css/themes/green.css")" rel="stylesheet" id="style-color">
+        <link href="@Url.Content("~/Assets/frontend/layout/css/custom.css")" rel="stylesheet">
+        <!-- Theme styles END --> 
+        @*<link href="@Url.Content("~/Assets/frontend/onepage/css/style.css")" />
+        <link href="@Url.Content("~/Assets/frontend/onepage/css/style-responsive.css")" />
+        <link href="@Url.Content("~/Assets/frontend/onepage/css/themes/red.css")" />*@
+        
+        @*@Scripts.Render("~/bundles/modernizr")*@
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src="@Url.Content("~/Assets/global/plugins/jquery.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/jquery-migrate.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/jquery-ui/jquery-ui.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/assets/global/plugins/jquery-tags-input/jquery.tagsinput.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        var BaseUrl = "@Request.Url.AbsoluteUri";
+        var MainUrl = '@Request.Url.GetLeftPart(UriPartial.Authority)@Url.Content("~")';
+        var imgToTop = '<img src="@Url.Content("~/Assets/frontend/layout/img/up.png")" style="width:40px; height:40px" />';
+    </script>
+     <!-- Load javascripts at bottom, this will reduce page load time -->
+        <!-- BEGIN CORE PLUGINS (REQUIRED FOR ALL PAGES) -->
+        <!--[if lt IE 9]>
+    <script src="@Url.Content("~/Assets/global/plugins/respond.min.js")"></script>
+    <![endif]-->
+           
+        <script src="@Url.Content("~/Assets/frontend/layout/scripts/back-to-top.js")" type="text/javascript"></script>
+        <!-- END CORE PLUGINS -->
+
+        <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+        <script src="@Url.Content("~/Assets/global/plugins/fancybox/source/jquery.fancybox.pack.js")" type="text/javascript"></script>
+        <!-- pop up -->
+        <script src="@Url.Content("~/Assets/global/plugins/carousel-owl-carousel/owl-carousel/owl.carousel.min.js")" type="text/javascript"></script>
+        <!-- slider for products -->
+
+        <!-- BEGIN RevolutionSlider -->
+        <!-- START SELECT2 -->
+
+        <link href="@Url.Content("~/Assets/global/plugins/select2/css/select2.css")" rel="stylesheet"> 
+        <script src="@Url.Content("~/Assets/global/plugins/select2/js/select2.js")" type="text/javascript"></script>    
+        
+        @*<link href="@Url.Content("~/Assets/global/plugins/select2/select2.css")" rel="stylesheet"> 
+        <script src="@Url.Content("~/Assets/global/plugins/select2/select2.js")" type="text/javascript"></script>*@
+       @* <link href="@Url.Content("~/Assets/global/plugins/select2_bak/select2.css")" rel="stylesheet"> 
+        <script src="@Url.Content("~/Assets/global/plugins/select2_bak/select2.js")" type="text/javascript"></script>*@                                       
+        <!-- END SELECT2 -->
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/jquery-validation/js/jquery.validate.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/jquery-validation/js/additional-methods.min.js")"></script>
+
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/datatables/media/js/jquery.dataTables.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js")"></script>
+        
+        <script src="@Url.Content("~/Assets/global/plugins/slider-revolution-slider/rs-plugin/js/jquery.themepunch.plugins.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/slider-revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/slider-revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/frontend/pages/scripts/revo-slider-init.js")" type="text/javascript"></script>
+
+        <script src="@Url.Content("~/assets/global/plugins/ckeditor/ckeditor.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/assets/global/plugins/ckeditor/adapters/jquery.js")" type="text/javascript"></script>
+        <!-- END RevolutionSlider -->
+        <script src="@Url.Content("~/Assets/global/plugins/uniform/jquery.uniform.min.js")" type="text/javascript" ></script>
+        <script src="@Url.Content("~/Assets/frontend/layout/scripts/layout.js")" type="text/javascript"></script>
+  
+        <script src="@Url.Content("~/Assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/global/plugins/bootbox/bootbox.min.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/assets/global/plugins/jquery.blockui.min.js")"></script>
+    <script src="@Url.Content("~/Assets/mki-custom.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Assets/mki-validation.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Assets/form-validation.js")" type="text/javascript"></script>
+    
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                Layout.init();
+                Layout.initOWL();
+                Layout.initUniform();
+                RevosliderInit.initRevoSlider();
+                Layout.initTwitter();
+                Layout.initFixHeaderWithPreHeader(); /* Switch On Header Fixing (only if you have pre-header) */
+                Layout.initNavScrolling();
+                FormValidation.init();
+                NewFormValidation.init();
+                $.fn.serializeObject = function () {
+                    var o = {};
+                    var a = this.serializeArray({ checkboxesAsBools: true });
+                    $.each(a, function () {
+                        if (o[this.name]) {
+                            if (!o[this.name].push) {
+                                o[this.name] = [o[this.name]];
+                            }
+                            o[this.name].push(this.value || '');
+                        } else {
+                            o[this.name] = this.value || '';
+                        }
+                    });
+
+                    return o;
+                };
+                $('.select2me').select2({
+                    width:'100%'
+                });
+                //$('.select2').select2({
+                //    allowClear: true
+                //}); 
+                $("input.tags").tagsInput({
+                    'defaultText': 'Tambah',
+                    'width': '100%',
+                    'delimiter': '|'
+                });
+                var $body = $(this.ie6 ? document.body : document); // using document in ie6 causes a crash
+                var preheader = $(".pre-header").height();
+                var header = $(".header").height();
+                var slider = $(".page-slider").height();
+                if (slider == null) {
+                    var fixwidth = ($body.height() - preheader - header - 80);
+                } else {
+                    var fixwidth = ($body.height() - preheader - header - slider - 120);
+                }
+                
+                //alert(fixwidth);
+                
+                $('.main').css({                    
+                    'min-height': fixwidth
+                });
+
+                // ... some code ...
+
+                // Get the window dimensions
+                var $window = $(window);
+                var wWidth = $window.width();
+                var wHeight = $window.height();
+               
+                
+            });
+        </script>
+
+    </head>
+<!-- Body BEGIN -->
+<body class="corporate"  >
+
+    <!-- BEGIN TOP BAR -->
+    <div class="pre-header">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN TOP BAR LEFT PART -->
+                <div class="col-md-4 col-sm-4 additional-shop-info">
+                    <ul class="list-unstyled list-inline">
+                        <li><i class="fa fa-phone"></i><span>+6221-392 7422</span></li>
+                        <li><i class="fa fa-envelope-o"></i><span>sisni@bsn.go.id</span></li>
+                    </ul>
+                </div>
+                <!-- END TOP BAR LEFT PART -->
+                <!-- BEGIN TOP BAR MENU -->
+                <div class="col-md-8 col-sm-8 additional-nav">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><a href="http://www.bsn.go.id" target="_blank">BSN</a></li>
+                        <li><a href="http://www.mastan.or.id" target="_blank">MASTAN</a></li>
+                        <li><a href="http://lib.bsn.go.id" target="_blank">Koleksi Perpustakaan</a></li>
+                        <li><a href="#faq">Bantuan</a></li>
+
+                        @if (Session["USER_ID"] != null) { 
+                            <li ><a href="@Url.Content("~/auth/MyAccount")" >My Account</a></li>
+                            <li >Halo @Session["USER_FULL_NAME"]</li>
+                            <li><a href="@Url.Content("~/auth/logout")">Logout</a></li>
+                        } else { 
+                            <li><a href="@Url.Content("~/auth/index")">Login</a></li>
+                            <li><a href="@Url.Content("~/main/register")">Daftar Akun</a></li>
+                        }
+                        
+                    </ul>
+                </div>
+                <!-- END TOP BAR MENU -->
+            </div>
+        </div>
+    </div>
+    <!-- END TOP BAR -->
+    <!-- BEGIN HEADER -->
+    <div class="header">
+        <div class="container" style="padding-right: 0;">
+            <a class="site-logo" href="@Url.Content("~/")">
+                <img src="@Url.Content("~/Assets/logo-2.png")" alt="BSN SISNI"></a>
+            <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
+
+            <!-- BEGIN NAVIGATION -->
+            <div class="header-navigation pull-right font-transform-inherit">
+                
+                <ul>
+                    @Html.Raw(AuthHelper.buat_menu(ViewBag.moduleId))
+                    
+                </ul>
+
+            </div>
+            <!-- END NAVIGATION -->
+        </div>
+    </div>
+    <!-- Header END -->
+           
+         
+            @RenderSection("featured", required: false)
+            <div class="main" style="min-height: 490px;" >
+                @RenderBody()
+            </div>
+    @* </div>*@ <!-- POSISI TUTUP DIV LEBIH -->
+        <div class="modal fade" id="konfirmasipenyimpanan" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>Anda Yakin dengan data ini ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" id="setujukonfirmasibutton" class="btn blue">Yakin</button>
+                                 <button type="button" data-dismiss="modal" class="btn btn-danger">Batal</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+              
+     <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <!-- BEGIN COPYRIGHT -->
+                    <div class="col-md-6 col-sm-6 padding-top-10">
+                        Copyright &copy; Badan Standardisasi Nasional @DateTime.Now.Year All Rights Reserved.
+                    </div>
+                    <!-- END COPYRIGHT -->
+                    <!-- BEGIN PAYMENTS -->
+                    @*<div class="col-md-6 col-sm-6">
+                        <ul class="social-footer list-unstyled list-inline pull-right">
+                            <li><a href="javascript:;"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-skype"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-github"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="javascript:;"><i class="fa fa-dropbox"></i></a></li>
+                        </ul>
+                    </div>*@
+                    <!-- END PAYMENTS -->
+                </div>
+            </div>
+        </div>
+     </body>
+<!-- END BODY -->
+</html>

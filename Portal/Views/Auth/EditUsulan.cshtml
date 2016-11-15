@@ -1,0 +1,861 @@
+﻿
+@using Portal.Helpers;
+<style>
+    .select2-selection--single {
+        height: 100% !important;
+    }
+
+    .select2-selection__rendered {
+        word-wrap: break-word !important;
+        text-overflow: inherit !important;
+        white-space: normal !important;
+    }
+</style>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">PNPS</a></li>
+        <li class="active">Edit Pengajuan Usulan PNPS</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+
+            </ul>
+            <br />
+            <br />
+            <div class="form-info">
+                <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                <p>
+                    Lengkapi form isian.
+                <p>Terimakasih</p>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Form Edit Pengajuan Usulan PNPS
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <form class="form-horizontal form-bordered" id="sispk_form" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                                             
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Konseptor <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_KONSEPTOR" name="PROPOSAL_KONSEPTOR" class="form-control wajib ">
+                                    <input type="hidden" value="1" name="PROPOSAL_TYPE" id="PROPOSAL_TYPE" class="form-control">
+                                    <input type="hidden" value="@DateTime.Now.Year" name="PROPOSAL_YEAR" id="PROPOSAL_YEAR" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Institusi Konseptor <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_INSTITUSI" name="PROPOSAL_INSTITUSI" class="form-control wajib ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nama <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_TIM_NAMA" name="PROPOSAL_TIM_NAMA" class="form-control wajib" value="@ViewBag.User.USER_PUBLIC_NAMA_LENGKAP">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Alamat <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_TIM_ALAMAT" name="PROPOSAL_TIM_ALAMAT" class="form-control wajib" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">No Telpon <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_TIM_PHONE" name="PROPOSAL_TIM_PHONE" class="form-control wajib" value="@ViewBag.User.USER_PUBLIC_TELPON">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Email <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_TIM_EMAIL" name="PROPOSAL_TIM_EMAIL" class="form-control wajib" value="@ViewBag.User.USER_PUBLIC_EMAIL">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Fax</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_TIM_FAX" name="PROPOSAL_TIM_FAX" class="form-control wajib" value="">
+                                    <input type="hidden" value="@DateTime.Now.Year" name="PROPOSAL_YEAR" id="PROPOSAL_YEAR" class="form-control">
+                                    <input type="hidden" value="2" name="PROPOSAL_TYPE" id="PROPOSAL_TYPE" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Judul PNPS <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input type="text" id="PROPOSAL_JUDUL_PNPS" name="PROPOSAL_JUDUL_PNPS" class="form-control wajib ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Ruang Lingkup <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" id="PROPOSAL_RUANG_LINGKUP" name="PROPOSAL_RUANG_LINGKUP" class="form-control wajib"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jenis Perumusan SNI <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control select2me wajib " data-placeholder="Pilih Jenis Perumusan SNI" id="PROPOSAL_JENIS_PERUMUSAN" name="PROPOSAL_JENIS_PERUMUSAN" onchange="pilih_jenis_perumusan(this)">
+                                        <option></option>
+                                        <option value="1">Baru</option>
+                                        <option value="2">Revisi</option>
+                                        <option value="3">Ralat</option>
+                                        <option value="4">Amandemen</option>
+                                        <option value="5">Terjemahan SNI Republikasi Reprint / Reprep</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group jalur_perumusan" style="display: none;">
+                            <label class="control-label col-md-3">Jalur Perumusan SNI <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control select2me wajib" data-placeholder="Pilih Jalur Perumusan SNI" id="PROPOSAL_JALUR" name="PROPOSAL_JALUR" onchange="pilih_jalur(this)">
+                                        <option></option>
+                                        <option value="1">Perumusan sendiri berdasarkan penelitian</option>
+                                        <option value="2">Adopsi</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="daftar_adopsi" style="display: none;">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Jenis Adopsi<span class="required">*</span></label>
+                                <div class="col-md-4">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control select2me wajib" data-placeholder="Pilih Jenis Adopsi" id="PROPOSAL_JENIS_ADOPSI" name="PROPOSAL_JENIS_ADOPSI" onchange="pilih_jenis_adopsi(this)">
+                                            <option></option>
+                                            <option value="1">Identik</option>
+                                            <option value="2">Modifikasi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group daftar_adopsi_ext" style="display: none;">
+                                <label class="control-label col-md-3">Metode Adopsi</label>
+                                <div class="col-md-5">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control select2me" data-placeholder="Pilih Metode Adopsi" id="PROPOSAL_METODE_ADOPSI" name="PROPOSAL_METODE_ADOPSI">
+                                            <option></option>
+                                            <option value="1">Publikasi ulang - cetak ulang (Republication Reprint)</option>
+                                            <option value="2">Terjemahan 1 Bahasa (Indonesia)</option>
+                                            <option value="3">Terjemahan 2 Bahasa (Indonesia dan Inggris)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group daftar_adopsi_ext_name" style="display: none;">
+                                <label class="control-label col-md-3">Standar ISO/IEC/SDO lain yang akan diadopsi secara <b><span class="jenis_name"></span></b></label>
+                                <div class="col-md-9">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control" id="PROPOSAL_ADOPSI_NOMOR_JUDUL" name="PROPOSAL_ADOPSI_NOMOR_JUDUL">
+                                        </select>
+                                    </div>
+                                    <div class="help-block">
+                                        Sebutkan standar ISO/EIC/SDO lain (Misalnya ASTM) yang akan diadopsi.(beri nomor standar, tahun terbitan dan judul standar yang akan diadopsi secara <span class="jenis_name"></span>).<br />
+                                        <span style="text-transform: none;" class="badge badge-warning badge-roundless">Tekan Enter untuk data selanjutnya</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group revisi_list" style="display: none;">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Revisi</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" id="PROPOSAL_REV_MERIVISI_ID" name="PROPOSAL_REV_MERIVISI_ID">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Revisi maka sebutkan nomor dan judul SNI yang akan diusulkan.<br />
+                                    <span style="text-transform: none;" class="badge badge-warning badge-roundless">Data dapat lebih dari satu</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ralat_list" style="display: none;">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Ralat</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Ralat" id="PROPOSAL_RALAT_SNI_ID" name="PROPOSAL_RALAT_SNI_ID">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Ralat maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group amd_list" style="display: none;">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Amandemen</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Amandemen" id="PROPOSAL_AMD_SNI_ID" name="PROPOSAL_AMD_SNI_ID">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Amandemen maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group terjemahan_list" style="display: none;">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Terjemahkan</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Terjemahkan" id="PROPOSAL_TERJEMAHAN_SNI_ID" name="PROPOSAL_TERJEMAHAN_SNI_ID">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Terjemahkan maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group pasal_list" style="display: none;">
+                            <label class="control-label col-md-3">Pasal SNI yang di <span class="pasal_list_name"></span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" id="PROPOSAL_PASAL" name="PROPOSAL_PASAL" class="form-control wajib"></textarea>
+                                </div>
+                                <div class="help-block">
+                                    Sebutkan bagian atau pasal dari SNI yang akan dilakukan <span class="pasal_list_name"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kebutuhan Mendesak</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_URGENT" id="PROPOSAL_IS_URGENT_1" value="1">
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_URGENT" id="PROPOSAL_IS_URGENT_2" value="0" checked>
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <div class="help-block">
+                                        Kebutuhan mendesak untuk regulasi teknis (disertai dengan surat dari pejabat setingkat Eselon 1 di instansi teknis yang relevan dengan kebutuhan SNI).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Terdapat isi dari standar yang terkait dengan hak paten ?</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_HAK_PATEN" id="PROPOSAL_IS_HAK_PATEN_1" value="1" onclick="sethakpaten()">
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_HAK_PATEN" id="PROPOSAL_IS_HAK_PATEN_2" value="0" onclick="sethakpaten()" checked="checked">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <div class="help-block">
+                                        Apakah terdapat isi dari standar yang terkait dengan hak paten ?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Informasi Hak Paten</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" readonly id="PROPOSAL_IS_HAK_PATEN_DESC" name="PROPOSAL_IS_HAK_PATEN_DESC" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Informasi detail hasil penelitian atau kajian terhadap SNI</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_INFORMASI" name="PROPOSAL_INFORMASI"></textarea>
+                                </div>
+                                <div class="help-block">
+                                    Berikan informasi detail, termasuk hasil penelitian atau kajian terhadap penerapan SNI tersebut, Jika perlu, tulis pada lembaran terpisah sebagai lampiran
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Lampiran Informasi detail hasil penelitian atau kajian terhadap SNI</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="input-group input-large">                                                                                        
+                                                <input type="file" name="PROPOSAL_LAMPIRAN_FILE_PATH" id="PROPOSAL_LAMPIRAN_FILE_PATH" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    Lampiran Terpisah Informasi detail hasil penelitian atau kajian terhadap SNI
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tujuan dan alasan spesifik mengenai perumusan yang akan dilakukan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_TUJUAN" name="PROPOSAL_TUJUAN"></textarea>
+                                </div>
+                                <div class="help-block">
+                                    Tujuan dan alasan spesifik mengenai perumusan yang akan dilakukan (termasuk alasan dilakukan amandemen/revisi/ralat untuk SNI tersebut.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kesesuaian dengan program pemerintah (sebutkan secara terperinci)</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_PROGRAM_PEMERINTAH" name="PROPOSAL_PROGRAM_PEMERINTAH"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pihak-pihak utama yang Berkepentingan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input id="PROPOSAL_PIHAK_BERKEPENTINGAN" type="text" class="form-control tags" placeholder="Tambah Pihak" name="PROPOSAL_PIHAK_BERKEPENTINGAN" />
+                                </div>
+                                <div class="help-block">
+                                    Pihak-pihak utama yang berkepentingan yang dapat mengambil manfaat dari kegiatan perumusan<br />
+                                    <span style="text-transform: none;" class="badge badge-warning badge-roundless">Tekan Enter untuk data selanjutnya</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Manfaat yang akan didapatkan dengan menerapkan SNI yang diusulkan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_MANFAAT_PENERAPAN" name="PROPOSAL_MANFAAT_PENERAPAN"></textarea>
+                                </div>
+                                <div class="help-block">
+                                    (Dalam kaitannya dengan keamanan, keselamatan, kesehatan, fungsi lingkungan hidup, ekonomi dan penguatan daya saing)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Apakah terdapat organisasi yang mendukung usulan perumusan standar ini?</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_ORG_MENDUKUNG" id="PROPOSAL_IS_ORG_MENDUKUNG_1" value="1" onclick="setorg()">
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_ORG_MENDUKUNG" id="PROPOSAL_IS_ORG_MENDUKUNG_2" value="0" onclick="setorg()" checked="checked">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    (tidak termasuk pihak pengusul)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group proposal_dukungan" style="display: none;">
+                            <label class="control-label col-md-3">Lampirkan bukti dukungan terhadap usulan perumusan standar ini (misalnya surat).</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="input-group input-large">
+                                           
+                                                <input type="file" name="PROPOSAL_DUKUNGAN_FILE_PATH" id="PROPOSAL_DUKUNGAN_FILE_PATH" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Semua usulan harus dievaluasi untuk memastikan tidak terjadi duplikasi dengan standar yang telah ada. Jelaskan apabila terjadi duplikasi. </label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_IS_DUPLIKASI_DESC" name="PROPOSAL_IS_DUPLIKASI_DESC"></textarea>
+                                </div>
+                                <div class="help-block">
+                                    Pengusul atau organisasi pengusul harus memastikan kesediaannya untuk melakukan persiapan dan berpartisipasi aktif dalam perumusan standar ini. Pengusul harus melengkapi usulan ini dengan draf standar atau minimal outline dari usulan standar yang diajukan. Semua usulan harus dievaluasi untuk memastikan tidak terjadi duplikasi dengan standar yang telah ada. Jelaskan apabila terjadi duplikasi.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">SNI Acuan Normatif</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_REF_SNI_ID" data-placeholder="Masukan Nomor SNI" id="PROPOSAL_REF_SNI_ID" name="PROPOSAL_REF_SNI_ID" multiple="multiple">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    SNI Acuan Normatif dapat dipilih lebih dari satu<br />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Acuan Non SNI</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_REF_NON_SNI" data-placeholder="Masukan Acuan Non SNI" id="PROPOSAL_REF_NON_SNI" name="PROPOSAL_REF_NON_SNI" multiple="multiple">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Acuan Non SNI dapat dipilih lebih dari satu<br />
+                                    <span style="text-transform: none;" class="badge badge-warning badge-roundless">Tekan Enter untuk data selanjutnya</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Bibliografi</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control BIBLIOGRAFI" data-placeholder="Masukan Acuan Non SNI" id="BIBLIOGRAFI" name="BIBLIOGRAFI" multiple="multiple">
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Bibliografi dapat dipilih lebih dari satu<br />
+                                    <span style="text-transform: none;" class="badge badge-warning badge-roundless">Tekan Enter untuk data selanjutnya</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Attach surat pengajuan PNPS</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="input-group input-large">
+                                            @*<div class="form-control uneditable-input span3" data-trigger="fileinput">
+                                                <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename"></span>
+                                            </div>
+                                            <span class="input-group-addon btn default btn-file">
+                                                <span class="fileinput-new">Pilih File </span>
+                                                <span class="fileinput-exists">Ganti </span>*@
+                                                <input type="file" name="PROPOSAL_SURAT_PENGAJUAN_PNPS" id="PROPOSAL_SURAT_PENGAJUAN_PNPS" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                            @*</span>
+                                            <a href="#" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Hapus </a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Attach Outline RSNI</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="input-group input-large">
+                                           @* <div class="form-control uneditable-input span3" data-trigger="fileinput">
+                                                <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename"></span>
+                                            </div>
+                                            <span class="input-group-addon btn default btn-file">
+                                                <span class="fileinput-new">Pilih File </span>
+                                                <span class="fileinput-exists">Ganti </span>*@
+                                                <input type="file" name="PROPOSAL_OUTLINE_RSNI" id="PROPOSAL_OUTLINE_RSNI" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                            @*</span>
+                                            <a href="#" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Hapus </a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn green" type="submit">Simpan</button>
+                                <a class="btn red" type="button" href="@Url.Action("TambahUsulanPNPS")">Batal</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END CONTENT -->
+
+<script type="text/javascript">
+
+    function pilih_jenis_perumusan(ini) {
+        var res = parseInt($(ini).val());
+        var name = $(ini).find('option:selected').html();
+        $(".pasal_list").slideDown("fast", function () {
+            $('.pasal_list_name').html(name);
+        });
+        if (res == 1) {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $('.pasal_list').slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 2) {
+            $(".revisi_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 3) {
+            $(".ralat_list").slideDown("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".daftar_adopsi").slideUp("fast");
+
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else if (res == 4) {
+            $(".amd_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+
+        } else if (res == 5) {
+            $(".terjemahan_list").slideDown("fast");
+            $(".amd_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        }
+
+        if (res == 5) {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").attr("disabled", "disabled");
+            $('#PROPOSAL_JALUR').select2();
+            $('#PROPOSAL_JALUR').val("1").trigger("change");
+        } else {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").removeAttr("disabled");
+            $('#PROPOSAL_JALUR').val("");
+            $('#PROPOSAL_JALUR').select2();
+        }
+    }
+    function pilih_jalur(ini) {
+        var jalur_perumusan = parseInt($(ini).val());
+        var jenis_perumusan = parseInt($('#PROPOSAL_JENIS_PERUMUSAN').val());
+        $('#PROPOSAL_JENIS_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $('#PROPOSAL_METODE_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $(".daftar_adopsi_ext").hide();
+        $(".daftar_adopsi_ext_name").hide();
+        if (jalur_perumusan == 2 && jenis_perumusan < 5) {
+
+            $(".daftar_adopsi").slideDown("fast", function () {
+                $(".daftar_adopsi_ext").show();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        } else {
+            $(".daftar_adopsi").slideUp("fast", function () {
+                $(".daftar_adopsi_ext").hide();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        }
+    }
+    function pilih_jenis_adopsi(ini) {
+        var res = parseInt($(ini).val());
+        $(".daftar_adopsi_ext").slideDown("fast", function () {
+            if (res == 1) {
+                $('.jenis_name').html('Identik');
+                $(".daftar_adopsi_ext_name").show('fast');
+            } else if (res == 2) {
+                $('.jenis_name').html('Modifikasi');
+                $(".daftar_adopsi_ext_name").show('fast');
+            }
+        });
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 0) {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", true);
+        } else {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", false);
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+    }
+    function setorg() {
+        var value = $('input[name="PROPOSAL_IS_ORG_MENDUKUNG"]:checked').val();
+        if (value == 0) {
+            $('.proposal_dukungan').slideUp();
+        } else {
+            $('.proposal_dukungan').slideDown();
+        }
+    }
+    jQuery(document).ready(function () {
+        $("#PROPOSAL_ADOPSI_NOMOR_JUDUL").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindNonSNIAdopsi',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REV_MERIVISI_ID").select2({
+            multiple: true,
+            allowClear: false,
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_RALAT_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_AMD_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_TERJEMAHAN_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REF_SNI_ID").select2({
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true,
+            },
+        });
+
+
+        $("#PROPOSAL_REF_NON_SNI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindNonSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#BIBLIOGRAFI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindBIBLIOGRAFI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        var _validFileExtensions = [".pdf"];
+        function ValidasiInput(ini) {
+            var arrInputs = $(ini);
+            for (var i = 0; i < arrInputs.length; i++) {
+                var oInput = arrInputs[i];
+                if (oInput.type == "file") {
+                    var sFileName = oInput.value;
+                    if (sFileName.length > 0) {
+                        var blnValid = false;
+                        for (var j = 0; j < _validFileExtensions.length; j++) {
+                            var sCurExtension = _validFileExtensions[j];
+                            if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                                blnValid = true;
+                                break;
+                            }
+                        }
+
+                        if (!blnValid) {
+                            alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
+                            $(ini).val('');
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+    });
+</script>
+

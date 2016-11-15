@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Aktivasi User";
+}
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="@("~/")">Beranda</a></li>
+        <li class="active">Aktivasi Akun</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Html.Action("~/Auth/Login")'"><i class="fa fa-angle-right"></i>Login Member</a></li>
+                <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Reset Password</a></li>
+                @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>My account</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Address book</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Wish list</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Returns</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Newsletter</a></li>*@
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-9">
+            <h1>Aktivasi Akun</h1>
+            <div class="content-form-page">
+                <div class="row">
+                    <div class="note @ViewBag.Note">
+                        <p style="text-align:justify">
+                                @ViewBag.Message
+                        </p>
+                        <p style="text-align:justify">
+                            Demikian informasi yang kami berikan, semoga informasi ini bisa membantu anda dalam melakukan pendaftaran dan aktivasi akun anda.
+                        </p>
+                        <p style="text-align:right">
+                            <br /><br />
+                            <strong>Terimakasih.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END SIDEBAR & CONTENT -->

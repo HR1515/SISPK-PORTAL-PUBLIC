@@ -1,0 +1,152 @@
+﻿@using Portal.Helpers;
+@{
+    var Detail = ViewBag.data_regtek;
+}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">Regulasi Teknis</a></li>
+        <li class="active">Detail Regulasi Teknis</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />           
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Detail Informasi Regulasi Teknis
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal form-bordered" id="sispk_form" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">No SK</label>
+                            <div class="col-md-9 control-label detailtext">
+                               @Detail.RETEK_NO_SK
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tentang</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.RETEK_TENTANG
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Instansi</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.INSTANSI_CODE
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Regulator</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.REGULATOR
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Keterangan</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @((Detail.RETEK_KETERANGAN != null)?Detail.RETEK_KETERANGAN:"-")
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">File</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                    -
+                                   @*<a href='@((Detail.DOC_FILE_NAME != null)?ViewBag.link.LINK_NAME+""+Detail.DOC_FILE_PATH.Replace("/U","U")+""+Detail.DOC_FILE_NAME+"."+Detail.DOC_FILETYPE:"javascript(void)")' download><img border="0" width="15" height="15" alt="download" src="http://sisni.bsn.go.id//static/images/pdf.ico"></a>*@
+                                </div>                                
+                            </div>
+                        </div>                                       
+   
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <a class="btn red" type="button" href="@Url.Action("DaftarList")">Kembali</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align :left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("input.tags").tagsInput({
+            'defaultText': 'Tambah',
+            'width': '100%'
+        });
+    });
+    function set_jalur(ini) {
+        var value = $(ini).val();
+        if ($(ini).is(":checked")) {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(1);
+                $('.adopsi').slideDown();
+            }
+        } else {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(0);
+                $('.adopsi').slideUp();
+            }
+        }
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+
+    }
+
+    function cekjenis(ini) {
+        var inivalue = parseInt($(ini).val());
+        if (inivalue == 2 || inivalue == 3) {
+            $('.revisilist').slideDown();
+        } else {
+            //$('.revisilist').slideUp();
+        }
+    }
+</script>
+
+
+

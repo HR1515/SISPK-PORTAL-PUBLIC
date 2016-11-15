@@ -1,0 +1,83 @@
+﻿
+<style>
+    .blog-item > p {
+    line-height: 25px;
+}
+
+</style>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">Berita</a></li>
+        <li class="active">Berita Detail</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+        <!-- BEGIN LEFT SIDEBAR -->            
+                <div class="col-md-9 col-sm-9 blog-item">
+                  <div class="blog-item-img">
+                    <!-- BEGIN CAROUSEL -->            
+                    <div class="front-carousel">
+                      <div id="myCarousel" class="carousel slide">
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">                          
+                          <div class="item active">
+                            <img src="@ViewBag.link.LINK_NAME@ViewBag.news_detail.NEWS_PATH_IMAGE" alt="" width="95%" style="height:320px !important">
+                          </div>
+                        </div>                        
+                       
+                      </div>                
+                    </div>
+                    <!-- END CAROUSEL -->             
+                  </div>
+                  <br />
+                  <h2>@ViewBag.news_detail.NEWS_TITLE</h2>
+                    @Html.Raw(ViewBag.news_detail.NEWS_CONTENTS)
+                    @*<p style="text-align:justify;line-height:30px">@ViewBag.news_detail.NEWS_CONTENTS</p>*@
+                  <ul class="blog-info">
+                    <li><i class="fa fa-user"></i> By @ViewBag.news_detail.ACCESS_NAME</li>
+                    <li><i class="fa fa-calendar"></i> @ViewBag.news_detail.NEWS_CREATE_DATE</li>
+                    <li><i class="fa fa-tags"></i> @ViewBag.news_detail.NEWS_TAG.Replace("|",", ")</li>
+                  </ul>         
+                </div>
+                <!-- END LEFT SIDEBAR -->
+        <div class="col-md-3 col-sm-3">
+
+            <!-- BEGIN RECENT NEWS -->                            
+                  <h2>Berita Terkini</h2>
+                  <div class="recent-news margin-bottom-10">
+                      @foreach (var hot in ViewBag.hot_news)
+                   {
+                        <div class="row margin-bottom-10">
+                          <div class="col-md-3">
+                            <img class="img-responsive" alt="" src="@ViewBag.link.LINK_NAME@hot.NEWS_PATH_IMAGE" style="width:40px;height:30px">                        
+                          </div>
+                          <div class="col-md-9 recent-news-inner">
+                            <h4><a href="javascript:;">@hot.NEWS_TITLE</a></h4>
+                          </div>                        
+                        </div>
+                    }
+                  </div>
+                  <!-- END RECENT NEWS --> 
+
+            <!-- BEGIN BLOG TAGS -->
+                  <div class="blog-tags margin-bottom-20">
+                    <h2>Tags</h2>
+                    <ul>
+                        @{
+                            var a = ViewBag.news_detail.NEWS_TAG.Replace("|", ", ");
+                            string[] vals = a.Split(',');
+                            }
+                        @for (int n = 0; n < vals.Length; n++)
+                {
+                      <li><a href="javascript:;"><i class="fa fa-tags"></i>@vals[n]</a></li>
+                      @*<li><a href="javascript:;"><i class="fa fa-tags"></i>Sertifikat</a></li>
+                      <li><a href="javascript:;"><i class="fa fa-tags"></i>Eksport</a></li>
+                      <li><a href="javascript:;"><i class="fa fa-tags"></i>Gas</a></li>
+                      <li><a href="javascript:;"><i class="fa fa-tags"></i>ISO</a></li>*@
+                        }
+                    </ul>
+                  </div>
+                  <!-- END BLOG TAGS -->
+                </div>
+        </div>
+    </div>

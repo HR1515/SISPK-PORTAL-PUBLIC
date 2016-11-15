@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PortalBSNModel.Store" Alias="Self" Provider="Oracle.DataAccess.Client" ProviderManifestToken="12.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="PortalBSNModelStoreContainer">
+          <EntitySet Name="MASTER_WILAYAH" EntityType="PortalBSNModel.Store.MASTER_WILAYAH" store:Type="Tables" store:Schema="C##BSN_PORTAL" store:Name="MASTER_WILAYAH">
+            <DefiningQuery>SELECT 
+      "MASTER_WILAYAH"."WILAYAH_ID" AS "WILAYAH_ID", 
+      "MASTER_WILAYAH"."WILAYAH_PARENT_ID" AS "WILAYAH_PARENT_ID", 
+      "MASTER_WILAYAH"."WILAYAH_KODE" AS "WILAYAH_KODE", 
+      "MASTER_WILAYAH"."WILAYAH_NAMA" AS "WILAYAH_NAMA", 
+      "MASTER_WILAYAH"."WILAYAH_CREATE_BY" AS "WILAYAH_CREATE_BY", 
+      "MASTER_WILAYAH"."WILAYAH_CREATE_DATE" AS "WILAYAH_CREATE_DATE", 
+      "MASTER_WILAYAH"."WILAYAH_UPDATE_BY" AS "WILAYAH_UPDATE_BY", 
+      "MASTER_WILAYAH"."WILAYAH_UPDATE_DATE" AS "WILAYAH_UPDATE_DATE", 
+      "MASTER_WILAYAH"."WILAYAH_STATUS" AS "WILAYAH_STATUS", 
+      "MASTER_WILAYAH"."WILAYAH_LOG_CODE" AS "WILAYAH_LOG_CODE"
+      FROM "C##BSN_PORTAL"."MASTER_WILAYAH" "MASTER_WILAYAH"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SYS_LINK" EntityType="PortalBSNModel.Store.SYS_LINK" store:Type="Tables" store:Schema="C##BSN_PORTAL" store:Name="SYS_LINK">
+            <DefiningQuery>SELECT 
+      "SYS_LINK"."LINK_ID" AS "LINK_ID", 
+      "SYS_LINK"."LINK_NAME" AS "LINK_NAME", 
+      "SYS_LINK"."LINK_IS_USE" AS "LINK_IS_USE", 
+      "SYS_LINK"."LINK_CREATE_BY" AS "LINK_CREATE_BY", 
+      "SYS_LINK"."LINK_CREATE_DATE" AS "LINK_CREATE_DATE", 
+      "SYS_LINK"."LINK_UPDATE_BY" AS "LINK_UPDATE_BY", 
+      "SYS_LINK"."LINK_UPDATE_DATE" AS "LINK_UPDATE_DATE", 
+      "SYS_LINK"."LINK_STATUS" AS "LINK_STATUS"
+      FROM "C##BSN_PORTAL"."SYS_LINK" "SYS_LINK"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SYS_MENU_PORTAL" EntityType="PortalBSNModel.Store.SYS_MENU_PORTAL" store:Type="Tables" store:Schema="C##BSN_PORTAL" store:Name="SYS_MENU_PORTAL">
+            <DefiningQuery>SELECT 
+      "SYS_MENU_PORTAL"."MENU_ID" AS "MENU_ID", 
+      "SYS_MENU_PORTAL"."MENU_PARENT_ID" AS "MENU_PARENT_ID", 
+      "SYS_MENU_PORTAL"."MENU_URL" AS "MENU_URL", 
+      "SYS_MENU_PORTAL"."MENU_NAME" AS "MENU_NAME", 
+      "SYS_MENU_PORTAL"."MENU_ICON" AS "MENU_ICON", 
+      "SYS_MENU_PORTAL"."MENU_SORT" AS "MENU_SORT", 
+      "SYS_MENU_PORTAL"."MENU_POSITION" AS "MENU_POSITION", 
+      "SYS_MENU_PORTAL"."MENU_CREATE_BY" AS "MENU_CREATE_BY", 
+      "SYS_MENU_PORTAL"."MENU_CREATE_DATE" AS "MENU_CREATE_DATE", 
+      "SYS_MENU_PORTAL"."MENU_UPDATE_BY" AS "MENU_UPDATE_BY", 
+      "SYS_MENU_PORTAL"."MENU_UPDATE_DATE" AS "MENU_UPDATE_DATE", 
+      "SYS_MENU_PORTAL"."MENU_STATUS" AS "MENU_STATUS", 
+      "SYS_MENU_PORTAL"."MENU_LOG_CODE" AS "MENU_LOG_CODE"
+      FROM "C##BSN_PORTAL"."SYS_MENU_PORTAL" "SYS_MENU_PORTAL"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEW_MENU_PORTAL" EntityType="PortalBSNModel.Store.VIEW_MENU_PORTAL" store:Type="Views" store:Schema="C##BSN_PORTAL" store:Name="VIEW_MENU_PORTAL">
+            <DefiningQuery>SELECT 
+      "VIEW_MENU_PORTAL"."MENU_ID" AS "MENU_ID", 
+      "VIEW_MENU_PORTAL"."MENU_PARENT_ID" AS "MENU_PARENT_ID", 
+      "VIEW_MENU_PORTAL"."MENU_URL" AS "MENU_URL", 
+      "VIEW_MENU_PORTAL"."MENU_NAME" AS "MENU_NAME", 
+      "VIEW_MENU_PORTAL"."MENU_ANAK" AS "MENU_ANAK", 
+      "VIEW_MENU_PORTAL"."MENU_STATUS" AS "MENU_STATUS", 
+      "VIEW_MENU_PORTAL"."MENU_LEVEL" AS "MENU_LEVEL"
+      FROM "C##BSN_PORTAL"."VIEW_MENU_PORTAL" "VIEW_MENU_PORTAL"</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C##BSN_PORTAL.MASTER_WILAYAH' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="MASTER_WILAYAH">
+          <Key>
+            <PropertyRef Name="WILAYAH_ID" />
+          </Key>
+          <Property Name="WILAYAH_ID" Type="number" Nullable="false" />
+          <Property Name="WILAYAH_PARENT_ID" Type="number" />
+          <Property Name="WILAYAH_KODE" Type="varchar2" MaxLength="255" />
+          <Property Name="WILAYAH_NAMA" Type="varchar2" MaxLength="255" />
+          <Property Name="WILAYAH_CREATE_BY" Type="number" />
+          <Property Name="WILAYAH_CREATE_DATE" Type="date" />
+          <Property Name="WILAYAH_UPDATE_BY" Type="number" />
+          <Property Name="WILAYAH_UPDATE_DATE" Type="date" />
+          <Property Name="WILAYAH_STATUS" Type="number" />
+          <Property Name="WILAYAH_LOG_CODE" Type="varchar2" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C##BSN_PORTAL.SYS_LINK' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SYS_LINK">
+          <Key>
+            <PropertyRef Name="LINK_ID" />
+          </Key>
+          <Property Name="LINK_ID" Type="number" Nullable="false" />
+          <Property Name="LINK_NAME" Type="varchar2" MaxLength="255" />
+          <Property Name="LINK_IS_USE" Type="number" />
+          <Property Name="LINK_CREATE_BY" Type="number" />
+          <Property Name="LINK_CREATE_DATE" Type="date" />
+          <Property Name="LINK_UPDATE_BY" Type="number" />
+          <Property Name="LINK_UPDATE_DATE" Type="date" />
+          <Property Name="LINK_STATUS" Type="number" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C##BSN_PORTAL.SYS_MENU_PORTAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SYS_MENU_PORTAL">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="number" Nullable="false" />
+          <Property Name="MENU_PARENT_ID" Type="number" />
+          <Property Name="MENU_URL" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_NAME" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_ICON" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_SORT" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_POSITION" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_CREATE_BY" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_CREATE_DATE" Type="date" />
+          <Property Name="MENU_UPDATE_BY" Type="date" />
+          <Property Name="MENU_UPDATE_DATE" Type="date" />
+          <Property Name="MENU_STATUS" Type="number" />
+          <Property Name="MENU_LOG_CODE" Type="varchar2" MaxLength="16" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C##BSN_PORTAL.VIEW_MENU_PORTAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="VIEW_MENU_PORTAL">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="number" Nullable="false" />
+          <Property Name="MENU_PARENT_ID" Type="number" />
+          <Property Name="MENU_URL" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_NAME" Type="varchar2" MaxLength="255" />
+          <Property Name="MENU_ANAK" Type="number" />
+          <Property Name="MENU_STATUS" Type="number" />
+          <Property Name="MENU_LEVEL" Type="number" />
+        </EntityType>
+        <Function Name="PROC_SYS_SEQUENCE_FIXER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="C##BSN_PORTAL" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PortalBSNModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PortalBsnEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="MASTER_WILAYAH" EntityType="PortalBSNModel.MASTER_WILAYAH" />
+          <EntitySet Name="SYS_LINK" EntityType="PortalBSNModel.SYS_LINK" />
+          <EntitySet Name="SYS_MENU_PORTAL" EntityType="PortalBSNModel.SYS_MENU_PORTAL" />
+          <EntitySet Name="VIEW_MENU_PORTAL" EntityType="PortalBSNModel.VIEW_MENU_PORTAL" />
+          <FunctionImport Name="PROC_SYS_SEQUENCE_FIXER" />
+        </EntityContainer>
+        <EntityType Name="MASTER_WILAYAH">
+          <Key>
+            <PropertyRef Name="WILAYAH_ID" />
+          </Key>
+          <Property Name="WILAYAH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="WILAYAH_PARENT_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="WILAYAH_KODE" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="WILAYAH_NAMA" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="WILAYAH_CREATE_BY" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="WILAYAH_CREATE_DATE" Type="DateTime" />
+          <Property Name="WILAYAH_UPDATE_BY" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="WILAYAH_UPDATE_DATE" Type="DateTime" />
+          <Property Name="WILAYAH_STATUS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="WILAYAH_LOG_CODE" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SYS_LINK">
+          <Key>
+            <PropertyRef Name="LINK_ID" />
+          </Key>
+          <Property Name="LINK_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="LINK_NAME" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="LINK_IS_USE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="LINK_CREATE_BY" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="LINK_CREATE_DATE" Type="DateTime" />
+          <Property Name="LINK_UPDATE_BY" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="LINK_UPDATE_DATE" Type="DateTime" />
+          <Property Name="LINK_STATUS" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="SYS_MENU_PORTAL">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="MENU_PARENT_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MENU_URL" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_NAME" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_ICON" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_SORT" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_POSITION" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_CREATE_BY" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_CREATE_DATE" Type="DateTime" />
+          <Property Name="MENU_UPDATE_BY" Type="DateTime" />
+          <Property Name="MENU_UPDATE_DATE" Type="DateTime" />
+          <Property Name="MENU_STATUS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MENU_LOG_CODE" Type="String" MaxLength="16" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="VIEW_MENU_PORTAL">
+          <Key>
+            <PropertyRef Name="MENU_ID" />
+          </Key>
+          <Property Name="MENU_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="MENU_PARENT_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MENU_URL" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_NAME" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="MENU_ANAK" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MENU_STATUS" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MENU_LEVEL" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PortalBSNModelStoreContainer" CdmEntityContainer="PortalBsnEntities">
+          <EntitySetMapping Name="MASTER_WILAYAH">
+            <EntityTypeMapping TypeName="PortalBSNModel.MASTER_WILAYAH">
+              <MappingFragment StoreEntitySet="MASTER_WILAYAH">
+                <ScalarProperty Name="WILAYAH_ID" ColumnName="WILAYAH_ID" />
+                <ScalarProperty Name="WILAYAH_PARENT_ID" ColumnName="WILAYAH_PARENT_ID" />
+                <ScalarProperty Name="WILAYAH_KODE" ColumnName="WILAYAH_KODE" />
+                <ScalarProperty Name="WILAYAH_NAMA" ColumnName="WILAYAH_NAMA" />
+                <ScalarProperty Name="WILAYAH_CREATE_BY" ColumnName="WILAYAH_CREATE_BY" />
+                <ScalarProperty Name="WILAYAH_CREATE_DATE" ColumnName="WILAYAH_CREATE_DATE" />
+                <ScalarProperty Name="WILAYAH_UPDATE_BY" ColumnName="WILAYAH_UPDATE_BY" />
+                <ScalarProperty Name="WILAYAH_UPDATE_DATE" ColumnName="WILAYAH_UPDATE_DATE" />
+                <ScalarProperty Name="WILAYAH_STATUS" ColumnName="WILAYAH_STATUS" />
+                <ScalarProperty Name="WILAYAH_LOG_CODE" ColumnName="WILAYAH_LOG_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_LINK">
+            <EntityTypeMapping TypeName="PortalBSNModel.SYS_LINK">
+              <MappingFragment StoreEntitySet="SYS_LINK">
+                <ScalarProperty Name="LINK_ID" ColumnName="LINK_ID" />
+                <ScalarProperty Name="LINK_NAME" ColumnName="LINK_NAME" />
+                <ScalarProperty Name="LINK_IS_USE" ColumnName="LINK_IS_USE" />
+                <ScalarProperty Name="LINK_CREATE_BY" ColumnName="LINK_CREATE_BY" />
+                <ScalarProperty Name="LINK_CREATE_DATE" ColumnName="LINK_CREATE_DATE" />
+                <ScalarProperty Name="LINK_UPDATE_BY" ColumnName="LINK_UPDATE_BY" />
+                <ScalarProperty Name="LINK_UPDATE_DATE" ColumnName="LINK_UPDATE_DATE" />
+                <ScalarProperty Name="LINK_STATUS" ColumnName="LINK_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_MENU_PORTAL">
+            <EntityTypeMapping TypeName="PortalBSNModel.SYS_MENU_PORTAL">
+              <MappingFragment StoreEntitySet="SYS_MENU_PORTAL">
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="MENU_PARENT_ID" ColumnName="MENU_PARENT_ID" />
+                <ScalarProperty Name="MENU_URL" ColumnName="MENU_URL" />
+                <ScalarProperty Name="MENU_NAME" ColumnName="MENU_NAME" />
+                <ScalarProperty Name="MENU_ICON" ColumnName="MENU_ICON" />
+                <ScalarProperty Name="MENU_SORT" ColumnName="MENU_SORT" />
+                <ScalarProperty Name="MENU_POSITION" ColumnName="MENU_POSITION" />
+                <ScalarProperty Name="MENU_CREATE_BY" ColumnName="MENU_CREATE_BY" />
+                <ScalarProperty Name="MENU_CREATE_DATE" ColumnName="MENU_CREATE_DATE" />
+                <ScalarProperty Name="MENU_UPDATE_BY" ColumnName="MENU_UPDATE_BY" />
+                <ScalarProperty Name="MENU_UPDATE_DATE" ColumnName="MENU_UPDATE_DATE" />
+                <ScalarProperty Name="MENU_STATUS" ColumnName="MENU_STATUS" />
+                <ScalarProperty Name="MENU_LOG_CODE" ColumnName="MENU_LOG_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEW_MENU_PORTAL">
+            <EntityTypeMapping TypeName="PortalBSNModel.VIEW_MENU_PORTAL">
+              <MappingFragment StoreEntitySet="VIEW_MENU_PORTAL">
+                <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
+                <ScalarProperty Name="MENU_PARENT_ID" ColumnName="MENU_PARENT_ID" />
+                <ScalarProperty Name="MENU_URL" ColumnName="MENU_URL" />
+                <ScalarProperty Name="MENU_NAME" ColumnName="MENU_NAME" />
+                <ScalarProperty Name="MENU_ANAK" ColumnName="MENU_ANAK" />
+                <ScalarProperty Name="MENU_STATUS" ColumnName="MENU_STATUS" />
+                <ScalarProperty Name="MENU_LEVEL" ColumnName="MENU_LEVEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_SEQUENCE_FIXER" FunctionName="PortalBSNModel.Store.PROC_SYS_SEQUENCE_FIXER" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

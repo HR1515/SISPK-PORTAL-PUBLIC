@@ -1,0 +1,144 @@
+﻿@using Portal.Helpers;
+
+<style>
+    td.details-control {
+        background: url('../Assets/Image_plus/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.detailstable td.details-control {
+        background: url('../Assets/Image_plus/details_close.png') no-repeat center center;
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">LPK</a></li>
+        <li class="active">Labolatorium Lembaga & Inspeksi</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+        </div>
+
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Daftar Labolatorium Lembaga & Inspeksi
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <table id="regtek" class="display table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>LABORATORIUM LEMBAGA & INSPEKSI</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function format(d) {
+        return '<table>' +
+                    '<tr>' +
+                    '<td style="width:140px;font-weight:bold;vertical-align:top;">No SK</td>' +
+                    '<td class="text-center" style="padding-left:10px;padding-right:10px;font-weight:bold;vertical-align:top;">:</td>' +
+                    '<td>' + d.LPK_NOMOR + '</td>' +
+                    '</tr>' +
+                     '<tr>' +
+                    '<td style="width:140px;font-weight:bold;vertical-align:top;">Lingkup</td>' +
+                    '<td class="text-center" style="padding-left:10px;padding-right:10px;font-weight:bold;vertical-align:top;">:</td>' +
+                    '<td>' + ((d.LPK_LINGKUP == null) ? '-' : d.LPK_LINGKUP) + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="width:140px;font-weight:bold;vertical-align:top;">Kontak Person</td>' +
+                    '<td class="text-center" style="padding-left:10px;padding-right:10px;font-weight:bold;vertical-align:top;">:</td>' +
+                    '<td>' + d.LPK_CONTACT_PERSON + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="width:140px;font-weight:bold;vertical-align:top;">Alamat</td>' +
+                    '<td class="text-center" style="padding-left:10px;padding-right:10px;font-weight:bold;vertical-align:top;">:</td>' +
+                    '<td>' + d.LPK_ALAMAT + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="width:140px;font-weight:bold;vertical-align:top;">No. Telp</td>' +
+                    '<td class="text-center" style="padding-left:10px;padding-right:10px;font-weight:bold;vertical-align:top;">:</td>' +
+                    '<td style="vertical-align:top;">' + d.LPK_TELEPON + '</td>' +
+                    '</tr>' +
+                '</table>';
+    }
+
+    jQuery(document).ready(function () {
+        var dt = $('#regtek').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/LPK/ListLabolatoriumInspeksi",
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "DESC"]]
+        });
+
+        // Array to track the ids of the details displayed rows
+        var detailRows = [];
+
+        $('#regtek tbody').on('click', 'tr td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = dt.row(tr);
+            var idx = $.inArray(tr.attr('id'), detailRows);
+
+            if (row.child.isShown()) {
+                tr.removeClass('detailstable');
+                row.child.hide();
+
+                // Remove from the 'open' array
+                detailRows.splice(idx, 1);
+            }
+            else {
+                tr.addClass('detailstable');
+                row.child(format(row.data())).show();
+
+                // Add to the 'open' array
+                if (idx === -1) {
+                    detailRows.push(tr.attr('id'));
+                }
+            }
+        });
+
+        // On each draw, loop over the `detailRows` array and show any child rows
+        dt.on('draw', function () {
+            $.each(detailRows, function (i, id) {
+                $('#' + id + ' td.details-control').trigger('click');
+            });
+        });
+    });
+</script>
+
+
+

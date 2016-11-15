@@ -1,0 +1,295 @@
+﻿@using Portal.Helpers;
+
+<style>
+    table > thead > tr > th {
+        vertical-align: middle !important;
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li>RSNI</li>
+        <li class="active">Perumusan RSNI</li>
+    </ul>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-table"></i>Parameter Pencarian</div>
+                    <div class="actions"></div>
+                </div>
+                <form class="form-horizontal" id="frmRegistrasi" method="post">
+                    <div class="portlet-body form">
+                        <div class="tab-content">
+
+                            <div class="form-group">
+                                <label for="firstname" class="col-lg-2 control-label">No. RSNI</label>
+                                <div class="col-lg-5">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control" name="nomor" id="nomor" placeholder="Masukan No RSNI">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stakeholder" class="col-lg-2 control-label">Komite Teknis</label>
+                                <div class="col-lg-5">
+                                    <select class="form-control input-large select2New" id="komtek" name="komtek" data-placeholder="Pilih Komtek">
+                                        <option></option>
+                                        @foreach (var kt in ViewBag.kt)
+                                        { 
+                                            <option value="@kt.KOMTEK_ID">@kt.KOMTEK_CODE @kt.KOMTEK_NAME</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstname" class="col-lg-2 control-label">Judul</label>
+                                <div class="col-lg-5">
+                                    <div class="input-icon right">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control" name="PROPOSAL_JUDUL_PNPS" id="PROPOSAL_JUDUL_PNPS" placeholder="Masukan Judul">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstname" class="col-lg-2 control-label">Tahun</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control input-large select2New" id="tahun" name="tahun" data-placeholder="Pilih Tahun">
+                                        <option></option>
+                                        @for (var i = DateTime.Now.Year; i >= 1987; i--)
+                                        {<option value="@i">@i</option>}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stakeholder" class="col-lg-2 control-label">Status</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control input-large select2New" id="status" name="status" data-placeholder="Pilih Status">
+                                        <option></option>
+                                        <option value="1">Baru</option>
+                                        <option value="2">Revisi</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stakeholder" class="col-lg-2 control-label">Tahapan</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control input-large select2New" id="tahapan" name="tahapan" data-placeholder="Pilih Tahapan">
+                                        <option></option>
+                                        <option value="PNPS">PNPS</option>
+                                        <option value="RSNI 1">RSNI 1</option>
+                                        <option value="RSNI 2">RSNI 2</option>
+                                        <option value="RSNI 3">RSNI 3</option>
+                                        <option value="RSNI 4">RSNI 4</option>
+                                        <option value="RASNI">RASNI</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stakeholder" class="col-lg-2 control-label">Pilih ICS</label>
+                                <div class="col-lg-5">
+                                    <select class="form-control input-large select2New" id="ICS" name="ICS" data-placeholder="Pilih ICS">
+                                        <option></option>
+                                        @foreach (var ics in ViewBag.ics)
+                                        {
+                                            <option value="@ics.ICS_CODE">@ics.ICS_CODE @ics.ICS_NAME_IND</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-2">
+                                </div>
+                                <div class="col-lg-10">
+                                    <button type="button" class="btn btn-primary" id="btn-daftar">Cari data</button>
+                                    <button type="reset" class="btn btn-danger" id="reset-btn">Reset</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="row margin-bottom-40">
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Daftar Perumusan RSNI
+                    </div>
+                    <div class="actions">
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <table class="table table-striped table-hover table-bordered" id="list-data">
+                            <thead>
+                                <tr>
+                                    <th style="width: 2%; text-align: center; font-weight: bold; font-size: 14px">No</th>
+                                    <th style="width: 5%; text-align: center; font-weight: bold; font-size: 14px">Dokumen Yang dihasilkan</th>
+                                    <th style="width: 10%; text-align: center; font-weight: bold; font-size: 14px">Nomor RSNI</th>
+                                    <th style="width: 5%; text-align: center; font-weight: bold; font-size: 14px">Komite Teknis</th>
+                                    <th style="width: 5%; text-align: center; font-weight: bold; font-size: 14px">Tahun</th>
+                                    <th style="width: 20%; text-align: center; font-weight: bold; font-size: 14px">Judul IND</th>
+                                    <th style="width: 20%; text-align: center; font-weight: bold; font-size: 14px">Judul ENG</th>
+                                    <th style="width: 5%; text-align: center; font-weight: bold; font-size: 14px">ICS</th>
+                                    <th style="width: 15%; text-align: center; font-weight: bold; font-size: 14px">Ruang Lingkup</th>
+                                    <th style="width: 5%; text-align: center; font-weight: bold; font-size: 14px">Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $('#btn-daftar').click(function () {
+            var table = $('#list-data').dataTable();
+            table.dataTable().fnDestroy();
+            var nomor = $('#nomor').val();
+            var komtek = $('#komtek').val();
+            var judul = $('#PROPOSAL_JUDUL_PNPS').val();
+            var tahun = $('#tahun').val();
+            var status = $('#status').val();
+            var tahapan = $('#tahapan').val();
+            var ICS = $('#ICS').val();
+            var oTable = table.dataTable({
+                "processing": true,
+                "serverSide": true,
+                "bServerSide": true,
+                "sAjaxSource": "/RSNI/ListRsni?nomor=" + nomor + "&komtek=" + komtek + "&judul=" + judul + "&tahun=" + tahun + "&status=" + status + "&tahapan=" + tahapan + "&ics=" + ICS,
+                "language": {
+                    "aria": {
+                        "sortAscending": ": activate to sort column ascending",
+                        "sortDescending": ": activate to sort column descending"
+                    },
+                    "emptyTable": "Data tidak tersedia",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "infoEmpty": "Menampilkan 0 Data",
+                    "infoFiltered": "",
+                    "lengthMenu": "Menampilkan _MENU_ Data",
+                    "search": "Pencarian:",
+                    "zeroRecords": "Pencarian Tidak Ditemukan",
+                    "sProcessing": "Proses Pengambilan Data",
+                },
+                "fnDrawCallback": function () {
+                    $('.tooltips').tooltip();
+                },
+                "aaSorting": [[0, "DESC"]],
+                "aoColumns": [
+				{ "sClass": "text-center", "bSortable": false },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-center" },
+				{ "sClass": "text-center" },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-center" },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-center" }
+
+                ],
+                "order": [
+				[0, 'DESC']
+                ],
+                "lengthMenu": [
+				[10, 50, 100],
+				[10, 50, 100]
+                ],
+                "pageLength": 10,
+            });
+        });
+        $('.select2New').select2({
+            width: '100%',
+            allowClear: true
+        });
+        $("#filter").hide();
+        $("#tutup").hide();
+
+        $("#buka").click(function () {
+            $("#filter").show();
+            $("#tutup").show();
+            $("#buka").hide();
+        })
+
+        $("#tutup").click(function () {
+            $("#filter").hide();
+            $("#tutup").hide();
+            $("#buka").show();
+        })
+
+        var table1 = $('#list-data');
+        var nomor = $('#nomor').val();
+        var komtek = $('#komtek').val();
+        var judul = $('#PROPOSAL_JUDUL_PNPS').val();
+        var tahun = $('#tahun').val();
+        var status = $('#status').val();
+        var tahapan = $('#tahapan').val();
+        var ICS = $('#ICS').val();
+
+        var oTable = table1.dataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/RSNI/ListRsni?nomor=" + nomor + "&komtek=" + komtek + "&judul=" + judul + "&tahun=" + tahun + "&status=" + status + "&tahapan=" + tahapan + "&ics=" + ICS,
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "DESC"]],
+            "aoColumns": [
+            { "sClass": "text-center", "bSortable": false },
+            { "sClass": "text-left" },
+            { "sClass": "text-left" },
+            { "sClass": "text-center" },
+            { "sClass": "text-center" },
+            { "sClass": "text-left" },
+            { "sClass": "text-left" },
+            { "sClass": "text-center" },
+            { "sClass": "text-left" },
+            { "sClass": "text-center" }
+
+            ],
+            "order": [
+            [0, 'DESC']
+            ],
+            "lengthMenu": [
+            [10, 50, 100],
+            [10, 50, 100]
+            ],
+            "pageLength": 10,
+        });
+    });
+
+</script>
+
+
+
+

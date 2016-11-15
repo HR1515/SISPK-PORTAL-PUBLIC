@@ -1,0 +1,280 @@
+﻿@using Portal.Helpers;
+@{
+   
+    var sni = ViewBag.sni;
+    var merevisi = ViewBag.merevisi;
+    int no = 1;
+    int nob = 1;
+    int nos = 1;
+}
+<style>
+    
+    .judul {
+        text-align:left !important;
+        font-weight:bold;
+    }
+    .isi {
+        padding-top:5px;
+        padding-bottom:5px;
+    }
+
+    .form-info > a {
+        color:#fff;
+    }
+
+    .form-info > a:hover {
+        color:#fff;
+    }
+    
+</style>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">SNI</a></li>
+        <li class="active">Detil SNI</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            @*<ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))                 
+            </ul>*@
+            <div class="form-info">
+                    @*<button type="submit" class="btn btn-primary">Login</button>*@
+                    <a href="@((sni.DSNI_DOC_FILE_NAME != null) ?ViewBag.link.LINK_NAME+""+sni.DSNI_DOC_FILE_PATH+""+sni.DSNI_DOC_FILE_NAME+"."+sni.DSNI_DOC_FILETYPE:"javascript(void)")" download class="btn @((sni.DSNI_DOC_FILE_NAME != null) ? "btn-primary" : "btn-danger disable")">@((sni.DSNI_DOC_FILE_NAME != null) ? "Download File SNI" : "File Tidak Tersedia")</a>
+            </div> 
+            
+            <div class="form-info">
+                    <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                    <p align="justify">Mulai Tahun 2013, website BSN akan menyediakan full text akses SNI yang baru ditetapkan selama 1 tahun. Terimakasih</p>
+                <p align="justify">SNI hasil adopsi badan standar asing tidak dapat kami tampilkan semua secara fulltext, terkait peraturan hak cipta di masing-masing Organisasi Pengembang Standar.</p>
+                <p align="justify">Dokumen SNI yang tidak tersedia secara online dapat diperoleh (sesuai ketentuan yang berlaku) di: Perpustakaan BSN, email:dokinfo@bsn.go.id,<br /> phone: +62 21 3927422 ext 222</p>
+            </div> 
+            
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Detail SNI
+                </div> 
+            </div>
+            <div class="portlet-body form">
+                <form class="form-horizontal form-bordered ng-pristine ng-valid" id="form-username" action="Create" method="post">
+                    <div class="form-body">
+                         
+                      <div class="form-group">
+                            <label class="control-label col-md-3">Nomor SNI</label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                  <label class="isi">@sni.SNI_NOMOR</label> 
+                                </div>
+                            </div>
+                        </div>        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Judul</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@sni.SNI_JUDUL</label> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        @*<div class="form-group">
+                            <div class="col-md-12" style="border-color:red;background-color:#ff6a00">
+                                <br /><br />
+                                <table width="90%">
+                                    <tr>
+                                        <td style="color:#fff">Terimakasih kepada para pengunjung website BSN yang telah memanfaatkan fulltext akses seluruh koleksi digital SNI melalui SNI Online selama 2 tahun (2010-2012).   </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>*@
+
+                        @if (sni.SNI_TIDAK_BERLAKU == 1)
+                        {
+                        <div class="form-group">
+                            <label class="control-label col-md-3">SNI ini direvisi oleh</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <label class="isi">@merevisi.SNI_NOMOR @merevisi.SNI_JUDUL</label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Abstraksi</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@sni.PROPOSAL_RUANG_LINGKUP</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Komite Teknis</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi" style="color:green"><a href="../../PanitiaTeknis/DetilPantek/@sni.KOMTEK_ID">@sni.KOMTEK_CODE @sni.KOMTEK_NAME</a></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">ICS</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">
+                                       @foreach (var list in ViewBag.ICS)
+                                       {
+                                        <span>@no. @list.ICS_CODE @list.ICS_NAME_IND</span><br />
+                                           no++;
+                                       }
+                                   </label>
+                                </div>
+                            </div>
+                        </div>
+                                                
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">SK Penetapan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@sni.SNI_SK_NOMOR</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tanggal Penetapan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">@sni.SNI_SK_DATE_NAME</label>
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.AcuanNormatif.Count > 0)
+                        { 
+                        <div class="form-group">
+                            <label class="control-label col-md-3"><b>Acuan Normatif</b></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">
+                                       @foreach (var list in ViewBag.AcuanNormatif)
+                                       {
+                                        <span>@nob. @list.PROPOSAL_REF_EXT_NOMOR @list.PROPOSAL_REF_EXT_JUDUL</span>
+                                       }
+                                   </label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                         @if (ViewBag.AcuanNonNormatif.Count > 0)
+                        { 
+                        <div class="form-group">
+                            <label class="control-label col-md-3"><b>Acuan Normatif Non SNI</b></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">
+                                        @foreach (var list in ViewBag.AcuanNonNormatif)
+                                        {
+                                            <span>@nos. @list.PROPOSAL_REF_JOIN</span><br />
+                                           nos++;
+                                       }
+                                   </label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                         @if (ViewBag.Bibliografi.Count > 0)
+                        { 
+                        <div class="form-group">
+                            <label class="control-label col-md-3"><b>Bibliografi</b></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi">
+                                       @foreach(var list in ViewBag.Bibliografi){
+                                            <span>@nob. @list.PROPOSAL_REF_JOIN</span><br />
+                                           nob++;
+                                       }
+                                   </label>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">Jumlah Halaman</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                   <label class="isi"></label>
+                                </div>
+                            </div>
+                        </div>*@
+                                                                       
+                        @*<div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">                                  
+                                    <a href="@Url.Action("Index")" class="btn btn-default">Kembali</a>                                    
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align :left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("input.tags").tagsInput({
+            'defaultText': 'Tambah',
+            'width': '100%'
+        });
+
+        $(".disable").attr("disabled", "disabled");
+    });
+    function set_jalur(ini) {
+        var value = $(ini).val();
+        if ($(ini).is(":checked")) {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(1);
+                $('.adopsi').slideDown();
+            }
+        } else {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(0);
+                $('.adopsi').slideUp();
+            }
+        }
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+
+    }
+
+    function cekjenis(ini) {
+        var inivalue = parseInt($(ini).val());
+        if (inivalue == 2 || inivalue == 3) {
+            $('.revisilist').slideDown();
+        } else {
+            //$('.revisilist').slideUp();
+        }
+    }
+</script>
+
+
+

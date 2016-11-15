@@ -1,0 +1,240 @@
+﻿@using Portal.Helpers;
+@{
+    var Detail = ViewBag.lemins;
+    var link = ViewBag.link;
+    int no = 1;
+}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">Lembaga Inspeksi</a></li>
+        <li class="active">Detail Lembaga Inspeksi
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />           
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Detail Informasi Lembaga Inspeksi
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal form-bordered" id="sispk_form" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">No LPK</label>
+                            <div class="col-md-9 control-label detailtext">
+                               @Detail.LPK_NOMOR
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nama</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                    @Detail.LPK_NAMA
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Alamat</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                    @Detail.LPK_ALAMAT
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kota</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @ViewBag.kab.WILAYAH_NAMA
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Provinsi</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                  @ViewBag.prov.WILAYAH_NAMA
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kode Pos</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_KODE_POS
+                                </div>                                
+                            </div>
+                        </div>  
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Telepon</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_TELEPON
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Fax</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_FAX
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kontak person</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_CONTACT_PERSON
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Email</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_EMAIL
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Website</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   @Detail.LPK_WEBSITE
+                                </div>                                
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Lingkup Bhs. Indonesia</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                   -
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Lingkup Detail</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                  @((Detail.LPK_LAMPIRAN != null) ? "<a href='" + link.LINK_NAME + "" + Detail.LPK_LAMPIRAN.Replace("/U", "U") + "'><img border='0' width='15' height='15' alt='download' src='http://sisni.bsn.go.id//static/images/pdf.ico'></a>" : "-")
+                                </div>                                
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Batas Akhir Akreditasi</label>
+                            <div class="col-md-9" style="padding-top: 20px">
+                                <div class="detailtext">
+                                  @Detail.LPK_PERIODE_AKHIR_DATE_NUMBER
+                                </div>                                
+                            </div>
+                        </div>
+                         @if (ViewBag.sni != null)
+                         {
+                        <div class="form-group">
+                                <div class="table-responsive">
+                                    <label class="control-label col-md-12" style="text-align: left; padding-bottom: 8px">Daftar SNI</label>
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center; font-weight: bold; font-size: 14px; width:2%">No</th>
+                                                <th style="text-align: center; font-weight: bold; font-size: 14px; width:98%">SNI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                                @foreach (var a in ViewBag.sni)
+                                                { 
+                                                <tr>
+                                                    <td>@no</td>
+                                                    <td><a href="/SNI/DetailSNI/@a.SNI_ID">@a.SNI_NOMOR</a> - @a.SNI_JUDUL</td>
+                                                </tr>
+                                                    no++;
+                                                }
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                         }
+                         @if (ViewBag.scope != null)
+                         {
+                            <div class="form-group">
+                                <div class="table-responsive">
+                                    <label class="control-label col-md-12" style="text-align: left; padding-bottom: 8px">Lingkup Daftar Scope</label>
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center; font-weight: bold; font-size: 14px">Kode</th>
+                                                <th style="text-align: center; font-weight: bold; font-size: 14px">Lingkup Indonesia</th>
+                                                <th style="text-align: center; font-weight: bold; font-size: 14px">Lingkup English</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                                @foreach (var a in ViewBag.scope)
+                                                { 
+                                                <tr>
+                                                    <td>@a.SCOPE_CODE</td>
+                                                    <td>@a.SCOPE_NAME</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                         }   
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <a class="btn red" type="button" href="@Url.Action("LembagaInspeksi")">Kembali</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align :left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    
+</script>
+
+
+

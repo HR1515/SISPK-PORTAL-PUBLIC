@@ -1,0 +1,107 @@
+﻿@using Portal.Helpers;
+
+<style>
+    tr > td {
+        text-align:center
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">SNI</a></li>
+        <li class="active">Rekapitulasi SNI Berdasarkan ICS</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+        
+
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Daftar Rekapitulasi SNI Berdasarkan ICS
+                    </div>
+                    <div class="actions">
+                       
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <table class="table table-striped table-hover table-bordered" id="list-data">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%;">Sektor (ICS 2 Digit)</th>  
+                                    <th width="1%">PNPS</th>
+                                    <th width="1%">RSNI1</th>
+                                    <th width="1%">RSNI2</th>                                    
+                                    <th width="1%">RSNI3</th>
+                                    <th width="1%">RSNI4</th>                                   
+                                    <th width="1%">RSNI5</th>
+                                    <th width="1%">RASNI</th>
+                                    <th width="1%">SNI</th>
+                                </tr>
+                            </thead>                           
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var table1 = $('#list-data');
+        var oTable = table1.dataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/SNI/List_Recap_SNI_ICS",
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "ASC"]],
+            "aoColumns": [
+				{ "sClass": "text-left" },
+				{ "sClass": "text-center" },
+                { "sClass": "text-center" },
+				{ "sClass": "text-center" },
+                { "sClass": "text-center" },
+                { "sClass": "text-center" },
+                { "sClass": "text-center"},
+                { "sClass": "text-center"},
+                { "sClass": "text-center"}
+               
+            ],
+            "order": [
+                [0, 'ASC']
+            ],
+            "lengthMenu": [
+                [10, 50, 100],
+                [10, 50, 100]
+            ],
+            "pageLength": 100,
+        });
+    });
+    $("#docreate").click(function () {
+
+    });
+</script>
+
+
+

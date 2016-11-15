@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Login Member";
+}
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="@Url.Content("~/")">Beranda</a></li>
+        <li class="active">Login</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Login/Register</a></li>*@
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/resetpassword")'"><i class="fa fa-angle-right"></i>Reset Password</a></li>
+                @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> My account</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Address book</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wish list</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Returns</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Newsletter</a></li>*@
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-9">
+            <h2>Login Member</h2>
+
+            <div class="col-md-7 col-sm-7">
+                <form class="form-horizontal" id="frmLogin" action="@Url.Content("~/Auth/Login")" method="post">
+                    @if (@ViewBag.Error != "")
+                    { 
+                        <div class="form-group">
+                            <label class="col-md-8 col-md-offset-4 control-label" style="color: #FF655F; text-align: left;"><i class="fa fa-info-circle"></i>@ViewBag.Error</label>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label for="email" class="col-lg-4 control-label">Username <span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control wajib" id="USER_NAME" name="USER_NAME">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-4 control-label">Password <span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="password" class="form-control wajib" id="USER_PASSWORD" name="USER_PASSWORD">
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for="confirm-password" class="col-lg-4 control-label">Kode Recaptcha<span class="require">*</span></label>
+                        <div class="col-lg-8">
+                            <div class='input-group-addon' style="text-align: left; width: 30%; background-color: #eee">
+                                <img alt="Captcha" id="showchaptcha" src="/Auth/CaptchaImage" style="" />
+                            </div>
+                            <div class='input-group-addon' style="width: 70%; background-color: #eee">
+                                <input type='text' style="padding: 0px 0px 0px 6px; font-size: 18px;" class='form-control' name='jawaban' id='jawaban' placeholder='Jawaban' autocomplete='off' />
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <label for="confirm-password" class="col-lg-4 control-label">Kode Recaptcha<span class="require">*</span></label>
+                        <div class="col-lg-8">
+                           
+                            <div class="g-recaptcha" data-sitekey="6Ley6g0TAAAAAHmtlDyvrh9BlNFDJ3iL8ytBHTyh"></div>
+                        </div>
+                    </div>*@
+
+                    <div class="form-group">
+                        <div class="col-lg-8 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5 col-sm-5 pull-right">
+                <div class="form-info">
+                    <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                    <p>Silahkan masukkan username dan password anda, dengan data yang sudah didaftarkan disistem kami. Setelah sukses login maka anda akan diarahkan ke halaman dashboard anda. Terimakasih</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- END CONTENT -->
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.form-login-isonline').hide();
+
+    });
+    $("#recaptcha").click(function () {
+        LoadImg();
+        $("#jawaban").val("");
+    });
+
+    function LoadImg() {
+        var xmlhttp;
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("showchaptcha").src = "/Auth/CaptchaImage";
+            }
+        };
+        xmlhttp.open("GET", '/Auth/CaptchaImage');
+        xmlhttp.send(null);
+    }
+</script>

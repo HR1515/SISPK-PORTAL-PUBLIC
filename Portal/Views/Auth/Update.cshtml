@@ -1,0 +1,1313 @@
+﻿
+@using Portal.Helpers;
+@{
+    var Detail = ViewBag.DataProposal;
+    var Lampiran = ViewBag.Lampiran;
+    var Bukti = ViewBag.Bukti;
+    var Surat = ViewBag.Surat;
+    var Outline = ViewBag.Outline;
+}
+<style>
+    .select2-selection--single {
+        height: 100% !important;
+    }
+
+    .select2-selection__rendered {
+        word-wrap: break-word !important;
+        text-overflow: inherit !important;
+        white-space: normal !important;
+    }
+</style>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">PNPS</a></li>
+        <li class="active">Pengajuan Usulan PNPS</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+               <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/logout")'"><i class="fa fa-angle-right"></i>Logout Member</a></li>
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/MyAccount")'"><i class="fa fa-angle-right"></i>My Account</a></li>
+               <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/list_usulan")'"><i class="fa fa-angle-right"></i>Daftar Usulan </a></li>   
+
+            </ul>
+            <br />
+            <br />
+            <div class="form-info">
+                <h2><i class="fa  fa-bullhorn"></i>&nbsp;&nbsp;<em>Informasi</em> Penting</h2>
+                <p>
+                    Lengkapi form isian.
+                <p>Terimakasih</p>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-gift"></i>Form Pengajuan Usulan PNPS
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                   <form class="form-horizontal form-bordered" id="sispk_form" action="/Auth/Update" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                        @if (Detail.PROPOSAL_TYPE == 1)
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Komite Teknis / Subkomite Teknis</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    @((Detail.KOMTEK_CODE == null) ? "-" : Detail.KOMTEK_CODE + ". " + Detail.KOMTEK_NAME)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Konseptor</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_KONSEPTOR" name="PROPOSAL_KONSEPTOR" class="form-control wajib" value="@((Detail.PROPOSAL_KONSEPTOR == null) ? "" : Detail.PROPOSAL_KONSEPTOR)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Institusi Konseptor</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_INSTITUSI" name="PROPOSAL_INSTITUSI" class="form-control wajib " value="@((Detail.PROPOSAL_INSTITUSI == null) ? "" : Detail.PROPOSAL_INSTITUSI)">
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Nama</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_TIM_NAMA" name="PROPOSAL_TIM_NAMA" class="form-control wajib " value="@((Detail.PROPOSAL_TIM_NAMA == null) ? "" : Detail.PROPOSAL_TIM_NAMA)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Institusi</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_INSTITUSI" name="PROPOSAL_INSTITUSI" class="form-control wajib " value="@((Detail.PROPOSAL_INSTITUSI == null) ? "" : Detail.PROPOSAL_INSTITUSI)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Alamat</label>
+                                <div class="col-md-9 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_TIM_ALAMAT" name="PROPOSAL_TIM_ALAMAT" class="form-control wajib " value="@((Detail.PROPOSAL_TIM_ALAMAT == null) ? "" : Detail.PROPOSAL_TIM_ALAMAT)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Telepon</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_TIM_PHONE" name="PROPOSAL_TIM_PHONE" class="form-control wajib " value="@((Detail.PROPOSAL_TIM_PHONE == null) ? "" : Detail.PROPOSAL_TIM_PHONE)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Email</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_TIM_EMAIL" name="PROPOSAL_TIM_EMAIL" class="form-control wajib " value="@((Detail.PROPOSAL_TIM_EMAIL == null) ? "" : Detail.PROPOSAL_TIM_EMAIL)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Fax</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    <input type="text" id="PROPOSAL_TIM_FAX" name="PROPOSAL_TIM_FAX" class="form-control wajib " value="@((Detail.PROPOSAL_TIM_FAX == null) ? "" : Detail.PROPOSAL_TIM_FAX)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Komite Teknis / Subkomite Teknis</label>
+                                <div class="col-md-4 control-label detailtext">
+                                    @((Detail.PROPOSAL_KOMTEK_ID == null || Detail.PROPOSAL_KOMTEK_ID == 0) ? "Komtek Belum Ditetapkan" : Detail.KOMTEK_CODE + ". " + Detail.KOMTEK_NAME)
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.ICS.Count > 0)
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">ICS</label>
+                                <div class="col-md-9" style="padding-top: 20px">
+                                    <div class="detailtext">
+                                        <ol style="padding-left: 15px;">
+                                            @foreach (var an in ViewBag.ICS)
+                                            {
+                                                <li>@an.ICS_CODE @((an.ICS_NAME_IND == null) ? an.ICS_NAME : an.ICS_NAME_IND)</li>
+                                            }
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Judul PNPS</label>
+                            <div class="col-md-9 control-label detailtext">
+                                <input type="text" id="PROPOSAL_JUDUL_PNPS" name="PROPOSAL_JUDUL_PNPS" class="form-control wajib " value="@((Detail.PROPOSAL_JUDUL_PNPS == null) ? "" : Detail.PROPOSAL_JUDUL_PNPS)">
+                                <input type="hidden" value="@Detail.PROPOSAL_TYPE" name="PROPOSAL_TYPE" id="PROPOSAL_TYPE" class="form-control">
+                                <input type="hidden" value="@Detail.PROPOSAL_KOMTEK_ID" name="PROPOSAL_KOMTEK_ID" id="PROPOSAL_KOMTEK_ID" class="form-control">
+                                <input type="hidden" id="PROPOSAL_ID" name="PROPOSAL_ID" class="form-control wajib" value="@Detail.PROPOSAL_ID">
+                                <input type="hidden" id="PROPOSAL_LOG_CODE" name="PROPOSAL_LOG_CODE" class="form-control wajib" value="@Detail.PROPOSAL_LOG_CODE">
+                                <input type="hidden" value="@Detail.PROPOSAL_YEAR" name="PROPOSAL_YEAR" id="PROPOSAL_YEAR" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Ruang Lingkup</label>
+                            <div class="col-md-9 control-label detailtext">
+                                <textarea rows="5" id="PROPOSAL_RUANG_LINGKUP" name="PROPOSAL_RUANG_LINGKUP" class="form-control wajib">@((Detail.PROPOSAL_RUANG_LINGKUP == null) ? "" : Detail.PROPOSAL_RUANG_LINGKUP)</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jenis Perumusan SNI <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control select2me wajib " data-placeholder="Pilih Jenis Perumusan SNI" id="PROPOSAL_JENIS_PERUMUSAN" name="PROPOSAL_JENIS_PERUMUSAN" onchange="pilih_jenis_perumusan(this)">
+                                        <option></option>
+                                        <option value="1" @((Detail.PROPOSAL_JENIS_PERUMUSAN == 1) ? "selected" : "")>Baru</option>
+                                        <option value="2" @((Detail.PROPOSAL_JENIS_PERUMUSAN == 2) ? "selected" : "")>Revisi</option>
+                                        <option value="3" @((Detail.PROPOSAL_JENIS_PERUMUSAN == 3) ? "selected" : "")>Ralat</option>
+                                        <option value="4" @((Detail.PROPOSAL_JENIS_PERUMUSAN == 4) ? "selected" : "")>Amandemen</option>
+                                        <option value="5" @((Detail.PROPOSAL_JENIS_PERUMUSAN == 5) ? "selected" : "")>Terjemahan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jalur Perumusan SNI <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control select2me wajib" data-placeholder="Pilih Jalur Perumusan SNI" id="PROPOSAL_JALUR" name="PROPOSAL_JALUR" onchange="pilih_jalur(this)">
+                                        <option></option>
+                                        <option value="1" @((Detail.PROPOSAL_JALUR == 1) ? "selected" : "")>Perumusan sendiri berdasarkan penelitian</option>
+                                        <option value="2" @((Detail.PROPOSAL_JALUR == 2) ? "selected" : "")>Adopsi</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="daftar_adopsi" style="@((Detail.PROPOSAL_JALUR == 2) ? "display:block;" : "display:none;")">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Jenis Adopsi<span class="required">*</span></label>
+                                <div class="col-md-4">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control select2me wajib" data-placeholder="Pilih Jenis Adopsi" id="PROPOSAL_JENIS_ADOPSI" name="PROPOSAL_JENIS_ADOPSI" onchange="pilih_jenis_adopsi(this)">
+                                            <option></option>
+                                            <option value="1" @((Detail.PROPOSAL_JENIS_ADOPSI == 1) ? "selected" : "")>Identik</option>
+                                            <option value="2" @((Detail.PROPOSAL_JENIS_ADOPSI == 2) ? "selected" : "")>Modifikasi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group daftar_adopsi_ext" style="display: block;">
+                                <label class="control-label col-md-3">Metode Adopsi</label>
+                                <div class="col-md-5">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control select2me" data-placeholder="Pilih Metode Adopsi" id="PROPOSAL_METODE_ADOPSI" name="PROPOSAL_METODE_ADOPSI">
+                                            <option></option>
+                                            <option value="1" @((Detail.PROPOSAL_METODE_ADOPSI == 1) ? "selected" : "")>Publikasi ulang - cetak ulang (Republication Reprint)</option>
+                                            <option value="2" @((Detail.PROPOSAL_METODE_ADOPSI == 2) ? "selected" : "")>Terjemahan 1 Bahasa (Indonesia)</option>
+                                            <option value="3" @((Detail.PROPOSAL_METODE_ADOPSI == 3) ? "selected" : "")>Terjemahan 2 Bahasa (Indonesia dan Inggris)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group daftar_adopsi_ext_name" style="display: block;">
+                                <label class="control-label col-md-3">Standar ISO/IEC/SDO lain yang akan diadopsi secara <b><span class="jenis_name">@((Detail.PROPOSAL_JENIS_ADOPSI_NAME == null) ? "-" : Detail.PROPOSAL_JENIS_ADOPSI_NAME)</span></b></label>
+                                <div class="col-md-9">
+                                    <div style="text-align: left" class="input-group col-md-12">
+                                        <select class="form-control" id="PROPOSAL_ADOPSI_NOMOR_JUDUL" name="PROPOSAL_ADOPSI_NOMOR_JUDUL" multiple="multiple">
+                                            @if (ViewBag.AdopsiList != null)
+                                            {
+                                                foreach (var ad in ViewBag.AdopsiList)
+                                                {
+                                                <option value="@ad.PROPOSAL_ADOPSI_NOMOR_JUDUL" selected="selected">@ad.PROPOSAL_ADOPSI_NOMOR_JUDUL</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="help-block">
+                                        Sebutkan standar ISO/EIC/SDO lain (Misalnya ASTM) yang akan diadopsi.(beri nomor standar, tahun terbitan dan judul standar yang akan diadopsi secara <span class="jenis_name">@((Detail.PROPOSAL_JENIS_ADOPSI_NAME == null) ? "-" : Detail.PROPOSAL_JENIS_ADOPSI_NAME)</span>).
+                                        <span style="text-transform: none;" class="badge badge-warning badge-roundless">Dapat lebih dari satu</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group revisi_list" style="@((Detail.PROPOSAL_JENIS_PERUMUSAN == 2) ? "display:block;" : "display:none;")">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Revisi</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" id="PROPOSAL_REV_MERIVISI_ID" name="PROPOSAL_REV_MERIVISI_ID" multiple="multiple">
+                                        @if (ViewBag.RevisiList != null)
+                                        {
+                                            foreach (var rl in ViewBag.RevisiList)
+                                            {
+                                            <option value="@rl.ID" selected="selected">@rl.TEXT</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Revisi maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ralat_list" style="@((Detail.PROPOSAL_JENIS_PERUMUSAN == 3) ? "display:block;" : "display:none;")">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Ralat</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Ralat" id="PROPOSAL_RALAT_SNI_ID" name="PROPOSAL_RALAT_SNI_ID">
+                                        <option value="@Detail.PROPOSAL_RALAT_SNI_ID" selected="selected">@(Detail.PROPOSAL_RALAT_NOMOR + ", " + Detail.PROPOSAL_RALAT_JUDUL)</option>
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Ralat maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group amd_list" style="@((Detail.PROPOSAL_JENIS_PERUMUSAN == 4) ? "display:block;" : "display:none;")">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Amandemen</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Amandemen" id="PROPOSAL_AMD_SNI_ID" name="PROPOSAL_AMD_SNI_ID">
+                                        <option value="@Detail.PROPOSAL_AMD_SNI_ID" selected="selected">@(Detail.PROPOSAL_AMD_NOMOR + ", " + Detail.PROPOSAL_AMD_JUDUL)</option>
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Amandemen maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group terjemahan_list" style="@((Detail.PROPOSAL_JENIS_PERUMUSAN == 5) ? "display:block;" : "display:none;")">
+                            <label class="control-label col-md-3">Nomor Judul SNI yang akan di Terjemahkan</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control wajib" data-placeholder="Pilih SNI yang akan di Terjemahkan" id="PROPOSAL_TERJEMAHAN_SNI_ID" name="PROPOSAL_TERJEMAHAN_SNI_ID">
+                                        <option value="@Detail.PROPOSAL_TERJEMAHAN_SNI_ID" selected="selected">@(Detail.PROPOSAL_TERJEMAHAN_NOMOR + ", " + Detail.PROPOSAL_TERJEMAHAN_JUDUL)</option>
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Apabila usulan ini merupakan Terjemahkan maka sebutkan nomor dan judul SNI yang akan diusulkan.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group pasal_list" style="@((Detail.PROPOSAL_JALUR > 1) ? "display:block;" : "display:none;")">
+                            <label class="control-label col-md-3">Pasal SNI yang di <span class="pasal_list_name">@Detail.PROPOSAL_JENIS_PERUMUSAN_NAME</span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" id="PROPOSAL_PASAL" name="PROPOSAL_PASAL" class="form-control wajib">@((Detail.PROPOSAL_PASAL == null) ? "-" : Detail.PROPOSAL_PASAL)</textarea>
+                                </div>
+                                <div class="help-block">
+                                    Sebutkan bagian atau pasal dari SNI yang akan dilakukan <span class="pasal_list_name">@Detail.PROPOSAL_JENIS_PERUMUSAN_NAME</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kebutuhan Mendesak</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_URGENT" id="PROPOSAL_IS_URGENT_1" value="1" @((Detail.PROPOSAL_IS_URGENT == 1) ? "checked" : "")>
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_URGENT" id="PROPOSAL_IS_URGENT_2" value="0" @((Detail.PROPOSAL_IS_URGENT == 0) ? "checked" : "")>
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <div class="help-block">
+                                        Kebutuhan mendesak untuk regulasi teknis (disertai dengan surat dari pejabat setingkat Eselon 1 di instansi teknis yang relevan dengan kebutuhan SNI).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Terdapat isi dari standar yang terkait dengan hak paten ?</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_HAK_PATEN" id="PROPOSAL_IS_HAK_PATEN_1" value="1" onclick="sethakpaten()" @((Detail.PROPOSAL_IS_HAK_PATEN == 1) ? "checked" : "")>
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" name="PROPOSAL_IS_HAK_PATEN" id="PROPOSAL_IS_HAK_PATEN_2" value="0" onclick="sethakpaten()" @((Detail.PROPOSAL_IS_HAK_PATEN == 0) ? "checked" : "")>
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <div class="help-block">
+                                        Apakah terdapat isi dari standar yang terkait dengan hak paten ?
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Informasi Hak Paten</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" @((Detail.PROPOSAL_IS_HAK_PATEN == 0) ? "readonly" : "") id="PROPOSAL_IS_HAK_PATEN_DESC" name="PROPOSAL_IS_HAK_PATEN_DESC" class="form-control">@((Detail.PROPOSAL_IS_HAK_PATEN_DESC == null) ? "" : Detail.PROPOSAL_IS_HAK_PATEN_DESC)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Informasi detail hasil penelitian atau kajian terhadap SNI</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_INFORMASI" name="PROPOSAL_INFORMASI">@((Detail.PROPOSAL_INFORMASI == null) ? "" : Detail.PROPOSAL_INFORMASI)</textarea>
+                                </div>
+                                <div class="help-block">
+                                    Berikan informasi detail, termasuk hasil penelitian atau kajian terhadap penerapan SNI tersebut, Jika perlu, tulis pada lembaran terpisah sebagai lampiran
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Lampiran Informasi detail hasil penelitian atau kajian terhadap SNI</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <input type="file" name="PROPOSAL_LAMPIRAN_FILE_PATH" id="PROPOSAL_LAMPIRAN_FILE_PATH" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    Lampiran Terpisah Informasi detail hasil penelitian atau kajian terhadap SNI<br />
+                                    @((Lampiran == null) ? "-" : Html.Raw("<a href='" + Lampiran.DOC_FILE_PATH + "" + Lampiran.DOC_FILE_NAME + "." + Lampiran.DOC_FILETYPE + "' target='_blank'>" + Lampiran.DOC_NAME + "</a>"))
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tujuan dan alasan spesifik mengenai perumusan yang akan dilakukan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_TUJUAN" name="PROPOSAL_TUJUAN">@((Detail.PROPOSAL_TUJUAN == null) ? "" : Html.Raw(Detail.PROPOSAL_TUJUAN))</textarea>
+                                </div>
+                                <div class="help-block">
+                                    Tujuan dan alasan spesifik mengenai perumusan yang akan dilakukan (termasuk alasan dilakukan amandemen/revisi/ralat untuk SNI tersebut.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Kesesuaian dengan program pemerintah (sebutkan secara terperinci)</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <textarea rows="5" class="form-control" id="PROPOSAL_PROGRAM_PEMERINTAH" name="PROPOSAL_PROGRAM_PEMERINTAH">@((Detail.PROPOSAL_PROGRAM_PEMERINTAH == null) ? "" : Html.Raw(Detail.PROPOSAL_PROGRAM_PEMERINTAH))</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pihak-pihak utama yang Berkepentingan</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <input id="PROPOSAL_PIHAK_BERKEPENTINGAN" type="text" class="form-control tags" placeholder="Tambah Pihak" name="PROPOSAL_PIHAK_BERKEPENTINGAN" value="@Detail.PROPOSAL_PIHAK_BERKEPENTINGAN" />
+                                </div>
+                                <div class="help-block">
+                                    Pihak-pihak utama yang berkepentingan yang dapat mengambil manfaat dari kegiatan perumusan<br />
+                                    <span class="badge badge-warning badge-roundless" style="text-transform: none;">Tekan Enter untuk pihak selanjutnya</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Apakah terdapat organisasi yang mendukung usulan perumusan standar ini?</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="radio-list">
+                                        <label>
+                                            <input type="radio" class="form-control" @((Detail.PROPOSAL_IS_ORG_MENDUKUNG == 1) ? "checked='checked'" : "") name="PROPOSAL_IS_ORG_MENDUKUNG" id="PROPOSAL_IS_ORG_MENDUKUNG_1" value="1" onclick="setorg()">
+                                            Ya</label>
+                                        <label>
+                                            <input type="radio" class="form-control" @((Detail.PROPOSAL_IS_ORG_MENDUKUNG == 2) ? "checked='checked'" : "") name="PROPOSAL_IS_ORG_MENDUKUNG" id="PROPOSAL_IS_ORG_MENDUKUNG_2" value="0" onclick="setorg()">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    (tidak termasuk pihak pengusul)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group proposal_dukungan" style="display: none;">
+                            <label class="control-label col-md-3">Lampirkan bukti dukungan terhadap usulan perumusan standar ini (misalnya surat).</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <input type="file" name="PROPOSAL_DUKUNGAN_FILE_PATH" id="PROPOSAL_DUKUNGAN_FILE_PATH" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    @((Bukti == null) ? "-" : Html.Raw("<a href='" + Bukti.DOC_FILE_PATH + "" + Bukti.DOC_FILE_NAME + "." + Bukti.DOC_FILETYPE + "' target='_blank'>" + Bukti.DOC_NAME + "</a>"))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">SNI Acuan Normatif</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_REF_SNI_ID" data-placeholder="Masukan Nomor SNI" id="PROPOSAL_REF_SNI_ID" name="PROPOSAL_REF_SNI_ID" multiple="multiple">
+                                        @if (ViewBag.AcuanNormatif.Count > 0)
+                                        {
+                                            foreach (var an in ViewBag.AcuanNormatif)
+                                            {
+                                            <option value="@an.PROPOSAL_REF_SNI_ID" selected="selected">@an.PROPOSAL_REF_JOIN</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    SNI Acuan Normatif dapat dipilih lebih dari satu
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Acuan Non SNI</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_REF_NON_SNI" data-placeholder="Masukan Acuan Non SNI" id="PROPOSAL_REF_NON_SNI" name="PROPOSAL_REF_NON_SNI" multiple="multiple">
+                                        @if (ViewBag.AcuanNonNormatif.Count > 0)
+                                        {
+
+                                            foreach (var an in ViewBag.AcuanNonNormatif)
+                                            {
+                                            <option value="@an.PROPOSAL_REF_JOIN" selected="selected">@an.PROPOSAL_REF_JOIN</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Acuan Non SNI dapat dipilih lebih dari satu
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Bibliografi</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control BIBLIOGRAFI" data-placeholder="Masukan Acuan Non SNI" id="BIBLIOGRAFI" name="BIBLIOGRAFI" multiple="multiple">
+                                        @if (ViewBag.Bibliografi.Count > 0)
+                                        {
+
+                                            foreach (var an in ViewBag.Bibliografi)
+                                            {
+                                            <option value="@an.PROPOSAL_REF_JOIN" selected="selected">@an.PROPOSAL_REF_JOIN</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="help-block">
+                                    Bibliografi dapat dipilih lebih dari satu
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Attach Surat Pengajuan PNPS</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <input type="file" name="PROPOSAL_SURAT_PENGAJUAN_PNPS" id="PROPOSAL_SURAT_PENGAJUAN_PNPS" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    @((Surat == null) ? "-" : Html.Raw("<a href='" + Surat.DOC_FILE_PATH + "" + Surat.DOC_FILE_NAME + "." + Surat.DOC_FILETYPE + "' target='_blank'>" + Surat.DOC_NAME + "</a>"))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Attach Outline Pengajuan PNPS</label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <input type="file" name="PROPOSAL_OUTLINE_RSNI" id="PROPOSAL_OUTLINE_RSNI" accept=".pdf,application/pdf" onchange="ValidasiInput(this)">
+                                    </div>
+                                </div>
+                                <div class="help-block">
+                                    @((Outline == null) ? "-" : Html.Raw("<a href='" + Outline.DOC_FILE_PATH + "" + Outline.DOC_FILE_NAME + "." + Outline.DOC_FILETYPE + "' target='_blank'>" + Outline.DOC_NAME + "</a>"))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Regulasi Teknis</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_RETEK_ID" data-placeholder="Masukan Regulasi Teknis" id="PROPOSAL_RETEK_ID" name="PROPOSAL_RETEK_ID">
+                                        @if (Detail.PROPOSAL_RETEK_ID != null)
+                                        {
+                                            <option value="@Detail.PROPOSAL_RETEK_ID" selected="selected">@Detail.PROPOSAL_RETEK_ID</option>     
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">LPK</label>
+                            <div class="col-md-9">
+                                <div style="text-align: left" class="input-group col-md-12">
+                                    <select class="form-control PROPOSAL_LPK_ID" data-placeholder="Masukan LPK" id="PROPOSAL_LPK_ID" name="PROPOSAL_LPK_ID">
+                                        @if (Detail.PROPOSAL_LPK_ID != null)
+                                        {
+                                            <option value="@Detail.PROPOSAL_LPK_ID" selected="selected">@Detail.PROPOSAL_LPK_ID</option>     
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button class="btn green" type="submit">Simpan</button>
+                                    <a class="btn red" type="button" href="@Url.Action("index")">Kembali</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END CONTENT -->
+
+<script type="text/javascript">
+    var _validFileExtensions = [".pdf"];
+    function ValidasiInput(ini) {
+        var arrInputs = $(ini);
+        for (var i = 0; i < arrInputs.length; i++) {
+            var oInput = arrInputs[i];
+            if (oInput.type == "file") {
+                var sFileName = oInput.value;
+                if (sFileName.length > 0) {
+                    var blnValid = false;
+                    for (var j = 0; j < _validFileExtensions.length; j++) {
+                        var sCurExtension = _validFileExtensions[j];
+                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                            blnValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!blnValid) {
+                        alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
+                        $(ini).val('');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+    function pilih_jenis_perumusan(ini) {
+        var res = parseInt($(ini).val());
+        var name = $(ini).find('option:selected').html();
+        $(".pasal_list").slideDown("fast", function () {
+            $('.pasal_list_name').html(name);
+        });
+        if (res == 1) {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $('.pasal_list').slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 2) {
+            $(".revisi_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 3) {
+            $(".ralat_list").slideDown("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".daftar_adopsi").slideUp("fast");
+
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else if (res == 4) {
+            $(".amd_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+
+        } else if (res == 5) {
+            $(".terjemahan_list").slideDown("fast");
+            $(".amd_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        }
+
+        if (res == 5) {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").attr("disabled", "disabled");
+            $('#PROPOSAL_JALUR').select2();
+            $('#PROPOSAL_JALUR').val("1").trigger("change");
+        } else {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").removeAttr("disabled");
+            $('#PROPOSAL_JALUR').val("");
+            $('#PROPOSAL_JALUR').select2();
+        }
+    }
+    function pilih_jalur(ini) {
+        var jalur_perumusan = parseInt($(ini).val());
+        var jenis_perumusan = parseInt($('#PROPOSAL_JENIS_PERUMUSAN').val());
+        $('#PROPOSAL_JENIS_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $('#PROPOSAL_METODE_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $(".daftar_adopsi_ext").hide();
+        $(".daftar_adopsi_ext_name").hide();
+        if (jalur_perumusan == 2 && jenis_perumusan < 5) {
+
+            $(".daftar_adopsi").slideDown("fast", function () {
+                $(".daftar_adopsi_ext").show();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        } else {
+            $(".daftar_adopsi").slideUp("fast", function () {
+                $(".daftar_adopsi_ext").hide();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        }
+    }
+    function pilih_jenis_adopsi(ini) {
+        var res = parseInt($(ini).val());
+        $(".daftar_adopsi_ext").slideDown("fast", function () {
+            if (res == 1) {
+                $('.jenis_name').html('Identik');
+                $(".daftar_adopsi_ext_name").show('fast');
+            } else if (res == 2) {
+                $('.jenis_name').html('Modifikasi');
+                $(".daftar_adopsi_ext_name").show('fast');
+            }
+        });
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 0) {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", true);
+        } else {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", false);
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+    }
+    function setorg() {
+        var value = $('input[name="PROPOSAL_IS_ORG_MENDUKUNG"]:checked').val();
+        if (value == 0) {
+            $('.proposal_dukungan').slideUp();
+        } else {
+            $('.proposal_dukungan').slideDown();
+        }
+    }
+    jQuery(document).ready(function () {
+        $("#PROPOSAL_ADOPSI_NOMOR_JUDUL").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindNonSNIAdopsi',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REV_MERIVISI_ID").select2({
+            multiple: true,
+            allowClear: false,
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_RALAT_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_AMD_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_TERJEMAHAN_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REF_SNI_ID").select2({
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true,
+            },
+        });
+
+
+        $("#PROPOSAL_REF_NON_SNI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindNonSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#BIBLIOGRAFI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindBIBLIOGRAFI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_RETEK_ID").select2({
+            tags: true,
+            multiple: false,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindRegulator',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_LPK_ID").select2({
+            tags: true,
+            multiple: false,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindLPK',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+    });
+</script>
+
+@*<script type="text/javascript">
+
+    function pilih_jenis_perumusan(ini) {
+        var res = parseInt($(ini).val());
+        var name = $(ini).find('option:selected').html();
+        $(".pasal_list").slideDown("fast", function () {
+            $('.pasal_list_name').html(name);
+        });
+        if (res == 1) {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $('.pasal_list').slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 2) {
+            $(".revisi_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideDown("fast");
+        } else if (res == 3) {
+            $(".ralat_list").slideDown("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".daftar_adopsi").slideUp("fast");
+
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else if (res == 4) {
+            $(".amd_list").slideDown("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+
+        } else if (res == 5) {
+            $(".terjemahan_list").slideDown("fast");
+            $(".amd_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".revisi_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        } else {
+            $(".revisi_list").slideUp("fast");
+            $(".ralat_list").slideUp("fast");
+            $(".amd_list").slideUp("fast");
+            $(".terjemahan_list").slideUp("fast");
+            $(".jalur_perumusan").slideUp("fast");
+        }
+
+        if (res == 5) {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").attr("disabled", "disabled");
+            $('#PROPOSAL_JALUR').select2();
+            $('#PROPOSAL_JALUR').val("1").trigger("change");
+        } else {
+            $('#PROPOSAL_JALUR').select2("destroy");
+            $("#PROPOSAL_JALUR option[value='2']").removeAttr("disabled");
+            $('#PROPOSAL_JALUR').val("");
+            $('#PROPOSAL_JALUR').select2();
+        }
+    }
+    function pilih_jalur(ini) {
+        var jalur_perumusan = parseInt($(ini).val());
+        var jenis_perumusan = parseInt($('#PROPOSAL_JENIS_PERUMUSAN').val());
+        $('#PROPOSAL_JENIS_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $('#PROPOSAL_METODE_ADOPSI').select2({
+            width: '100%',
+            placeholder: "Pilih",
+            allowClear: false
+        }).val("");
+        $(".daftar_adopsi_ext").hide();
+        $(".daftar_adopsi_ext_name").hide();
+        if (jalur_perumusan == 2 && jenis_perumusan < 5) {
+
+            $(".daftar_adopsi").slideDown("fast", function () {
+                $(".daftar_adopsi_ext").show();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        } else {
+            $(".daftar_adopsi").slideUp("fast", function () {
+                $(".daftar_adopsi_ext").hide();
+                $(".daftar_adopsi_ext_name").hide();
+            });
+        }
+    }
+    function pilih_jenis_adopsi(ini) {
+        var res = parseInt($(ini).val());
+        $(".daftar_adopsi_ext").slideDown("fast", function () {
+            if (res == 1) {
+                $('.jenis_name').html('Identik');
+                $(".daftar_adopsi_ext_name").show('fast');
+            } else if (res == 2) {
+                $('.jenis_name').html('Modifikasi');
+                $(".daftar_adopsi_ext_name").show('fast');
+            }
+        });
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 0) {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", true);
+        } else {
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').prop("readonly", false);
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+    }
+    function setorg() {
+        var value = $('input[name="PROPOSAL_IS_ORG_MENDUKUNG"]:checked').val();
+        if (value == 0) {
+            $('.proposal_dukungan').slideUp();
+        } else {
+            $('.proposal_dukungan').slideDown();
+        }
+    }
+    jQuery(document).ready(function () {
+        $("#PROPOSAL_ADOPSI_NOMOR_JUDUL").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindNonSNIAdopsi',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REV_MERIVISI_ID").select2({
+            multiple: true,
+            allowClear: false,
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_RALAT_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_AMD_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_TERJEMAHAN_SNI_ID").select2({
+            width: '100%',
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#PROPOSAL_REF_SNI_ID").select2({
+            ajax: {
+                url: '/PNPS/FindSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true,
+            },
+        });
+
+
+        $("#PROPOSAL_REF_NON_SNI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindNonSNI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        $("#BIBLIOGRAFI").select2({
+            tags: true,
+            multiple: true,
+            allowClear: false,
+            tokenSeparators: [";"],
+            ajax: {
+                url: '/PNPS/FindBIBLIOGRAFI',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.sni,
+                        pagination: {
+                            more: (params.page * 10) < data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+        });
+        var _validFileExtensions = [".pdf"];
+        function ValidasiInput(ini) {
+            var arrInputs = $(ini);
+            for (var i = 0; i < arrInputs.length; i++) {
+                var oInput = arrInputs[i];
+                if (oInput.type == "file") {
+                    var sFileName = oInput.value;
+                    if (sFileName.length > 0) {
+                        var blnValid = false;
+                        for (var j = 0; j < _validFileExtensions.length; j++) {
+                            var sCurExtension = _validFileExtensions[j];
+                            if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                                blnValid = true;
+                                break;
+                            }
+                        }
+
+                        if (!blnValid) {
+                            alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
+                            $(ini).val('');
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+    });
+</script>*@
+

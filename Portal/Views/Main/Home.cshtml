@@ -1,0 +1,470 @@
+﻿@{
+	ViewBag.Title = "Beranda";
+}
+
+			@{String rootPath = Url.Content("~/"); }
+			@{String currentPath = Request.Url.AbsolutePath; }
+		   
+			@if (rootPath == currentPath)
+			{
+				   <!-- BEGIN SLIDER -->
+				<div class="page-slider margin-bottom-40">
+					<div class="fullwidthbanner-container revolution-slider">
+						<div class="fullwidthabnner">
+							<ul id="revolutionul">
+								<!-- THE NEW SLIDE -->
+								@foreach (var s in ViewBag.slider)
+								{ 
+								<li data-transition="fade" data-slotamount="8" data-masterspeed="700" data-delay="9400" data-thumb="assets/frontend/pages/img/revolutionslider/thumbs/thumb2.jpg")")">
+									<!-- THE MAIN IMAGE IN THE FIRST SLIDE -->
+									@*<div style="background-color:#808080; opacity:0.6;">*@
+										<img  style="background-color:#808080;opacity:0.6;" src="@ViewBag.link.LINK_NAME@s.SLIDER_IMAGE_BIG_PATH" alt="">
+									@*</div>*@
+									<div class="caption lft slide_title_white slide_item_left"
+										data-x="30"
+										data-y="90"
+										data-speed="400"
+										data-start="1500"
+										data-easing="easeOutExpo">
+										Tahukah Anda ?<br>
+										<span class="slide_title_white_bold"></span>
+									</div>
+									<div class="caption lft slide_subtitle_white slide_item_left"
+										data-x="87"
+										data-y="245"
+										data-speed="400"
+										data-start="2000"
+										data-easing="easeOutExpo">
+										<span class="slide_title_white_bold">@s.SLIDER_JUDUL</span>
+									</div>
+								   @* <a class="caption lft btn dark slide_btn slide_item_left" href="#"
+										data-x="187"
+										data-y="315"
+										data-speed="400"
+										data-start="3000"
+										data-easing="easeOutExpo">Selengkapnya
+									</a>*@                                    
+									<div class="caption lfb fixsmallslider"
+										data-x="700"
+										data-y="0"
+										data-speed="700"
+										data-start="1000"
+										data-easing="easeOutExpo">
+										<img src="@ViewBag.link.LINK_NAME@s.SLIDER_IMAGE_SMALL_PATH" alt="Image 1" width="400px">
+									</div>
+								</li>
+								}                               
+
+							</ul>
+							<div class="tp-bannertimer tp-bottom"></div>
+						</div>
+					</div>
+				</div>
+				<!-- END SLIDER -->
+			}
+			else
+			{
+				<span></span>
+			}
+
+
+<div class="container">
+	<!-- BEGIN BLOCKQUOTE BLOCK -->
+   <div class="row quote-v2 margin-bottom-30">
+		<form class="form-horizontal" action="../SNI/DaftarList" id="search_SNI" role="form" method="get">
+			<div class="form-group">
+				<label class="col-md-3 control-label labelsearch">Cari <b>Dokumen SNI</b> disini</label>
+				<div class="col-md-9">
+					<div class="input-group">
+						<input type="text" di="q" name="q" class="form-control" placeholder="Ketik nama dokumen yang ingin anda cari" style="padding: 10px; font-size: 14px;">
+						<span class="input-group-addon" id="caridulu" style="background-color: #98b827; border: 0px;">
+							<i class="fa fa-search" id="search" style="color: #fff;"></i>
+						</span>
+					</div>
+					<!-- <input type="text" class="form-control textfieldSerach" placeholder="Ketik nama dokumen yang ingin anda cari"> -->
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- END BLOCKQUOTE BLOCK -->
+	<div style="height: 1px; background-color: #a1a1a1; text-align: center; margin-bottom: 20px;">
+		<span style="background-color: white; color: #98b827; font-size: 16px; position: relative; top: -0.8em;">&nbsp;&nbsp;Berita SNI&nbsp;&nbsp;
+		</span>
+	</div>
+
+	<div class="row margin-bottom-40">
+		<div class="col-md-12 col-sm-12">
+			@foreach (var news in ViewBag.hot_news)
+			{ 
+			   <div class="col-md-4 col-sm-4">
+					<div class="newsletterbox">
+						<div style="height:200px">
+						<img src="@ViewBag.link.LINK_NAME@news.NEWS_PATH_IMAGE" alt="Amazing Project" class="img-responsive">
+						</div>
+						<div class="subbox">
+							<div style="height:30px">
+								<h5><a href="News/News_detail/@news.NEWS_ID">@news.NEWS_TITLE</a></h5>
+							</div>
+							<div style="height:20px">
+								<span>@news.NEWS_CREATE_DATE</span>
+							</div>
+							<div style="height:30px">
+								<p style="text-align:justify">@news.NEWS_BRIEF_NEWS</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			}            
+		</div>
+	</div>
+	<br />
+	<div style="height:1px; background-color: #a1a1a1;text-align:center;margin-bottom:20px;"></div>
+		<style>
+			.box-one {
+				border: 1px dotted #808080;
+				min-height: 60px;
+				padding: 10px;
+			}
+
+			.box-icon {
+				background-color: #0094ff;
+				width: 20%;
+				min-width: 20%;
+				float: left;
+				height: 60px;
+				border-radius: 50% !important;
+			}
+
+			.icojer {
+				text-align: center;
+				vertical-align: middle;
+				padding: 22px;
+				font-size: 24px !important;
+				color: #fff;
+			}
+		</style>
+	<div class="row margin-bottom-40">
+		<div class="col-md-12 col-sm-12">
+			<div class="col-md-3 col-sm-3">
+				<!-- USULAN MAS ANTO BELUM TERWUJUD-->
+				@*<div class="col-md-12 box-one">
+								<div class="box-icon">
+									<i class="fa fa-file icojer"></i>
+								</div>
+								 <div style="width:80%;min-width:80%;padding-left:15px;float:right;">
+									 <div style="height:30px">
+										 <span style="font-size:25px;font-weight:bold;padding-left:10px">11</span>
+									 </div>
+									 <div style="height:30px;padding-left:10px;padding-top:10px">
+										 <span class="label label-sm label-warning" style="font-size:15px;font-weight:bold;">
+											Usulan
+										</span>
+									 </div>
+								 </div>
+								<div class="clear-fix"></div>
+							</div>
+
+							<div class="col-md-12 box-one">
+								<div class="box-icon">
+									<i class="fa fa-file icojer"></i>
+								</div>
+								 <div style="width:80%;min-width:80%;padding-left:15px;float:right;">
+									 <div style="height:30px">
+										 <span style="font-size:25px;font-weight:bold;padding-left:10px">11</span>
+									 </div>
+									 <div style="height:30px;padding-left:10px;padding-top:10px">
+										<span class="label label-sm label-warning" style="font-size:15px;font-weight:bold;">
+											RSNI
+										</span>
+									 </div>
+								 </div>
+								<div class="clear-fix"></div>
+							</div>
+
+							<div class="col-md-12 box-one">
+								<div class="box-icon">
+									<i class="fa fa-file icojer"></i>
+								</div>
+								 <div style="width:80%;min-width:80%;padding-left:15px;float:right;">
+									 <div style="height:30px">
+										 <span style="font-size:25px;font-weight:bold;padding-left:10px">11</span>
+									 </div>
+									 <div style="height:30px;padding-left:10px;padding-top:10px">
+										 <span class="label label-sm label-warning" style="font-size:15px;font-weight:bold;">
+											SNI
+										</span>
+									 </div>
+								 </div>
+								<div class="clear-fix"></div>
+							</div>*@
+				<div class="listbox">
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-list-alt"></i> SNI Dalam Angka
+							</div>
+						</div>
+						<div class="portlet-body" style="height: 200px">                           
+							<ul class="pricing-content list-unstyled">
+							  <li>
+								<i class="fa fa-file"></i> USULAN <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_USULAN</span>
+							  </li>
+							  <li>
+								<i class="fa fa-file"></i> RSNI <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_RSNI</span>
+							  </li>
+							  <li>
+								<i class="fa fa-file"></i> SNI <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_SNI</span>
+							  </li>
+							</ul>                            
+						</div>
+					</div>                   
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3">
+				<div class="listbox">
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-list-alt"></i>Komtek Dalam Angka
+							</div>
+						</div>
+						<div class="portlet-body" style="height: 200px">
+							<ul class="pricing-content list-unstyled">
+							  <li>
+								  <div></div>
+								<i class="fa fa-institution"></i>Komite Teknis<span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_KOMTEK</span>
+							  </li>
+							  <li>
+								<i class="fa fa-institution"></i>Sub Komite Teknis <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_SUBKOMTEK</span>
+							  </li>
+							  <li>
+								<i class="fa fa-users"></i>Anggota Komtek <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_ANGGSUBKOMTEK</span>
+							  </li>
+								<li>
+								<i class="fa fa-users"></i>Anggota Subkomtek <span class="badge bg-red number" style="text-align:right;float:right">@ViewBag.JML_SUBANGGSUBKOMTEK</span>
+							  </li>
+							</ul>    
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-3">
+				<div class="listbox">
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-comment"></i>Jajak Pendapat
+							</div>
+						</div>
+						<div class="portlet-body" style="height: 200px">
+							 <ul class="pricing-content list-unstyled">
+							  <li>
+								 <span class="badge bg-red number" style="float:left">@ViewBag.JML_MTPS</span>&nbsp &nbsp MTPS <span style="float:right;"><a href="PNPS/MTPS"><i class="fa fa-comment"></i></a></span>                                 
+							  </li>
+							  <li>
+								 <span class="badge bg-red number" style="float:left">@ViewBag.JML_JP</span>&nbsp &nbsp Jajak Pendapat <span style="float:right"><a href="EBallot/DJPPS"><i class="fa fa-comment"></i></a></span>   
+							  </li>                              
+							  
+							</ul>    
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-3">
+				<div class="listbox">
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-list-alt"></i>Pelaporan - Pelaporan
+							</div>
+						</div>
+						<div class="portlet-body" style="height: 200px">
+							 <ul class="pricing-content list-unstyled">
+							  <li>
+								  <a href="@Url.Content("SNI/RekapSNI_ICS")" style="color:#01B04F;text-decoration:none"><i class="fa fa-link" style="color:#01B04F"></i>Rekapitulasi SNI (ICS)</a>
+								  
+							  </li>
+							  <li>
+								  <a href="@Url.Content("SNI/RekapSNI_PT")" style="color:#01B04F;text-decoration:none"><i class="fa fa-link" style="color:#01B04F"></i>Rekapitulasi SNI (KT)</a>
+							  </li>
+							  <li>
+								  <a href="@Url.Content("SNI/Rekap_SNI_SK")" style="color:#01B04F;text-decoration:none"><i class="fa fa-link" style="color:#01B04F"></i>Rekapitulasi SNI (SK)</a>
+							  </li>
+							  
+							</ul>    
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+
+		</div>
+	</div>
+	 <div class="row quote-v1 margin-bottom-30">
+		  <div class="col-md-12" style="text-align:center">
+			<span>E - Magazine BSN</span>
+		  </div>          
+		</div>
+	<div class="row front-team">
+				<ul class="list-unstyled">
+					 @foreach (var val in ViewBag.sni_valuasi)
+					 {
+					  <li class="col-md-2">
+						<div class="thumbnail">
+						  <img alt="" src="@val.SNIVAL_IMAGE" class="img-responsive" style="width:170px;height:220px">
+							<br />
+						  <center>
+							  <h4>
+								<a href="http://lib.bsn.go.id/index.php?/mjlh/majalah/detail_volume_smp/@val.SNIVAL_SOURCE_ID" target="_blank"><strong>@val.SNIVAL_NAME</strong></a>                                
+							  </h4>
+						  </center>
+						</div>
+					  </li>  
+					 }                
+				</ul>            
+	 </div>
+</div>
+
+
+<!-- BEGIN PRE-FOOTER -->
+<div class="pre-footer">
+	<div class="container">
+		<div class="row">
+			<!-- BEGIN BOTTOM ABOUT BLOCK -->
+			<div class="col-md-4 col-sm-6 pre-footer-col">
+				<h2>Tentang Kami</h2>
+				@Html.Raw(ViewBag.profile.PROFILE_TENTANG_KAMI)
+				   
+  
+
+			   @* <div class="photo-stream">
+					<h2>Foto Kegiatan</h2>
+					<ul class="list-unstyled">
+						<li><a href="javascript:;">
+							<img alt="" src="@Url.Content("~/Assets/frontend/pages/img/people/img5-small.jpg")")"></a></li>
+						<li><a href="javascript:;">
+							<img alt="" src="@Url.Content("~/Assets/frontend/pages/img/works/img1.jpg")")"></a></li>
+						<li><a href="javascript:;">
+							<img alt="" src="@Url.Content("~/Assets/frontend/pages/img/people/img4-large.jpg")")"></a></li>
+						<li><a href="javascript:;">
+							<img alt="" src="@Url.Content("~/Assets/frontend/pages/img/works/img6.jpg")")"></a></li>
+						<li><a href="javascript:;">
+							<img alt="" src="@Url.Content("~/Assets/frontend/pages/img/works/img3.jpg")")"></a></li>
+					   
+					</ul>
+				</div>*@
+				<div class="photo-stream" style="margin-top: 10px;">
+					<style>
+						.theadcounter
+						{
+							background:rgb(77,106,121);
+							font-size: 16px;
+							color: #ffffff;
+						}
+						.tbodycounter
+						{
+							background:#f5f5f5;
+							color: #444444;
+							padding: 10px;
+						}
+					</style>
+					<table>
+						<thead class="theadcounter">
+							<th style="padding: 10px;">Statistik Pengunjung</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="tbodycounter">
+									<table>
+										<tr>
+											<td style="width:100px;font-size:11px;padding:3px;">Hari Ini</td>
+											<td style="width:10px;text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="width:100px;font-size:11px;padding:3px;">@ViewBag.hit_counter.HCTODAYLOAD / @ViewBag.hit_counter.HCTODAYIP</td>
+										</tr>
+										<tr>
+											<td style="font-size:11px;padding:3px;">Minggu Ini</td>
+											<td style="text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="font-size:11px;padding:3px;">@ViewBag.hit_counter.HCWEEKLOAD / @ViewBag.hit_counter.HCWEEKIP</td>
+										</tr>
+										<tr>
+											<td style="font-size:11px;padding:3px;">Bulan Ini</td>
+											<td style="text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="font-size:11px;padding:3px;">@ViewBag.hit_counter.HCMONTHLOAD / @ViewBag.hit_counter.HCMONTHIP</td>
+										</tr>
+										<tr>
+											<td style="font-size:11px;padding:3px;">Tahun Ini</td>
+											<td style="text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="font-size:11px;padding:3px;">@ViewBag.hit_counter.HCYEARLOAD / @ViewBag.hit_counter.HCYEARIP</td>
+										</tr>
+										<tr>
+											<td style="font-size:11px;padding:3px;">Total</td>
+											<td style="text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="font-size:11px;padding:3px;">@ViewBag.hit_counter.HCTOTAL</td>
+										</tr>
+										<tr>
+											<td style="font-size:11px;padding:3px;">Online</td>
+											<td style="text-align:center;font-size:11px;padding:3px;">:</td>
+											<td style="font-size:11px;padding:3px;">@ViewBag.hit_counter.HCONLNE</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END BOTTOM ABOUT BLOCK -->
+
+			<!-- BEGIN BOTTOM CONTACTS -->
+			<div class="col-md-4 col-sm-6 pre-footer-col">
+				<h2>Kontak Kami</h2>
+				<style>
+					.addr > p {
+						line-height: 15px;
+						margin-bottom:9px
+					}
+				</style>
+				<address class="margin-bottom-40 addr">
+				   @Html.Raw(ViewBag.profile.PROFILE_KONTAK_KAMI)
+				   
+				</address>
+				<div class="photo-stream" style="margin-top: -30px;">
+					<h2>Map Lokasi</h2>
+					<iframe style="border: 0px;" src="https://mapsengine.google.com/map/u/0/embed?mid=zUuu-Vq5uiys.kzLxAO8VeCFI&z=13" width="360" height="226"></iframe>
+				</div>
+			</div>
+			<!-- END BOTTOM CONTACTS -->
+
+			<!-- BEGIN TWITTER BLOCK -->
+			<div class="col-md-4 col-sm-6 pre-footer-col">
+				<h2 class="margin-bottom-0">Tweets Kami</h2>
+				<div style="height:400px;overflow-y:auto;overflow-x:hidden;">
+					<a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="3" data-theme="dark" data-link-color="#57C8EB" data-widget-id="663995707188117504" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets...</a>
+				</div>
+			</div>
+			<!-- END TWITTER BLOCK -->
+		</div>
+	</div>
+</div>
+<!-- END PRE-FOOTER -->
+
+<script type="text/javascript">
+	$('#caridulu').click(function () {
+		$('#search_SNI').submit();
+	})
+	//function search(){
+	//    var input_search = $("#id_SNI").val();
+	//        $.ajax({
+	//            type: "POST",
+	//            url: "../SNI/DaftarList?id=" + input_search,
+	//            data: data,
+	//            success: function (data) {
+	//                window.location = "SNI/DaftarList"
+	//            }
+	//        });
+	//}
+
+</script>    

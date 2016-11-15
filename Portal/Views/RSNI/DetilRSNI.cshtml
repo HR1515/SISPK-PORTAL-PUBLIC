@@ -1,0 +1,231 @@
+﻿@using Portal.Helpers;
+@{
+    var Detail = ViewBag.DataProposal;
+}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">RSNI</a></li>
+        <li class="active">Detail Informasi RSNI</li>
+    </ul>
+    <div class="row margin-bottom-40">
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+            </ul>
+            <br />
+            <br />           
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Detail Informasi RSNI
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal form-bordered" id="sispk_form" action="" method="post" enctype="multipart/form-data">
+                    <div class="form-body">
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-3">No Komite Teknis</label>
+                            <div class="col-md-9 control-label detailtext">
+                                <a href="../../PanitiaTeknis/DetilPantek/@Detail.KOMTEK_ID">@Detail.KOMTEK_CODE @Detail.KOMTEK_NAME</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tahun Usulan</label>
+                            <div class="col-md-9 control-label detailtext">
+                                @Detail.PROPOSAL_YEAR
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Judul</label>
+                            <div class="col-md-9 control-label detailtext" >
+                                @Detail.PROPOSAL_JUDUL_PNPS
+                            </div>
+                        </div>
+
+                        @if (ViewBag.monitoring != null) { 
+                        <div class="form-group">
+                            <label class="control-label col-md-4" style="font-weight:bold">Tahapan Yang Telah Dilalui :</label>
+                            <div class="col-md-12 control-label detailtext">
+                                <table class="table table-striped table-hover table-bordered">
+                                    <thead>   
+                                        <tr>
+                                            <th>Dokumen</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Tahapan</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @if (ViewBag.monitoring.MONITORING_TGL_PNPS != null)
+                                        {
+                                         <tr>
+                                            <td>PNPS</td>
+                                            <td>@ViewBag.monitoring.MONITORING_TGL_PNPS.ToString("dd MMMM yyyy")</td>
+                                            <td>@ViewBag.monitoring.MONITORING_TGL_APP_PNPS.ToString("dd MMMM yyyy")</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>                                            
+                                        }
+
+                                        @if (ViewBag.monitoring.MONITORING_TGL_MTPS != null)
+                                        {
+                                             <tr>
+                                                <td>MTPS</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_MTPS.ToString("dd MMMM yyyy")</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_APP_MTPS.ToString("dd MMMM yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                                                                             
+                                        }
+                                        @if (ViewBag.monitoring.MONITORING_TGL_RSNI1_1 != null)
+                                        {
+                                             <tr>
+                                                <td>RSNI 1</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_RSNI1_1.ToString("dd MMMM yyyy")</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_APP_RSNI1_1.ToString("dd MMMM yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>                                              
+  
+                                        }
+                                         @if (ViewBag.monitoring.MONITORING_TGL_RATEK_1 != null)
+                                         {
+                                             <tr>
+                                                <td>RSNI 1</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_RATEK_1.ToString("dd MMMM yyyy")</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_APP_RATEK_1.ToString("dd MMMM yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>                                           
+  
+                                         }
+                                            
+                                         @if (ViewBag.monitoring.MONITORING_TGL_RAKON_1 != null)
+                                         {
+                                             <tr>
+                                                <td>RSNI 2</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_RAKON_1.ToString("dd MMMM yyyy")</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_APP_RAKON_1.ToString("dd MMMM yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                         }
+
+                                        @if (ViewBag.monitoring.MONITORING_TGL_AWAL_JP_1 != null)
+                                        {
+                                             <tr>
+                                                <td>RSNI 3</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_AWAL_JP_1.ToString("dd MMMM yyyy")</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_AKHIR_JP_1.ToString("dd MMMM yyyy")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+
+                                         @if (ViewBag.monitoring.MONITORING_TGL_RAKOR_1 != null)
+                                         {
+                                             <tr>
+                                                <td>RSNI 4</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_RAKOR_1.ToString("dd MMMM yyyy")</td>
+                                                <td>@((ViewBag.monitoring.MONITORING_TGL_APP_RAKOR_1 != null) ? ViewBag.monitoring.MONITORING_TGL_APP_RAKOR_1.ToString("dd MMMM yyyy") : "")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                         }
+
+                                        @if (ViewBag.monitoring.MONITORING_TGL_RASNI != null)
+                                        {
+                                             <tr>
+                                                <td>RSNI 5</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_RASNI.ToString("dd MMMM yyyy")</td>
+                                                <td>@((ViewBag.monitoring.MONITORING_TGL_APP_RASNI != null) ? ViewBag.monitoring.MONITORING_TGL_APP_RASNI.ToString("dd MMMM yyyy") : "")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+
+                                        @if(ViewBag.monitoring.MONITORING_TGL_PENETAPAN != null)
+                                        {
+                                             <tr>
+                                                <td>RSNI 5</td>
+                                                <td>@ViewBag.monitoring.MONITORING_TGL_PENETAPAN.ToString("dd MMMM yyyy")</td>
+                                                <td>@((ViewBag.monitoring.MONITORING_TGL_APP_PENETAPAN != null) ? ViewBag.monitoring.MONITORING_TGL_APP_RASNI.ToString("dd MMMM yyyy") : "")</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }                                           
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>  
+                        }
+                        <div style="height:165px">
+
+                        </div>                      
+                </form>
+                <!-- END FORM-->
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<style>
+    .detailtext {
+        text-align :left !important;
+    }
+</style>
+<!-- END CONTENT -->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("input.tags").tagsInput({
+            'defaultText': 'Tambah',
+            'width': '100%'
+        });
+    });
+    function set_jalur(ini) {
+        var value = $(ini).val();
+        if ($(ini).is(":checked")) {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(1);
+                $('.adopsi').slideDown();
+            }
+        } else {
+            if (value == 2) {
+                $('#PROPOSAL_JALUR_2').val(0);
+                $('.adopsi').slideUp();
+            }
+        }
+
+    }
+    function sethakpaten() {
+        var value = $('input[name="PROPOSAL_IS_HAK_PATEN"]:checked').val();
+        if (value == 1) {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideDown();
+        } else {
+            $('.PROPOSAL_IS_HAK_PATEN_DESC').slideUp();
+            $('#PROPOSAL_IS_HAK_PATEN_DESC').val('');
+        }
+
+    }
+
+    function cekjenis(ini) {
+        var inivalue = parseInt($(ini).val());
+        if (inivalue == 2 || inivalue == 3) {
+            $('.revisilist').slideDown();
+        } else {
+            //$('.revisilist').slideUp();
+        }
+    }
+</script>
+
+
+

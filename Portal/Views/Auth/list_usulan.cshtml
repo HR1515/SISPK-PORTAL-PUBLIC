@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "Akun Saya";
+    var Model = ViewBag.akun;
+}
+
+<style type="text/css">
+    nav-tabs > li >a {
+        background-color:#ff6a00 !important;
+        color:#ff6a00 !important;
+    }
+
+    nav-tabs > li >a:hover {
+        background: none;
+        border-color: transparent;
+    }
+</style>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="@("/")">Beranda</a></li>
+        <li class="active">Akun Saya</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/logout")'"><i class="fa fa-angle-right"></i>Logout Member</a></li>
+                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/list_usulan")'"><i class="fa fa-angle-right"></i>Daftar Usulan </a></li>
+                @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>My account</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Address book</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Wish list</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Returns</a></li>
+                    <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i>Newsletter</a></li>*@
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Daftar Usulan PNPS
+                    </div>
+                    <div class="actions">
+                        @if (Session["USER_ID"] != null)
+                        { 
+                            <a href="/PNPS/TambahUsulanPNPS" id="docreate" class="btn btn-warning">
+                                <i class="fa fa-plus"></i>Ajukan PNPS
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tabbable-custom ">
+                        <ul class="nav nav-tabs ">
+                            <li class="active">
+                                <a href="#baru" data-toggle="tab">Usulan Baru </a>
+                            </li>
+                            <li>
+                                <a href="#ditolak" data-toggle="tab">Usulan Ditolak </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="baru">
+                                <table class="table table-striped table-hover table-bordered" id="list-data">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: auto; text-align: center;">Tanggal</th>
+                                            <th style="width: 40%;">Judul</th>
+                                            <th style="width: 25%;">Ruang Lingkup</th>
+                                            <th style="width: 15%; text-align: center;">Tahun Usulan</th>
+                                            <th style="width: 10%; text-align: center;">Jenis Perumusan</th>
+                                            <th style="width: 10%; text-align: center;">Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="ditolak">
+                                <table class="table table-striped table-bordered table-hover" id="usulanditolak">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: auto; text-align: center;">Tanggal</th>
+                                            <th style="width: 40%;">Judul</th>
+                                            <th style="width: 25%;">Ruang Lingkup</th>
+                                            <th style="width: 15%; text-align: center;">Tahun Usulan</th>
+                                            <th style="width: 10%; text-align: center;">Jenis Perumusan</th>
+                                            <th style="width: 10%; text-align: center;">Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END SIDEBAR & CONTENT -->
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var table1 = $('#list-data');
+        var oTable = table1.dataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/Auth/ListUsulanPNPS",
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "DESC"]],
+            "aoColumns": [
+				{ "sClass": "text-left", "bVisible": false, },
+				{ "sClass": "text-left" },
+                { "sClass": "text-left" },
+				{ "sClass": "text-center" },
+                { "sClass": "text-center" },
+                { "sClass": "text-center" }
+
+            ],
+            "order": [
+                [0, 'DESC']
+            ],
+            "lengthMenu": [
+                [10, 50, 100],
+                [10, 50, 100]
+            ],
+            "pageLength": 10,
+        });
+
+        var table2 = $('#usulanditolak');
+        var oTable = table2.dataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/Auth/ListUsulanPNPSditolak",
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "DESC"]],
+            "aoColumns": [
+				{ "sClass": "text-left", "bVisible": false, },
+				{ "sClass": "text-left" },
+                { "sClass": "text-left" },
+				{ "sClass": "text-center" },
+                { "sClass": "text-center" },
+                { "sClass": "text-center" }
+
+            ],
+            "order": [
+                [0, 'DESC']
+            ],
+            "lengthMenu": [
+                [10, 50, 100],
+                [10, 50, 100]
+            ],
+            "pageLength": 10,
+        });
+    });
+
+    $("#docreate").click(function () {
+
+    });
+</script>

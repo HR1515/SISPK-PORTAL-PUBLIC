@@ -1,0 +1,107 @@
+﻿@using Portal.Helpers;
+
+<style>
+    tr > td {
+        text-align:center
+    }
+</style>
+<input type="hidden" id="ics_id" value="@ViewBag.ics_id" />
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="javascript:void(0);">SNI</a></li>
+        <li class="active">RSNI dan SNI berdasarkan ICS (RSNI 3)</li>
+    </ul>
+
+    <div class="row margin-bottom-40">
+
+       @* <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @Html.Raw(AuthHelper.buat_menu_seinduk(ViewBag.moduleId))
+
+            </ul>
+            <br />
+            <br />
+        </div>*@
+
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-table"></i>Daftar RSNI3 berdasarkan ICS @ViewBag.ics_name.ICS_NAME_IND 
+                    </div>
+                    <div class="actions">
+                       
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <table class="table table-striped table-hover table-bordered" id="list-data">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;font-weight:bold;font-size:14px">No</th>
+                                    <th style="text-align:center;font-weight:bold;font-size:14px">Nomor</th>  
+                                    <th style="text-align:center;font-weight:bold;font-size:14px">Judul IND</th> 
+                                    <th style="text-align:center;font-weight:bold;font-size:14px">Judul ENG</th>                                    
+                                    <th style="text-align:center;font-weight:bold;font-size:14px">KT/SKT</th>
+                                </tr>
+                            </thead>                           
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var id = $("#ics_id").val();
+        var table1 = $('#list-data');
+        var oTable = table1.dataTable({
+            "processing": true,
+            "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/SNI/List_Recap_SNI_ICS_RSNI3?id="+id,
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "Data tidak tersedia",
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 Data",
+                "infoFiltered": "",
+                "lengthMenu": "Menampilkan _MENU_ Data",
+                "search": "Pencarian:",
+                "zeroRecords": "Pencarian Tidak Ditemukan",
+                "sProcessing": "Proses Pengambilan Data",
+            },
+            "fnDrawCallback": function () {
+                $('.tooltips').tooltip();
+            },
+            "aaSorting": [[0, "DESC"]],
+            "aoColumns": [
+				{ "sClass": "text-center", "bSortable": false },
+				{ "sClass": "text-left" },
+				{ "sClass": "text-left" },
+                { "sClass": "text-left" },
+                { "sClass": "text-center" }
+               
+            ],
+            "order": [
+                [0, 'DESC']
+            ],
+            "lengthMenu": [
+                [10, 50, 100],
+                [10, 50, 100]
+            ],
+            "pageLength": 10,
+        });
+    });
+    $("#docreate").click(function () {
+
+    });
+</script>
+
+
+
