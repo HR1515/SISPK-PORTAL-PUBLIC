@@ -248,6 +248,7 @@ namespace Portal.Controllers
                 ViewData["moduleId"] = moduleId;
                 var DataProposal = (from poll in db.VIEW_POLLING where poll.POLLING_ID == id select poll).SingleOrDefault();
                 ViewData["DataProposal"] = DataProposal;
+                ViewData["POLLING_ID"] = id;
                 var UserId = Convert.ToInt32(Session["USER_ID"]);
                 ViewData["poll_us"] = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + id + " AND POLLING_DETAIL_CREATE_BY =" + UserId).SingleOrDefault();
                 ViewData["JML_POLLING"] = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + id).SingleOrDefault();
@@ -256,6 +257,8 @@ namespace Portal.Controllers
                 //ViewData["jp_list"] = (from poll in db.VIEW_POLLING_DETAIL where poll.POLLING_DETAIL_POLLING_ID == id orderby poll.POLLING_DETAIL_PASAL ascending select poll).ToList();
                 ViewData["jp_list"] = db.Database.SqlQuery<VIEW_POLLING_DETAIL>("SELECT * FROM VIEW_POLLING_DETAIL WHERE POLLING_DETAIL_POLLING_ID = '" + id + "' AND POLLING_DETAIL_CREATE_BY = " + UserId + " ORDER BY POLLING_DETAIL_PASAL ASC, POLLING_DETAIL_CREATE_BY ASC, POLLING_DETAIL_OPTION ASC").ToList();
                 ViewData["Error"] = "";
+                var link = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
+                ViewData["link"] = link;
                 var isError = @TempData["isError"];
 
                 if (isError != null)
@@ -268,7 +271,7 @@ namespace Portal.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult JajakPendapat(TRX_POLLING_DETAILS input, string jawaban = "")
+        public ActionResult JajakPendapat(TRX_POLLING_DETAILS input, VIEW_POLLING VP, string jawaban = "")
         {
            if (Session["Captcha"] == null || Session["Captcha"].ToString() != jawaban)
                 {
@@ -282,19 +285,44 @@ namespace Portal.Controllers
                     var GetIP = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 12").FirstOrDefault();
                     var GetUser = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 13").FirstOrDefault();
                     var GetPassword = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 14").FirstOrDefault();
+                    var GetPath = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 15").FirstOrDefault();
+                    var TGL_SEKARANG = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                    string path = "";
+                    string filePathpdf = "";
+
+                    HttpPostedFileBase file4 = Request.Files["POLLING_FILE"];
+                    if (file4.ContentLength > 0)
+                    {
+                        Directory.CreateDirectory(GetPath.CONFIG_VALUE + "/Upload/DokPolling");
+                        path = GetPath.CONFIG_VALUE + "/Upload/DokPolling/";
+                        Stream stremdokumen = file4.InputStream;
+                        byte[] appData = new byte[file4.ContentLength + 1];
+                        stremdokumen.Read(appData, 0, file4.ContentLength);
+                        string Extension = Path.GetExtension(file4.FileName);
+                        if (Extension.ToLower() == ".pdf")
+                        {
+                            Aspose.Pdf.Document pdf = new Aspose.Pdf.Document(stremdokumen);
+                            //Aspose.Words.Document docx = new Aspose.Words.Document(stremdokumen);
+                            filePathpdf = path + "POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
+                            pdf.Save(@"" + filePathpdf, Aspose.Pdf.SaveFormat.Pdf);
+                        }
+                    }
+
                     using (OracleConnection con = new OracleConnection("Data Source=" + GetIP.CONFIG_VALUE + ";User ID=" + GetUser.CONFIG_VALUE + ";PASSWORD=" + GetPassword.CONFIG_VALUE + ";"))
                     {
                         con.Open();
 
                         using (OracleCommand cmd = new OracleCommand())
                         {
+                            var pathnya = "/Upload/DokPolling/POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
 
                             var UserId = Session["USER_ID"];
                             var logcode = MixHelper.GetLogCode();
                             int lastid = MixHelper.GetSequence("TRX_POLLING_DETAILS");
                             var datenow = MixHelper.ConvertDateNow();
 
-                            var fname = "POLLING_DETAIL_ID,POLLING_DETAIL_POLLING_ID,POLLING_DETAIL_OPTION,POLLING_DETAIL_REASON,POLLING_DETAIL_PASAL,POLLING_DETAIL_CREATE_BY,POLLING_DETAIL_CREATE_DATE,POLLING_DETAIL_STATUS,POLLING_DETAIL_INPUT_TYPE";
+                            var fname = "POLLING_DETAIL_ID,POLLING_DETAIL_POLLING_ID,POLLING_DETAIL_OPTION,POLLING_DETAIL_REASON,POLLING_DETAIL_PASAL,POLLING_DETAIL_CREATE_BY,POLLING_DETAIL_CREATE_DATE,POLLING_DETAIL_STATUS,POLLING_DETAIL_FILE_PATH,POLLING_DETAIL_INPUT_TYPE";
 
                             var fvalue = "'" + lastid + "', " +
                                         "'" + input.POLLING_DETAIL_POLLING_ID + "', " +
@@ -304,13 +332,14 @@ namespace Portal.Controllers
                                         "'" + UserId + "', " +
                                          datenow + ", " +
                                         "1," +
+                                        "'" + pathnya + "'," +
                                         "2";
                             cmd.Connection = con;
                             cmd.CommandType = System.Data.CommandType.Text;
 
                             //return Json(new { query = "INSERT INTO TRX_POLLING_DETAILS (" + fname + ") VALUES (" + fvalue.Replace("''", "NULL") + ")" }, JsonRequestBehavior.AllowGet);
                             cmd.CommandText = "INSERT INTO TRX_POLLING_DETAILS (" + fname + ") VALUES ('" + lastid + "','" + input.POLLING_DETAIL_POLLING_ID + "','" + input.POLLING_DETAIL_OPTION + "',:parameter,'" + input.POLLING_DETAIL_PASAL + "','" + UserId + "'," +
-                                         datenow + ",1,2)";
+                                         datenow + ",1,'" + pathnya + "',2)";
 
                             OracleParameter oracleParameterClob = new OracleParameter();
                             oracleParameterClob.OracleDbType = OracleDbType.Clob;

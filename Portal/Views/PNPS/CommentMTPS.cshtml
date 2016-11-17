@@ -1,9 +1,9 @@
 ﻿@using Portal.Helpers;
 @{
-    var poll_us = 0;
-    //var date = ViewBag.DataProposal.POLLING_FULL_DATE_NAME.ToString().Replace("<br>", " ");
-    int no = 1;
-    }
+	var poll_us = 0;
+	//var date = ViewBag.DataProposal.POLLING_FULL_DATE_NAME.ToString().Replace("<br>", " ");
+	int no = 1;
+	}
 @*<script src="@Url.Content("~/assets/global/css/jajakpendapat.css")" type="text/javascript"></script>*@
 <style type="text/css">
 .comment-list .row {
@@ -42,251 +42,256 @@
 }
 </style>
 <div class="container">
-    <ul class="breadcrumb">
-        <li><a href="javascript:void(0);">PNPS</a></li>
-        <li class="active">Komentar Publikasi Usulan PNPS</li>
-    </ul>
+	<ul class="breadcrumb">
+		<li><a href="javascript:void(0);">PNPS</a></li>
+		<li class="active">Komentar Publikasi Usulan PNPS</li>
+	</ul>
 
-    <div class="row margin-bottom-40">
-        <div class="col-md-12">
-    <!-- BEGIN SAMPLE FORM PORTLET-->
-    <div class="portlet box green">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-comments"></i>Jajak Pendapat
-            </div>
-        </div>
-        <div class="portlet-body" style='padding: 10px 10px 1px;'>
-            <form class="form form-horizontal form-bordered" role="form" method="post" enctype="multipart/form-data">
-                <div class="alert alert-danger display-hide">
-                                    @*<button class="close" data-close="alert"></button>*@
-                  Anda harus memasukan komentar anda
-                </div>
-                @*<div class="form-group">
-                    <label for="inputEmail1" class="col-md-2 control-label"><strong>Kode PNPS</strong></label>
-                    <div class="col-md-10">
-                        <label class="form-control-static">@ViewBag.data_mtps.PROPOSAL_PNPS_CODE
-                        </label>
-                    </div>
-                </div>*@
-                <div class="form-group">
-                    <label for="inputEmail1" class="col-md-2 control-label"><strong>Komite Teknis</strong></label>
-                    <div class="col-md-10">
-                        <label class="form-control-static">@ViewBag.data_mtps.KOMTEK_CODE @ViewBag.data_mtps.KOMTEK_NAME
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail1" class="col-md-2 control-label"><strong>Judul PNPS</strong></label>
-                    <div class="col-md-10">
-                        <label class="form-control-static">
-                            @ViewBag.data_mtps.PROPOSAL_JUDUL_PNPS
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputEmail1" class="col-md-2 control-label"><strong>Ruang Lingkup</strong></label>
-                    <div class="col-md-10">
-                        <label class="form-control-static">@Html.Raw(ViewBag.data_mtps.PROPOSAL_RUANG_LINGKUP)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-              		<label for="inputEmail1" class="col-md-2 control-label"><strong>Attachment</strong></label>
-              		<div class="col-md-10">
-              		
-                    @if (ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH != "" && ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH != null)
-                    { 
-                        <label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH).PDF" target="_blank" style="color:green;">Download Data Usulan</a></label>
-                    }
-                    else {
-                        <label class="form-control-static">No Attachment
-                        </label>
-                    }
-              		</div>
-              	</div>
-                <div class="blog-item text-right">
-                    <ul class="blog-info" style='margin: 10px 0;'>
-                        <li><i class="fa fa-user"></i>@Session["USER_FULL_NAME"]</li>
-                        <li><i class="fa fa-calendar"></i>@ViewBag.data_mtps.POLLING_FULL_DATE_NAME_NUMBER</li>
-                        <li><i class="fa fa-clock-o"></i>@ViewBag.data_mtps.POLLING_MONITORING_NAME</li>
-                        <li><i class="fa fa-comments"></i>@ViewBag.data_mtps.POLLING_JML_PARTISIPAN</li>
-                    </ul>
-                </div>
-                <div class='form-group'>
-                    <div class="col-md-12">
-                        <article class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="panel panel-default arrow left">
-                                    <div class="panel-body">                                                                          
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <input type="hidden" name="POLLING_DETAIL_POLLING_ID" value="@ViewBag.POLLING_ID" />                                                
-                                                <input type="hidden" name="PROPOSAL_ID" value="@ViewBag.data_mtps.PROPOSAL_ID"/>
-                                                <textarea id='komentar' class="" name='POLLING_DETAIL_REASON'></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                            <span>Lampiran Komentar : </span>
-                                            </div>
-                                            <div class="col-md-12">                                                
-                                                <input type="file" name="POLLING_FILE" accept=".pdf,application/pdf" onchange="ValidasiInput(this)"/>
-                                                <span style="color:red;font-style:italic">File yang upload harus PDF</span>   
-                                            </div>                                            
-                                        </div>
-                                       <div class='form-group'>                                            
-                                            <div class="col-md-4">
-                                               <div class='input-group-addon' style="text-align:left;width:40%;background-color:#eee">
-                                                     <img alt="Captcha" id="showchaptcha" src="/Auth/CaptchaImage" style="" />
-                                               </div>
-                                               <div class='input-group-addon' style="width:60%;background-color:#eee">
-                                                     <input type='text' style="padding:0px 0px 0px 6px;font-size:18px;" class='form-control' name='jawaban' id='jawaban' placeholder='Jawaban' autocomplete='off' /> 
-                                               </div>                                                                   
-                                            </div>
-                                        </div>
-                                        @if (@ViewBag.Error != "")
-                                        { 
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label" style="color: #FF655F; text-align: left; "><i class="fa fa-info-circle"></i> @ViewBag.Error</label>
-                                                </div>
-                                        }
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <button class='btn btn-success' type='submit' id="kirim_dulu">Kirim Komentar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        </article>                         
-                    </div>
-                </div>
-                
-                @if (ViewBag.list_poll_detail.Count > 0)
-                { 
-                <div class="blog-item text-right">
-                    <ul class="blog-info" style='margin: 10px 0;'>
-                        <li style='color: #e84d1c'><i class="fa fa-comments"></i>Daftar Komentar</li>
-                    </ul>
-                </div>
-                <div class='form-group'>
-                    <div class="col-md-12">
-                        @foreach (var list in ViewBag.list_poll_detail)
-                        {
-                            var ganjil = "";
-                            var edit = "";
-                            if (no % 2 == 1)
-                            {
-                                ganjil = "ganjil";
-                            }
-                            if (list.POLLING_DETAIL_CREATE_BY == Convert.ToInt32(Session["USER_ID"].ToString()))
-                            {
-                                edit = "<a href='/PNPS/Editcommentmtps/" + list.POLLING_DETAIL_ID + "' ><i class='fa fa-pencil'></i> edit</a><br /><br />";
-                            }
-                        <article class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="panel panel-default arrow left">
-                                    <div class="panel-body @ganjil">
-                                        <header>
-                                            <div class='text-left col-sm-6' style="padding: 0px;">
-                                                @*<div class="comment-user"><i class="fa fa-user"></i>&nbsp @list.USER_PUBLIC_NAMA_LENGKAP @((list.POLLING_DETAIL_FILE_PATH != null)?"<a href='"+ViewBag.pathnya+""+list.POLLING_DETAIL_FILE_PATH+"'><i class='fa fa-file-pdf-o'></i></a>":"")</div>*@
-                                                <div class="comment-user"><i class="fa fa-user"></i>&nbsp @list.USER_PUBLIC_NAMA_LENGKAP </div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>&nbsp @list.POLLING_FULL_DATE_NAME
-                                                </time>
-                                            </div>                                           
-                                        </header>
+	<div class="row margin-bottom-40">
+		<div class="col-md-12">
+	<!-- BEGIN SAMPLE FORM PORTLET-->
+	<div class="portlet box green">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="fa fa-comments"></i>Jajak Pendapat
+			</div>
+		</div>
+		<div class="portlet-body" style='padding: 10px 10px 1px;'>
+			<form class="form form-horizontal form-bordered" role="form" method="post" enctype="multipart/form-data">
+				<div class="alert alert-danger display-hide">
+									@*<button class="close" data-close="alert"></button>*@
+				  Anda harus memasukan komentar anda
+				</div>
+				@*<div class="form-group">
+					<label for="inputEmail1" class="col-md-2 control-label"><strong>Kode PNPS</strong></label>
+					<div class="col-md-10">
+						<label class="form-control-static">@ViewBag.data_mtps.PROPOSAL_PNPS_CODE
+						</label>
+					</div>
+				</div>*@
+				<div class="form-group">
+					<label for="inputEmail1" class="col-md-2 control-label"><strong>Komite Teknis</strong></label>
+					<div class="col-md-10">
+						<label class="form-control-static">@ViewBag.data_mtps.KOMTEK_CODE @ViewBag.data_mtps.KOMTEK_NAME
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail1" class="col-md-2 control-label"><strong>Judul PNPS</strong></label>
+					<div class="col-md-10">
+						<label class="form-control-static">
+							@ViewBag.data_mtps.PROPOSAL_JUDUL_PNPS
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail1" class="col-md-2 control-label"><strong>Ruang Lingkup</strong></label>
+					<div class="col-md-10">
+						<label class="form-control-static">@Html.Raw(ViewBag.data_mtps.PROPOSAL_RUANG_LINGKUP)
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail1" class="col-md-2 control-label"><strong>Attachment</strong></label>
+					<div class="col-md-10">
+					
+					@if (ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH != "" && ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH != null)
+					{ 
+						<label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(ViewBag.data_mtps.PROPOSAL_FORMULIR_FILE_PATH).PDF" target="_blank" style="color:green;">Download Data Usulan</a></label>
+					}
+					else {
+						<label class="form-control-static">No Attachment
+						</label>
+					}
+					</div>
+				</div>
+				<div class="blog-item text-right">
+					<ul class="blog-info" style='margin: 10px 0;'>
+						<li><i class="fa fa-user"></i>@Session["USER_FULL_NAME"]</li>
+						<li><i class="fa fa-calendar"></i>@ViewBag.data_mtps.POLLING_FULL_DATE_NAME_NUMBER</li>
+						<li><i class="fa fa-clock-o"></i>@ViewBag.data_mtps.POLLING_MONITORING_NAME</li>
+						<li><i class="fa fa-comments"></i>@ViewBag.data_mtps.POLLING_JML_PARTISIPAN</li>
+					</ul>
+				</div>
+				<div class='form-group'>
+					<div class="col-md-12">
+						<article class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-default arrow left">
+									<div class="panel-body">                                                                          
+										<div class="form-group">
+											<div class="col-md-12">
+												<input type="hidden" name="POLLING_DETAIL_POLLING_ID" value="@ViewBag.POLLING_ID" />                                                
+												<input type="hidden" name="PROPOSAL_ID" value="@ViewBag.data_mtps.PROPOSAL_ID"/>
+												<textarea id='komentar' class="" name='POLLING_DETAIL_REASON'></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-12">
+											<span>Lampiran Komentar : </span>
+											</div>
+											<div class="col-md-12">                                                
+												<input type="file" name="POLLING_FILE" accept=".pdf,application/pdf" onchange="ValidasiInput(this)"/>
+												<span style="color:red;font-style:italic">File yang upload harus PDF</span>   
+											</div>                                            
+										</div>
+									   <div class='form-group'>                                            
+											<div class="col-md-4">
+											   <div class='input-group-addon' style="text-align:left;width:40%;background-color:#eee">
+													 <img alt="Captcha" id="showchaptcha" src="/Auth/CaptchaImage" style="" />
+											   </div>
+											   <div class='input-group-addon' style="width:60%;background-color:#eee">
+													 <input type='text' style="padding:0px 0px 0px 6px;font-size:18px;" class='form-control' name='jawaban' id='jawaban' placeholder='Jawaban' autocomplete='off' /> 
+											   </div>                                                                   
+											</div>
+										</div>
+										@if (@ViewBag.Error != "")
+										{ 
+												<div class="form-group">
+													<label class="col-md-4 control-label" style="color: #FF655F; text-align: left; "><i class="fa fa-info-circle"></i> @ViewBag.Error</label>
+												</div>
+										}
+										<div class="form-group">
+											<div class="col-md-12">
+												<button class='btn btn-success' type='submit' id="kirim_dulu">Kirim Komentar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+						</article>                         
+					</div>
+				</div>
+				
+				@if (ViewBag.list_poll_detail.Count > 0)
+				{ 
+				<div class="blog-item text-right">
+					<ul class="blog-info" style='margin: 10px 0;'>
+						<li style='color: #e84d1c'><i class="fa fa-comments"></i>Daftar Komentar</li>
+					</ul>
+				</div>
+				<div class='form-group'>
+					<div class="col-md-12">
+						@foreach (var list in ViewBag.list_poll_detail)
+						{
+							var ganjil = "";
+							var edit = "";
+							if (no % 2 == 1)
+							{
+								ganjil = "ganjil";
+							}
+							if (list.POLLING_DETAIL_CREATE_BY == Convert.ToInt32(Session["USER_ID"].ToString()))
+							{
+								edit = "<a href='/PNPS/Editcommentmtps/" + list.POLLING_DETAIL_ID + "' ><i class='fa fa-pencil'></i> edit</a><br /><br />";
+							}
+							
+							<article class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="panel panel-default arrow left">
+										<div class="panel-body @ganjil">
+											<header>
+												<div class='text-left col-sm-6' style="padding: 0px;">
+													@*<div class="comment-user"><i class="fa fa-user"></i>&nbsp @list.USER_PUBLIC_NAMA_LENGKAP @((list.POLLING_DETAIL_FILE_PATH != null)?"<a href='"+ViewBag.pathnya+""+list.POLLING_DETAIL_FILE_PATH+"'><i class='fa fa-file-pdf-o'></i></a>":"")</div>*@
+													<div class="comment-user"><i class="fa fa-user"></i>&nbsp @list.USER_PUBLIC_NAMA_LENGKAP </div>
+													<time class="comment-date" datetime="16-12-2014 01:05">
+														<i class="fa fa-clock-o"></i>&nbsp @list.POLLING_FULL_DATE_NAME
+													</time>
+												</div>
+											</header>
+											<div class='clearfix'></div>
+											<div class="comment-post" style='padding-top: 10px;'>
+												@Html.Raw(list.POLLING_DETAIL_REASON)
+												@if (list.POLLING_DETAIL_FILE_PATH != "" && list.POLLING_DETAIL_FILE_PATH != null)
+												{
+													<label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(list.POLLING_DETAIL_FILE_PATH).PDF" target="_blank" style="color:green;">Lampiran Komentar</a></label><br>
+												}
+												@Html.Raw(edit)
+											</div>
+										</div>
+									</div>
+								</div>
+							</article>no++;
+						}                        
+					</div>
+				</div>
+				}
+			</form>
 
-                                        <div class='clearfix'></div>
-                                        <div class="comment-post" style='padding-top: 10px;'>
-                                            @Html.Raw(list.POLLING_DETAIL_REASON)  @Html.Raw(edit)
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                            no++;
-                        }                        
-                    </div>
-                </div>
-                }
-            </form>
-
-        </div>
-    </div>
-    <!-- END SAMPLE FORM PORTLET-->
+		</div>
+	</div>
+	<!-- END SAMPLE FORM PORTLET-->
 </div>
-    </div>
+	</div>
 </div>
 
 <script type="text/javascript">
-    jQuery(document).ready(function () {
-        CKEDITOR.disableAutoInline = true;
-        CKEDITOR.config.toolbar_MA = [['Bold', 'Italic', 'Underline', '-', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Undo', 'Redo', 'RemoveFormat', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image']];
-        CKEDITOR.replace('komentar',
-        { toolbar: 'MA', height: '150px', skin: 'office2013' }
-     );
-    });
+	jQuery(document).ready(function () {
+		CKEDITOR.disableAutoInline = true;
+		CKEDITOR.config.toolbar_MA = [['Bold', 'Italic', 'Underline', '-', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Undo', 'Redo', 'RemoveFormat', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image']];
+		CKEDITOR.replace('komentar',
+		{ toolbar: 'MA', height: '150px', skin: 'office2013' }
+	 );
+	});
 </script>
 
 <script>
-    $(document).ready(function () {
-        $('.form-login-isonline').hide();
+	$(document).ready(function () {
+		$('.form-login-isonline').hide();
 
-    });
-    $("#recaptcha").click(function () {
-        LoadImg();
-        $("#jawaban").val("");
-    });
+	});
+	$("#recaptcha").click(function () {
+		LoadImg();
+		$("#jawaban").val("");
+	});
 
-    $('#kirim_dulu').click(function () {
-        var value = CKEDITOR.instances['komentar'].getData();
-        if (value == "") {
-            alert("Komentar harus diisi");
-            return false;
-        }
-    });
+	$('#kirim_dulu').click(function () {
+		var value = CKEDITOR.instances['komentar'].getData();
+		if (value == "") {
+			alert("Komentar harus diisi");
+			return false;
+		}
+	});
 
-    function LoadImg() {
-        var xmlhttp;
-        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else { // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("showchaptcha").src = "/Auth/CaptchaImage";
-            }
-        };
-        xmlhttp.open("GET", '/Auth/CaptchaImage');
-        xmlhttp.send(null);
-    }
-    var _validFileExtensions = [".pdf"];
-    function ValidasiInput(ini) {
-        var arrInputs = $(ini);
-        for (var i = 0; i < arrInputs.length; i++) {
-            var oInput = arrInputs[i];
-            if (oInput.type == "file") {
-                var sFileName = oInput.value;
-                if (sFileName.length > 0) {
-                    var blnValid = false;
-                    for (var j = 0; j < _validFileExtensions.length; j++) {
-                        var sCurExtension = _validFileExtensions[j];
-                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                            blnValid = true;
-                            break;
-                        }
-                    }
+	function LoadImg() {
+		var xmlhttp;
+		if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else { // code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("showchaptcha").src = "/Auth/CaptchaImage";
+			}
+		};
+		xmlhttp.open("GET", '/Auth/CaptchaImage');
+		xmlhttp.send(null);
+	}
+	var _validFileExtensions = [".pdf"];
+	function ValidasiInput(ini) {
+		var arrInputs = $(ini);
+		for (var i = 0; i < arrInputs.length; i++) {
+			var oInput = arrInputs[i];
+			if (oInput.type == "file") {
+				var sFileName = oInput.value;
+				if (sFileName.length > 0) {
+					var blnValid = false;
+					for (var j = 0; j < _validFileExtensions.length; j++) {
+						var sCurExtension = _validFileExtensions[j];
+						if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+							blnValid = true;
+							break;
+						}
+					}
 
-                    if (!blnValid) {
-                        alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
-                        $(ini).val('');
-                        return false;
-                    }
-                }
-            }
-        }
+					if (!blnValid) {
+						alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
+						$(ini).val('');
+						return false;
+					}
+				}
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 </script>

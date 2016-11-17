@@ -143,6 +143,8 @@
 
                                                 <div class="panel-body">
                                                     <div class="form-group">
+                                                        <input type="hidden" name="POLLING_DETAIL_POLLING_ID" value="@ViewBag.POLLING_ID" />
+                                                        <input type="hidden" name="PROPOSAL_ID" value="@ViewBag.DataProposal.PROPOSAL_ID" />
                                                         <label class="col-md-2 control-label"><strong>Tipe Komentar</strong></label>
                                                         <div class="col-md-10" style="padding-left: 0px;">
                                                             <div class="radio-list">
@@ -167,6 +169,15 @@
                                                     <div class="form-group">
                                                         <div class="col-md-12">
                                                             <textarea id="komentar" name="POLLING_DETAIL_REASON" class=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <span>Lampiran Pendapat : </span>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <input type="file" name="POLLING_FILE" accept=".pdf,application/pdf" onchange="ValidasiInput(this)" />
+                                                            <span style="color:red;font-style:italic">File yang upload harus PDF</span>
                                                         </div>
                                                     </div>
 
@@ -226,20 +237,26 @@
                                                                 <div class="comment-user"><i class="fa fa-check-square-o"></i>@dt.PILIHAN</div>
                                                             </div>
                                                             <div class='text-right col-sm-6' style="padding-right: 0px;">
-                                                                <a class="icon-btn" href="javascript:;" style='font-weight: bold; font-size: 16px; height: 50px; padding: 5px 0 0;'>@dt.POLLING_DETAIL_PASAL<div>PASAL</div>
-                                                                </a>
-                                                            </div>
-                                                        </header>
-
-                                                        <div class='clearfix'></div>
-                                                        <div class="comment-post" style='padding-top: 10px;'>
-                                                            @Html.Raw(dt.POLLING_DETAIL_REASON) @Html.Raw(edit)
-
+                                                                <a class="icon-btn" href="javascript:;" style='font-weight: bold; font-size: 16px; height: 50px; padding: 5px 0 0;'>
+                                                                    @dt.POLLING_DETAIL_PASAL<div>PASAL</div>
+                                                            </a>
                                                         </div>
+                                                    </header>
+
+                                                    <div class='clearfix'></div>
+                                                    <div class="comment-post" style='padding-top: 10px;'>
+                                                        @Html.Raw(dt.POLLING_DETAIL_REASON)
+                                                        @if (dt.POLLING_DETAIL_FILE_PATH != "" && dt.POLLING_DETAIL_FILE_PATH != null)
+                                                        {
+                                                            <label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(dt.POLLING_DETAIL_FILE_PATH).PDF" target="_blank" style="color:green;">Lampiran Komentar</a></label><br>
+                                                        }
+                                                        @Html.Raw(edit)
+
                                                     </div>
                                                 </div>
                                             </div>
-                                        </article>
+                                        </div>
+                                    </article>
                                         no++;
 
                                     }
@@ -326,6 +343,34 @@
             });
 
         });
+    var _validFileExtensions = [".pdf"];
+    function ValidasiInput(ini) {
+        var arrInputs = $(ini);
+        for (var i = 0; i < arrInputs.length; i++) {
+            var oInput = arrInputs[i];
+            if (oInput.type == "file") {
+                var sFileName = oInput.value;
+                if (sFileName.length > 0) {
+                    var blnValid = false;
+                    for (var j = 0; j < _validFileExtensions.length; j++) {
+                        var sCurExtension = _validFileExtensions[j];
+                        if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                            blnValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!blnValid) {
+                        alert("Maaf, " + sFileName + " tidak dapat di Upload, Extensi yang dapat di Upload adalah : " + _validFileExtensions.join(", "));
+                        $(ini).val('');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 
         //function sethakpaten() {
         //    var value = $('input[name="POLLING_OPTION"]:checked').val();
