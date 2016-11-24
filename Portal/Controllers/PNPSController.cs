@@ -778,7 +778,8 @@ namespace Portal.Controllers
                 ViewData["data_mtps"] = (from t in db.VIEW_POLLING where t.POLLING_ID == id select t).SingleOrDefault();
                 var GetPath = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 15").FirstOrDefault();
                 ViewData["pathnya"] = GetPath.CONFIG_VALUE;
-                ViewData["list_poll_detail"] = (from t in db.VIEW_POLLING_DETAIL where t.POLLING_DETAIL_POLLING_ID == id && t.POLLING_DETAIL_CREATE_BY == user_id && t.POLLING_TYPE == "2" orderby t.POLLING_DETAIL_CREATE_DATE descending select t).ToList();
+                //ViewData["list_poll_detail"] = (from t in db.VIEW_POLLING_DETAIL where t.POLLING_DETAIL_POLLING_ID == id && t.POLLING_DETAIL_CREATE_BY == user_id && t.POLLING_TYPE == "2" orderby t.POLLING_DETAIL_CREATE_DATE descending select t).ToList();
+                ViewData["list_poll_detail"] = (from t in db.VIEW_POLLING_DETAIL where t.POLLING_DETAIL_POLLING_ID == id orderby t.POLLING_DETAIL_CREATE_DATE descending select t).ToList();
                 var link = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
                 ViewData["link"] = link;
                 ViewData["Error"] = "";

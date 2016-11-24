@@ -4198,7 +4198,7 @@
           <Property Name="POLLING_DETAIL_APPROVE_BY" Type="number" />
           <Property Name="POLLING_DETAIL_APPROVE_DATE" Type="date" />
           <Property Name="POLLING_DETAIL_STATUS" Type="number" />
-          <Property Name="POLLING_DETAIL_PASAL" Type="number" />
+          <Property Name="POLLING_DETAIL_PASAL" Type="varchar2" MaxLength="2000" />
           <Property Name="POLLING_DETAIL_INPUT_TYPE" Type="number" />
           <Property Name="POLLING_DETAIL_FILE_PATH" Type="varchar2" MaxLength="2000" />
         </EntityType>
@@ -5733,7 +5733,7 @@
           <Property Name="POLLING_DETAIL_APPROVE_BY" Type="number" />
           <Property Name="POLLING_DETAIL_APPROVE_DATE" Type="date" />
           <Property Name="POLLING_DETAIL_STATUS" Type="number" />
-          <Property Name="POLLING_DETAIL_PASAL" Type="number" />
+          <Property Name="POLLING_DETAIL_PASAL" Type="varchar2" MaxLength="2000"/>
           <Property Name="POLLING_DETAIL_FILE_PATH" Type="varchar2" MaxLength="2000" />
           <Property Name="POLLING_PROPOSAL_ID" Type="number" />
           <Property Name="POLLING_TYPE" Type="varchar2" MaxLength="255" />
@@ -8291,7 +8291,7 @@
           <Property Type="Decimal" Name="POLLING_DETAIL_APPROVE_BY" Precision="38" Scale="0" />
           <Property Type="DateTime" Name="POLLING_DETAIL_APPROVE_DATE" />
           <Property Type="Decimal" Name="POLLING_DETAIL_STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="POLLING_DETAIL_PASAL" Precision="38" Scale="0" />
+          <Property Type="String" Name="POLLING_DETAIL_PASAL" MaxLength="2000" FixedLength="false" Unicode="false"/>
           <Property Type="Decimal" Name="POLLING_DETAIL_INPUT_TYPE" Precision="38" Scale="0" />
           <Property Type="String" Name="POLLING_DETAIL_FILE_PATH" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -9691,7 +9691,7 @@
           <Property Type="Decimal" Name="POLLING_DETAIL_APPROVE_BY" Precision="38" Scale="0" />
           <Property Type="DateTime" Name="POLLING_DETAIL_APPROVE_DATE" />
           <Property Type="Decimal" Name="POLLING_DETAIL_STATUS" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="POLLING_DETAIL_PASAL" Precision="38" Scale="0" />
+          <Property Type="String" Name="POLLING_DETAIL_PASAL" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="POLLING_DETAIL_FILE_PATH" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="POLLING_PROPOSAL_ID" Precision="38" Scale="0" />
           <Property Type="String" Name="POLLING_TYPE" MaxLength="255" FixedLength="false" Unicode="false" />

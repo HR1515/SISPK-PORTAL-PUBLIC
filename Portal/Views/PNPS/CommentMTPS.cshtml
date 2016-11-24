@@ -202,7 +202,7 @@
 												@Html.Raw(list.POLLING_DETAIL_REASON)
 												@if (list.POLLING_DETAIL_FILE_PATH != "" && list.POLLING_DETAIL_FILE_PATH != null)
 												{
-													<label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(list.POLLING_DETAIL_FILE_PATH).PDF" target="_blank" style="color:green;">Lampiran Komentar</a></label><br>
+													<label class="form-control-static"><a class="" href="@(ViewBag.link.LINK_NAME.TrimEnd('/'))@(list.POLLING_DETAIL_FILE_PATH)" target="_blank" style="color:green;">Lampiran Komentar</a></label><br>
 												}
 												@Html.Raw(edit)
 											</div>

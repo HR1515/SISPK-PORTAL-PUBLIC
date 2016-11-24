@@ -247,15 +247,18 @@ namespace Portal.Controllers
             {
                 ViewData["moduleId"] = moduleId;
                 var DataProposal = (from poll in db.VIEW_POLLING where poll.POLLING_ID == id select poll).SingleOrDefault();
+                //var DataPolingDetails = (from poll in db.VIEW_POLLING_DETAIL where poll.POLLING_DETAIL_POLLING_ID == id select poll).SingleOrDefault();
                 ViewData["DataProposal"] = DataProposal;
                 ViewData["POLLING_ID"] = id;
                 var UserId = Convert.ToInt32(Session["USER_ID"]);
+                //ViewData["doc_rsni3"] = (from poll in db.VIEW_POLLING where poll.POLLING_ID == id select poll).SingleOrDefault();
+                ViewData["doc_rsni3"] = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_RELATED_ID = '" + DataProposal.POLLING_PROPOSAL_ID + "'  AND DOC_RELATED_TYPE = 38").SingleOrDefault();
                 ViewData["poll_us"] = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + id + " AND POLLING_DETAIL_CREATE_BY =" + UserId).SingleOrDefault();
                 ViewData["JML_POLLING"] = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + id).SingleOrDefault();
                 //return Json(new { query = "SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = "+id+" AND POLLING_DETAIL_CREATE_BY =" + UserId }, JsonRequestBehavior.AllowGet);
                 ViewData["polling"] = (from poll in db.VIEW_POLLING where poll.POLLING_ID == id select poll).SingleOrDefault();
                 //ViewData["jp_list"] = (from poll in db.VIEW_POLLING_DETAIL where poll.POLLING_DETAIL_POLLING_ID == id orderby poll.POLLING_DETAIL_PASAL ascending select poll).ToList();
-                ViewData["jp_list"] = db.Database.SqlQuery<VIEW_POLLING_DETAIL>("SELECT * FROM VIEW_POLLING_DETAIL WHERE POLLING_DETAIL_POLLING_ID = '" + id + "' AND POLLING_DETAIL_CREATE_BY = " + UserId + " ORDER BY POLLING_DETAIL_PASAL ASC, POLLING_DETAIL_CREATE_BY ASC, POLLING_DETAIL_OPTION ASC").ToList();
+                ViewData["jp_list"] = db.Database.SqlQuery<VIEW_POLLING_DETAIL>("SELECT * FROM VIEW_POLLING_DETAIL WHERE POLLING_DETAIL_POLLING_ID = '" + id + "'  ORDER BY POLLING_DETAIL_PASAL ASC, POLLING_DETAIL_CREATE_BY ASC, POLLING_DETAIL_OPTION ASC").ToList();
                 ViewData["Error"] = "";
                 var link = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
                 ViewData["link"] = link;
@@ -495,9 +498,12 @@ namespace Portal.Controllers
         public ActionResult cekdata(TRX_POLLING_DETAILS form)
         {
             int status = 0;
+            int row_id = 0;
             var UserId = Session["USER_ID"];
-            status = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + form.POLLING_DETAIL_POLLING_ID + " AND POLLING_DETAIL_PASAL = " + form.POLLING_DETAIL_PASAL + " AND POLLING_DETAIL_OPTION = " + form.POLLING_DETAIL_OPTION + " AND POLLING_DETAIL_CREATE_BY =" + UserId).SingleOrDefault();
-            return Json(new { status = status, query = "SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + form.POLLING_DETAIL_POLLING_ID + " AND POLLING_DETAIL_PASAL = " + form.POLLING_DETAIL_PASAL + " AND POLLING_DETAIL_OPTION = " + form.POLLING_DETAIL_OPTION + " AND POLLING_DETAIL_CREATE_BY =" + UserId }, JsonRequestBehavior.AllowGet);
+            row_id = db.Database.SqlQuery<int>("SELECT POLLING_DETAIL_ID FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + form.POLLING_DETAIL_POLLING_ID + " AND POLLING_DETAIL_PASAL = '" + form.POLLING_DETAIL_PASAL + "' AND POLLING_DETAIL_OPTION = " + form.POLLING_DETAIL_OPTION + " AND POLLING_DETAIL_CREATE_BY =" + UserId).SingleOrDefault();
+            status = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + form.POLLING_DETAIL_POLLING_ID + " AND POLLING_DETAIL_PASAL = '" + form.POLLING_DETAIL_PASAL + "' AND POLLING_DETAIL_OPTION = " + form.POLLING_DETAIL_OPTION + " AND POLLING_DETAIL_CREATE_BY =" + UserId).SingleOrDefault();
+            return Json(new {status = status, row_id = row_id, query = "SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + form.POLLING_DETAIL_POLLING_ID + " AND POLLING_DETAIL_PASAL = '" + form.POLLING_DETAIL_PASAL + "' AND POLLING_DETAIL_OPTION = " + form.POLLING_DETAIL_OPTION + " AND POLLING_DETAIL_CREATE_BY =" + UserId }, JsonRequestBehavior.AllowGet);
+            
         }       
 
     }
