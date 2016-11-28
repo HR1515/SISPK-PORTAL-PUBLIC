@@ -76,5 +76,7 @@ namespace Portal.Models
         public string PROPOSAL_NO_SURAT_PEMBATALAN { get; set; }
         public string PROPOSAL_RETEK_ID { get; set; }
         public string PROPOSAL_LPK_ID { get; set; }
+        public string PROPOSAL_HAK_PATEN_LOCATION { get; set; }
+        public string PROPOSAL_HAK_PATEN_NAME { get; set; }
     }
 }

@@ -145,5 +145,7 @@ namespace Portal.Models
         public string POLLING_REASON { get; set; }
         public Nullable<decimal> POLLING_IS_KUORUM { get; set; }
         public Nullable<decimal> POLLING_JML_PARTISIPAN { get; set; }
+        public string PROPOSAL_HAK_PATEN_LOCATION { get; set; }
+        public string PROPOSAL_HAK_PATEN_NAME { get; set; }
     }
 }

@@ -265,6 +265,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-3">File Hak Paten</label>
+                            <div class="col-md-9 control-label detailtext">
+                                @((Detail.PROPOSAL_HAK_PATEN_NAME == null) ? "-" : Html.Raw("<a href='" +(ViewBag.link1.LINK_NAME.TrimEnd('/'))+ Detail.PROPOSAL_HAK_PATEN_LOCATION + "" + Detail.PROPOSAL_HAK_PATEN_NAME + "' target='_blank'> Download File Hak Paten </a>"))
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-3">Informasi Hak Paten</label>
                             <div class="col-md-9 control-label detailtext">
                                 @((Detail.PROPOSAL_IS_HAK_PATEN_DESC == null) ? "-" : Detail.PROPOSAL_IS_HAK_PATEN_DESC)

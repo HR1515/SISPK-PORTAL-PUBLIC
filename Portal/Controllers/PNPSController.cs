@@ -130,6 +130,8 @@ namespace Portal.Controllers
         {
             if (Session["USER_ID"] != null)
             {
+                var link = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
+                ViewData["link"] = link;
                 ViewData["moduleId"] = moduleId;
                 ViewData["User"] = db.SYS_USER_PUBLIC.SqlQuery("SELECT * FROM SYS_USER_PUBLIC WHERE USER_PUBLIC_ID = '" + Session["USER_PUBLIC_ID"] + "'").SingleOrDefault();
                 return View();
@@ -156,46 +158,126 @@ namespace Portal.Controllers
             var DATENOW = MixHelper.ConvertDateNow();
             var PROPOSAL_CODE = db.Database.SqlQuery<String>("SELECT TO_CHAR (SYSDATE, 'YYYYMMDD-') || ( CASE WHEN LENGTH (COUNT(PROPOSAL_ID) + 1) = 1 THEN '000' || CAST ( COUNT (PROPOSAL_ID) + 1 AS VARCHAR2 (255) ) WHEN LENGTH (COUNT(PROPOSAL_ID) + 1) = 2 THEN '00' || CAST ( COUNT (PROPOSAL_ID) + 1 AS VARCHAR2 (255)) WHEN LENGTH (COUNT(PROPOSAL_ID) + 1) = 3 THEN '0' || CAST ( COUNT (PROPOSAL_ID) + 1 AS VARCHAR2 (255) ) ELSE CAST ( COUNT (PROPOSAL_ID) + 1 AS VARCHAR2 (255) ) END ) PROPOSAL_CODE FROM TRX_PROPOSAL WHERE TO_CHAR (SYSDATE, 'MM-DD-YYYY') = TO_CHAR (PROPOSAL_CREATE_DATE,'MM-DD-YYYY')").SingleOrDefault();
 
-            var fname = "PROPOSAL_ID,PROPOSAL_TYPE,PROPOSAL_RETEK_ID,PROPOSAL_LPK_ID,PROPOSAL_YEAR,PROPOSAL_KOMTEK_ID,PROPOSAL_TIM_NAMA,PROPOSAL_TIM_ALAMAT,PROPOSAL_TIM_PHONE,PROPOSAL_TIM_EMAIL,PROPOSAL_TIM_FAX,PROPOSAL_KONSEPTOR,PROPOSAL_INSTITUSI,PROPOSAL_JUDUL_PNPS,PROPOSAL_RUANG_LINGKUP,PROPOSAL_JENIS_PERUMUSAN,PROPOSAL_JALUR,PROPOSAL_JENIS_ADOPSI,PROPOSAL_METODE_ADOPSI,PROPOSAL_TERJEMAHAN_SNI_ID,PROPOSAL_RALAT_SNI_ID,PROPOSAL_AMD_SNI_ID,PROPOSAL_IS_URGENT,PROPOSAL_PASAL,PROPOSAL_IS_HAK_PATEN,PROPOSAL_IS_HAK_PATEN_DESC,PROPOSAL_INFORMASI,PROPOSAL_TUJUAN,PROPOSAL_PROGRAM_PEMERINTAH,PROPOSAL_PIHAK_BERKEPENTINGAN,PROPOSAL_CREATE_BY,PROPOSAL_CREATE_DATE,PROPOSAL_STATUS,PROPOSAL_STATUS_PROSES,PROPOSAL_LOG_CODE,PROPOSAL_MANFAAT_PENERAPAN,PROPOSAL_IS_ORG_MENDUKUNG,PROPOSAL_IS_DUPLIKASI_DESC,PROPOSAL_CODE";
-            var fvalue = "'" + LASTID + "', " +
-                        "2, " +
-                        "'" + INPUT.PROPOSAL_RETEK_ID + "', " +
-                        "'" + INPUT.PROPOSAL_LPK_ID + "', " +
-                        "'" + INPUT.PROPOSAL_YEAR + "', " +
-                        "NULL, " +
-                        "'" + INPUT.PROPOSAL_TIM_NAMA + "', " +
-                        "'" + INPUT.PROPOSAL_TIM_ALAMAT + "', " +
-                        "'" + INPUT.PROPOSAL_TIM_PHONE + "', " +
-                        "'" + INPUT.PROPOSAL_TIM_EMAIL + "', " +
-                        "'" + INPUT.PROPOSAL_TIM_FAX + "', " +
-                        "'" + INPUT.PROPOSAL_KONSEPTOR + "', " +
-                        "'" + INPUT.PROPOSAL_INSTITUSI + "', " +
-                        "'" + INPUT.PROPOSAL_JUDUL_PNPS + "', " +
-                        "'" + INPUT.PROPOSAL_RUANG_LINGKUP + "', " +
-                        "'" + INPUT.PROPOSAL_JENIS_PERUMUSAN + "', " +
-                        "'" + INPUT.PROPOSAL_JALUR + "', " +
-                        "'" + INPUT.PROPOSAL_JENIS_ADOPSI + "', " +
-                        "'" + INPUT.PROPOSAL_METODE_ADOPSI + "', " +
-                        "'" + INPUT.PROPOSAL_TERJEMAHAN_SNI_ID + "', " +
-                        "'" + INPUT.PROPOSAL_RALAT_SNI_ID + "', " +
-                        "'" + INPUT.PROPOSAL_AMD_SNI_ID + "', " +
-                        "'" + INPUT.PROPOSAL_IS_URGENT + "', " +
-                        "'" + INPUT.PROPOSAL_PASAL + "', " +
-                        "'" + INPUT.PROPOSAL_IS_HAK_PATEN + "', " +
-                        "'" + INPUT.PROPOSAL_IS_HAK_PATEN_DESC + "', " +
-                        "'" + INPUT.PROPOSAL_INFORMASI + "', " +
-                        "'" + INPUT.PROPOSAL_TUJUAN + "', " +
-                        "'" + INPUT.PROPOSAL_PROGRAM_PEMERINTAH + "', " +
-                        "'" + INPUT.PROPOSAL_PIHAK_BERKEPENTINGAN + "', " +
-                        "'" + USER_ID + "', " +
-                        DATENOW + "," +
-                        "'0', " +
-                        "'1', " +
-                        "'" + LOGCODE + "'," +
-                        "'" + INPUT.PROPOSAL_MANFAAT_PENERAPAN + "'," +
-                        "'" + INPUT.PROPOSAL_IS_ORG_MENDUKUNG + "'," +
-                        "'" + INPUT.PROPOSAL_IS_DUPLIKASI_DESC + "'," +
-                        "'" + PROPOSAL_CODE + "'";
+            var DataPath1 = (from path in db.SYS_CONFIG where path.CONFIG_ID == 15 select path).SingleOrDefault();
+            string pathnya = DataPath1.CONFIG_VALUE+"/Upload/Dokumen/HAK_PATEN/";
+
+            //string pathnya = Server.MapPath("~/Upload/Dokumen/HAK_PATEN/");
+            HttpPostedFileBase file_paten = Request.Files["PROPOSAL_HAK_PATEN_LOCATION"];
+            var file_name_paten = "";
+            var filePath_paten = "";
+            var fileExtension_paten = "";
+            if (file_paten != null)
+            {
+                //Check whether Directory (Folder) exists.
+                if (!Directory.Exists(pathnya))
+                {
+                    //If Directory (Folder) does not exists. Create it.
+                    Directory.CreateDirectory(pathnya);
+                }
+                string lampiranregulasipath = file_paten.FileName;
+                if (lampiranregulasipath.Trim() != "")
+                {
+                    lampiranregulasipath = Path.GetFileNameWithoutExtension(file_paten.FileName);
+                    fileExtension_paten = Path.GetExtension(file_paten.FileName);
+                    file_name_paten = "HAK_PATEN_ID_PROPOSAL_" + LASTID + fileExtension_paten;
+                    filePath_paten = pathnya + file_name_paten.Replace(" ", "_");
+                    file_paten.SaveAs(filePath_paten);
+                }
+            }
+
+            var fname = "";
+            var fvalue = "";
+
+            if (INPUT.PROPOSAL_HAK_PATEN_LOCATION != null)
+            {
+                fname = "PROPOSAL_ID,PROPOSAL_TYPE,PROPOSAL_RETEK_ID,PROPOSAL_LPK_ID,PROPOSAL_YEAR,PROPOSAL_KOMTEK_ID,PROPOSAL_TIM_NAMA,PROPOSAL_TIM_ALAMAT,PROPOSAL_TIM_PHONE,PROPOSAL_TIM_EMAIL,PROPOSAL_TIM_FAX,PROPOSAL_KONSEPTOR,PROPOSAL_INSTITUSI,PROPOSAL_JUDUL_PNPS,PROPOSAL_RUANG_LINGKUP,PROPOSAL_JENIS_PERUMUSAN,PROPOSAL_JALUR,PROPOSAL_JENIS_ADOPSI,PROPOSAL_METODE_ADOPSI,PROPOSAL_TERJEMAHAN_SNI_ID,PROPOSAL_RALAT_SNI_ID,PROPOSAL_AMD_SNI_ID,PROPOSAL_IS_URGENT,PROPOSAL_PASAL,PROPOSAL_IS_HAK_PATEN,PROPOSAL_IS_HAK_PATEN_DESC,PROPOSAL_INFORMASI,PROPOSAL_TUJUAN,PROPOSAL_PROGRAM_PEMERINTAH,PROPOSAL_PIHAK_BERKEPENTINGAN,PROPOSAL_CREATE_BY,PROPOSAL_CREATE_DATE,PROPOSAL_STATUS,PROPOSAL_STATUS_PROSES,PROPOSAL_LOG_CODE,PROPOSAL_MANFAAT_PENERAPAN,PROPOSAL_IS_ORG_MENDUKUNG,PROPOSAL_IS_DUPLIKASI_DESC,PROPOSAL_HAK_PATEN_LOCATION,PROPOSAL_HAK_PATEN_NAME,PROPOSAL_CODE";
+                fvalue = "'" + LASTID + "', " +
+                    "2, " +
+                    "'" + INPUT.PROPOSAL_RETEK_ID + "', " +
+                    "'" + INPUT.PROPOSAL_LPK_ID + "', " +
+                    "'" + INPUT.PROPOSAL_YEAR + "', " +
+                    "NULL, " +
+                    "'" + INPUT.PROPOSAL_TIM_NAMA + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_ALAMAT + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_PHONE + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_EMAIL + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_FAX + "', " +
+                    "'" + INPUT.PROPOSAL_KONSEPTOR + "', " +
+                    "'" + INPUT.PROPOSAL_INSTITUSI + "', " +
+                    "'" + INPUT.PROPOSAL_JUDUL_PNPS + "', " +
+                    "'" + INPUT.PROPOSAL_RUANG_LINGKUP + "', " +
+                    "'" + INPUT.PROPOSAL_JENIS_PERUMUSAN + "', " +
+                    "'" + INPUT.PROPOSAL_JALUR + "', " +
+                    "'" + INPUT.PROPOSAL_JENIS_ADOPSI + "', " +
+                    "'" + INPUT.PROPOSAL_METODE_ADOPSI + "', " +
+                    "'" + INPUT.PROPOSAL_TERJEMAHAN_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_RALAT_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_AMD_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_IS_URGENT + "', " +
+                    "'" + INPUT.PROPOSAL_PASAL + "', " +
+                    "'" + INPUT.PROPOSAL_IS_HAK_PATEN + "', " +
+                    "'" + INPUT.PROPOSAL_IS_HAK_PATEN_DESC + "', " +
+                    "'" + INPUT.PROPOSAL_INFORMASI + "', " +
+                    "'" + INPUT.PROPOSAL_TUJUAN + "', " +
+                    "'" + INPUT.PROPOSAL_PROGRAM_PEMERINTAH + "', " +
+                    "'" + INPUT.PROPOSAL_PIHAK_BERKEPENTINGAN + "', " +
+                    "'" + USER_ID + "', " +
+                    DATENOW + "," +
+                    "'0', " +
+                    "'1', " +
+                    "'" + LOGCODE + "'," +
+                    "'" + INPUT.PROPOSAL_MANFAAT_PENERAPAN + "'," +
+                    "'" + INPUT.PROPOSAL_IS_ORG_MENDUKUNG + "'," +
+                    "'" + INPUT.PROPOSAL_IS_DUPLIKASI_DESC + "'," +
+                    "'/Upload/Dokumen/HAK_PATEN/'," +
+                    "'" + file_name_paten.Replace(" ", "_") + "'," +
+                    "'" + PROPOSAL_CODE + "'";
+            }
+            else
+            {
+                fname = "PROPOSAL_ID,PROPOSAL_TYPE,PROPOSAL_RETEK_ID,PROPOSAL_LPK_ID,PROPOSAL_YEAR,PROPOSAL_KOMTEK_ID,PROPOSAL_TIM_NAMA,PROPOSAL_TIM_ALAMAT,PROPOSAL_TIM_PHONE,PROPOSAL_TIM_EMAIL,PROPOSAL_TIM_FAX,PROPOSAL_KONSEPTOR,PROPOSAL_INSTITUSI,PROPOSAL_JUDUL_PNPS,PROPOSAL_RUANG_LINGKUP,PROPOSAL_JENIS_PERUMUSAN,PROPOSAL_JALUR,PROPOSAL_JENIS_ADOPSI,PROPOSAL_METODE_ADOPSI,PROPOSAL_TERJEMAHAN_SNI_ID,PROPOSAL_RALAT_SNI_ID,PROPOSAL_AMD_SNI_ID,PROPOSAL_IS_URGENT,PROPOSAL_PASAL,PROPOSAL_IS_HAK_PATEN,PROPOSAL_IS_HAK_PATEN_DESC,PROPOSAL_INFORMASI,PROPOSAL_TUJUAN,PROPOSAL_PROGRAM_PEMERINTAH,PROPOSAL_PIHAK_BERKEPENTINGAN,PROPOSAL_CREATE_BY,PROPOSAL_CREATE_DATE,PROPOSAL_STATUS,PROPOSAL_STATUS_PROSES,PROPOSAL_LOG_CODE,PROPOSAL_MANFAAT_PENERAPAN,PROPOSAL_IS_ORG_MENDUKUNG,PROPOSAL_IS_DUPLIKASI_DESC,PROPOSAL_CODE";
+                fvalue = "'" + LASTID + "', " +
+                    "2, " +
+                    "'" + INPUT.PROPOSAL_RETEK_ID + "', " +
+                    "'" + INPUT.PROPOSAL_LPK_ID + "', " +
+                    "'" + INPUT.PROPOSAL_YEAR + "', " +
+                    "NULL, " +
+                    "'" + INPUT.PROPOSAL_TIM_NAMA + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_ALAMAT + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_PHONE + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_EMAIL + "', " +
+                    "'" + INPUT.PROPOSAL_TIM_FAX + "', " +
+                    "'" + INPUT.PROPOSAL_KONSEPTOR + "', " +
+                    "'" + INPUT.PROPOSAL_INSTITUSI + "', " +
+                    "'" + INPUT.PROPOSAL_JUDUL_PNPS + "', " +
+                    "'" + INPUT.PROPOSAL_RUANG_LINGKUP + "', " +
+                    "'" + INPUT.PROPOSAL_JENIS_PERUMUSAN + "', " +
+                    "'" + INPUT.PROPOSAL_JALUR + "', " +
+                    "'" + INPUT.PROPOSAL_JENIS_ADOPSI + "', " +
+                    "'" + INPUT.PROPOSAL_METODE_ADOPSI + "', " +
+                    "'" + INPUT.PROPOSAL_TERJEMAHAN_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_RALAT_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_AMD_SNI_ID + "', " +
+                    "'" + INPUT.PROPOSAL_IS_URGENT + "', " +
+                    "'" + INPUT.PROPOSAL_PASAL + "', " +
+                    "'" + INPUT.PROPOSAL_IS_HAK_PATEN + "', " +
+                    "'" + INPUT.PROPOSAL_IS_HAK_PATEN_DESC + "', " +
+                    "'" + INPUT.PROPOSAL_INFORMASI + "', " +
+                    "'" + INPUT.PROPOSAL_TUJUAN + "', " +
+                    "'" + INPUT.PROPOSAL_PROGRAM_PEMERINTAH + "', " +
+                    "'" + INPUT.PROPOSAL_PIHAK_BERKEPENTINGAN + "', " +
+                    "'" + USER_ID + "', " +
+                    DATENOW + "," +
+                    "'0', " +
+                    "'1', " +
+                    "'" + LOGCODE + "'," +
+                    "'" + INPUT.PROPOSAL_MANFAAT_PENERAPAN + "'," +
+                    "'" + INPUT.PROPOSAL_IS_ORG_MENDUKUNG + "'," +
+                    "'" + INPUT.PROPOSAL_IS_DUPLIKASI_DESC + "'," +
+                    "'" + PROPOSAL_CODE + "'";
+            }
+
+                
             db.Database.ExecuteSqlCommand("INSERT INTO TRX_PROPOSAL (" + fname + ") VALUES (" + fvalue.Replace("''", "NULL") + ")");
             var tester = "INSERT INTO TRX_PROPOSAL_FIXER (" + fname + ") VALUES (" + fvalue.Replace("''", "NULL") + ")";
             if (PROPOSAL_REV_MERIVISI_ID != null)
@@ -671,6 +753,8 @@ namespace Portal.Controllers
             var Bukti = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_FOLDER_ID = 10 AND DOC_RELATED_ID = " + id + " AND DOC_RELATED_TYPE = 29").FirstOrDefault();
             var Surat = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_FOLDER_ID = 10 AND DOC_RELATED_ID = " + id + " AND DOC_RELATED_TYPE = 32").FirstOrDefault();
             var link = (from links in portaldb.SYS_LINK where links.LINK_IS_USE == 1 && links.LINK_STATUS == 1 select links).SingleOrDefault();
+            var link1 = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
+            ViewData["link1"] = link1;
             ViewData["link"] = link.LINK_NAME;
             ViewData["DataProposal"] = DataProposal;
             ViewData["AcuanNormatif"] = AcuanNormatif;
@@ -1144,6 +1228,7 @@ namespace Portal.Controllers
         public ActionResult Detail_Usulan_PNPS(int id = 0)
         {
             ViewData["moduleId"] = moduleId;
+            //int DataProposal = "";
             var DataProposal = (from proposal in db.VIEW_PROPOSAL where proposal.PROPOSAL_ID == id select proposal).SingleOrDefault();
             var AcuanNormatif = (from an in db.VIEW_PROPOSAL_REF where an.PROPOSAL_REF_TYPE == 1 && an.PROPOSAL_REF_PROPOSAL_ID == id orderby an.PROPOSAL_REF_ID ascending select an).ToList();
             var AcuanNonNormatif = (from an in db.VIEW_PROPOSAL_REF where an.PROPOSAL_REF_TYPE == 2 && an.PROPOSAL_REF_PROPOSAL_ID == id orderby an.PROPOSAL_REF_ID ascending select an).ToList();
@@ -1156,6 +1241,8 @@ namespace Portal.Controllers
             var Surat = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_FOLDER_ID = 10 AND DOC_RELATED_ID = " + id + " AND DOC_RELATED_TYPE = 32").FirstOrDefault();
             var Outline = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_FOLDER_ID = 10 AND DOC_RELATED_ID = " + id + " AND DOC_RELATED_TYPE = 36").FirstOrDefault();
             var link = (from links in portaldb.SYS_LINK where links.LINK_IS_USE == 1 && links.LINK_STATUS == 1 select links).SingleOrDefault();
+            var link1 = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
+            ViewData["link1"] = link1;
             ViewData["link"] = link.LINK_NAME;
             ViewData["DataProposal"] = DataProposal;
             ViewData["AcuanNormatif"] = AcuanNormatif;
@@ -1169,6 +1256,7 @@ namespace Portal.Controllers
             ViewData["Surat"] = Surat;
             ViewData["Outline"] = Outline;
             return View();
+            //return Content("isi : "+DataProposal.PROPOSAL_NO_SNI_PROPOSAL);
         }
 
         public ActionResult Update(int id) {
