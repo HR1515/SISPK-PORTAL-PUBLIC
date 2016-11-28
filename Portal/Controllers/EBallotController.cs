@@ -293,6 +293,7 @@ namespace Portal.Controllers
 
                     string path = "";
                     string filePathpdf = "";
+                    var pathnya = "";
 
                     HttpPostedFileBase file4 = Request.Files["POLLING_FILE"];
                     if (file4.ContentLength > 0)
@@ -310,6 +311,7 @@ namespace Portal.Controllers
                             filePathpdf = path + "POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
                             pdf.Save(@"" + filePathpdf, Aspose.Pdf.SaveFormat.Pdf);
                         }
+                        pathnya = "/Upload/DokPolling/POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
                     }
 
                     using (OracleConnection con = new OracleConnection("Data Source=" + GetIP.CONFIG_VALUE + ";User ID=" + GetUser.CONFIG_VALUE + ";PASSWORD=" + GetPassword.CONFIG_VALUE + ";"))
@@ -318,8 +320,7 @@ namespace Portal.Controllers
 
                         using (OracleCommand cmd = new OracleCommand())
                         {
-                            var pathnya = "/Upload/DokPolling/POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
-
+                            
                             var UserId = Session["USER_ID"];
                             var logcode = MixHelper.GetLogCode();
                             int lastid = MixHelper.GetSequence("TRX_POLLING_DETAILS");
@@ -422,11 +423,15 @@ namespace Portal.Controllers
 
                 }
                 var UserId = Convert.ToInt32(Session["USER_ID"]);
-                ViewData["DataProposal"] = (from poll in db.VIEW_POLLING where poll.POLLING_ID == datapoling.POLLING_DETAIL_POLLING_ID select poll).SingleOrDefault();
+                var DataProposal = (from poll in db.VIEW_POLLING where poll.POLLING_ID == datapoling.POLLING_DETAIL_POLLING_ID select poll).SingleOrDefault();
                 ViewData["JML_POLLING"] = db.Database.SqlQuery<int>("SELECT COUNT(POLLING_DETAIL_ID) AS JML_POLL FROM TRX_POLLING_DETAILS WHERE POLLING_DETAIL_POLLING_ID = " + datapoling.POLLING_DETAIL_POLLING_ID).SingleOrDefault();
+                ViewData["DataProposal"] = DataProposal;
+                ViewData["doc_rsni3"] = db.Database.SqlQuery<VIEW_DOCUMENTS>("SELECT * FROM VIEW_DOCUMENTS WHERE DOC_RELATED_ID = '" + DataProposal.POLLING_PROPOSAL_ID + "'  AND DOC_RELATED_TYPE = 38").SingleOrDefault();
                 ViewData["polling"] = datapoling;
                 ViewData["jp_list"] = db.Database.SqlQuery<VIEW_POLLING_DETAIL>("SELECT * FROM VIEW_POLLING_DETAIL WHERE POLLING_DETAIL_POLLING_ID = '" + id + "' AND POLLING_DETAIL_CREATE_BY = " + UserId + " ORDER BY POLLING_DETAIL_PASAL ASC, POLLING_DETAIL_CREATE_BY ASC, POLLING_DETAIL_OPTION ASC").ToList();
                 ViewData["Error"] = "";
+                var link = (from t in portaldb.SYS_LINK where t.LINK_IS_USE == 1 && t.LINK_ID == 1 select t).SingleOrDefault();
+                ViewData["link"] = link;
                 var isError = @TempData["isError"];
 
                 if (isError != null)
@@ -439,7 +444,7 @@ namespace Portal.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditJajakPendapat(TRX_POLLING_DETAILS input, string jawaban = "")
+        public ActionResult EditJajakPendapat(TRX_POLLING_DETAILS input, VIEW_PROPOSAL VP, string jawaban = "")
         {
             if (Session["Captcha"] == null || Session["Captcha"].ToString() != jawaban)
             {
@@ -453,6 +458,39 @@ namespace Portal.Controllers
                 var GetIP = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 12").FirstOrDefault();
                 var GetUser = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 13").FirstOrDefault();
                 var GetPassword = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 14").FirstOrDefault();
+                var GetPath = db.Database.SqlQuery<SYS_CONFIG>("SELECT * FROM SYS_CONFIG WHERE CONFIG_ID = 15").FirstOrDefault();
+                var TGL_SEKARANG = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                string path = "";
+                string filePathpdf = "";
+                string dir = "";
+
+                if (input.POLLING_DETAIL_FILE_PATH != "" && input.POLLING_DETAIL_FILE_PATH != null)
+                {
+                    dir = input.POLLING_DETAIL_FILE_PATH;
+                } else
+                {
+                    dir = "/Upload/DokPolling/POLLING_" + VP.PROPOSAL_ID + "_" + TGL_SEKARANG + ".pdf";
+                }
+
+                HttpPostedFileBase file4 = Request.Files["POLLING_FILE"];
+                if (file4.ContentLength > 0)
+                {
+                    Directory.CreateDirectory(GetPath.CONFIG_VALUE + "/Upload/DokPolling");
+                    path = GetPath.CONFIG_VALUE +""+ dir;
+                    Stream stremdokumen = file4.InputStream;
+                    byte[] appData = new byte[file4.ContentLength + 1];
+                    stremdokumen.Read(appData, 0, file4.ContentLength);
+                    string Extension = Path.GetExtension(file4.FileName);
+                    if (Extension.ToLower() == ".pdf")
+                    {
+                        Aspose.Pdf.Document pdf = new Aspose.Pdf.Document(stremdokumen);
+                        //Aspose.Words.Document docx = new Aspose.Words.Document(stremdokumen);
+                        filePathpdf = path;
+                        pdf.Save(@"" + filePathpdf, Aspose.Pdf.SaveFormat.Pdf);
+                    }
+                }
+
                 using (OracleConnection con = new OracleConnection("Data Source=" + GetIP.CONFIG_VALUE + ";User ID=" + GetUser.CONFIG_VALUE + ";PASSWORD=" + GetPassword.CONFIG_VALUE + ";"))
                 {
                     con.Open();
@@ -465,6 +503,7 @@ namespace Portal.Controllers
                         var updatequery = "UPDATE TRX_POLLING_DETAILS SET " +
                                     "POLLING_DETAIL_REASON = :parameter, " +
                                     "POLLING_DETAIL_UPDATE_BY = '" + UserId + "', " +
+                                    "POLLING_DETAIL_FILE_PATH = '" + dir + "', " +
                                     "POLLING_DETAIL_UPDATE_DATE = " + datenow +
                                     " WHERE POLLING_DETAIL_ID = '" + input.POLLING_DETAIL_ID + "'";
                         //return Json(new{sas =updatequery },JsonRequestBehavior.AllowGet);
