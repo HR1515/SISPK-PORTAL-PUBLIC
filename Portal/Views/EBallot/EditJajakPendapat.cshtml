@@ -142,7 +142,15 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 control-label"><strong>Pasal</strong></label>
+										@if (ViewBag.polling.POLLING_DETAIL_OPTION == 1 || ViewBag.polling.POLLING_DETAIL_OPTION == 2)
+										{
+											<label class="col-md-2 control-label"><strong>Pasal</strong></label>
+										}
+										else
+										{
+											<label class="col-md-2 control-label"><strong>Non-Pasal</strong></label>
+										}
+										
 										<div class="col-md-2">
 											<span class="form-control-static"> @ViewBag.polling.POLLING_DETAIL_PASAL</span>
 										</div>

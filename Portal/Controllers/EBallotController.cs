@@ -57,7 +57,7 @@ namespace Portal.Controllers
             var start = (param.iDisplayStart == 0) ? 0 : param.iDisplayStart;
 
 
-            string where_clause = "POLLING_STATUS = 1 AND POLLING_IS_KUORUM = 0 AND POLLING_TYPE = 7 AND POLLING_MONITORING_TYPE = 'Sedang Berlangsung'";
+            string where_clause = "POLLING_STATUS = 1 AND POLLING_IS_KUORUM = 0 AND (POLLING_TYPE = 7 OR POLLING_TYPE = 12) AND POLLING_MONITORING_TYPE = 'Sedang Berlangsung'";
 
             string search_clause = "";
             if (search != "")
@@ -88,7 +88,7 @@ namespace Portal.Controllers
             if (where_clause != "" || search_clause != "")
             {
                 inject_clause_count = "WHERE " + where_clause + " " + search_clause;
-                inject_clause_select = "SELECT * FROM (SELECT T1.*, ROWNUM ROWNUMBER FROM (SELECT * FROM VIEW_POLLING WHERE " + where_clause + " " + search_clause + " ORDER BY " + order + " " + sort + ") T1 WHERE ROWNUM <= " + Convert.ToString(limit + start) + ") WHERE ROWNUMBER > " + Convert.ToString(start);
+                inject_clause_select = "SELECT * FROM (SELECT T1.*, ROWNUM ROWNUMBER FROM (SELECT * FROM VIEW_POLLING WHERE " + where_clause + " AND (PROPOSAL_IS_BATAL <> '1' OR PROPOSAL_IS_BATAL IS NULL) " + search_clause + " ORDER BY " + order + " " + sort + ") T1 WHERE ROWNUM <= " + Convert.ToString(limit + start) + ") WHERE ROWNUMBER > " + Convert.ToString(start);
             }
             var CountData = db.Database.SqlQuery<decimal>("SELECT CAST(COUNT(*) AS NUMBER) AS Jml FROM  VIEW_POLLING " + inject_clause_count);
             var SelectedData = db.Database.SqlQuery<VIEW_POLLING>(inject_clause_select);

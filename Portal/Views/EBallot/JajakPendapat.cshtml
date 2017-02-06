@@ -150,14 +150,18 @@
                                                             <div class="radio-list">
                                                                 <label class="radio-inline">
                                                                     <input type="radio" class="opsi" name="POLLING_DETAIL_OPTION" id="POLLING_DETAIL_OPTION1" value="1" checked>
-                                                                    Editorial
+                                                                    Pasal Editorial
                                                                 </label>
                                                                 <label class="radio-inline">
                                                                     <input type="radio" class="opsi" name="POLLING_DETAIL_OPTION" id="POLLING_DETAIL_OPTION2" value="2">
-                                                                    Substansial</label>
+                                                                    Pasal Substansial</label>
                                                                 <label class="radio-inline">
                                                                     <input type="radio" class="opsi" name="POLLING_DETAIL_OPTION" id="POLLING_DETAIL_OPTION3" value="3">
-                                                                    Lainnya
+                                                                    Non-Pasal Editorial
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="opsi" name="POLLING_DETAIL_OPTION" id="POLLING_DETAIL_OPTION3" value="4">
+                                                                    Non-Pasal Substansial
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -236,7 +240,7 @@
                                                     <div class="panel-body @ganjil">
                                                         <header>
                                                             <div class='text-left col-sm-6' style="padding-left: 0px;">
-                                                                <div class="comment-user"><i class="fa fa-user"></i>@dt.USER_PUBLIC_NAMA_LENGKAP</div>
+                                                                <div class="comment-user"><i class="fa fa-user"></i>@dt.POLLING_DETAIL_INPUT_TYPE_NAME</div>
                                                                 <time class="comment-date" datetime="@dt.POLLING_DETAIL_CREATE_DATE"><i class="fa fa-clock-o"></i>@dt.POLLING_DETAIL_CREATE_DATE </time>
                                                                 <div class="comment-user"><i class="fa fa-check-square-o"></i>@dt.PILIHAN</div>
                                                             </div>
@@ -250,7 +254,7 @@
                                                                 else
                                                                 {
                                                                     <a class="icon-btn" href="javascript:;" style='font-weight: bold; font-size: 16px; height: 50px; padding: 5px 0 0;'>
-                                                                        @dt.POLLING_DETAIL_PASAL<div>TOPIK</div>
+                                                                        @dt.POLLING_DETAIL_PASAL<div>Non-PASAL</div>
                                                                     </a>
                                                                 }
 
@@ -320,11 +324,11 @@
             $("#labelPasal").text("Pasal");
             $("#POLLING_DETAIL_PASAL").val("");
         }
-        else if (this.value == 3) {
+        else if (this.value == 3 || this.value == 4) {
             $("#POLLING_DETAIL_PASAL").removeAttr("onkeypress");
             $("#pasalCol").removeAttr("class");
             $("#pasalCol").attr("class", "col-md-4");
-            $("#labelPasal").text("Topik");
+            $("#labelPasal").text("Non-Pasal");
             $("#POLLING_DETAIL_PASAL").val("");
             //$("#labelPasal").css("font-weight", "Bold");
         }
