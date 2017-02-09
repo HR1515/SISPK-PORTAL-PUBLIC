@@ -72,7 +72,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -80,7 +80,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR PROPOSAL_JUDUL_PNPS = '%" + search + "%')";
+                search_clause += " OR LOWER(PROPOSAL_JUDUL_PNPS) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -122,6 +122,7 @@ namespace Portal.Controllers
             List<string> order_field = new List<string>();
             order_field.Add("PROPOSAL_NO_SNI_PROPOSAL");
             order_field.Add("PROPOSAL_JUDUL_PNPS");
+            order_field.Add("PROPOSAL_RUANG_LINGKUP");
             order_field.Add("KOMTEK_NAME");
 
             string order_key = (param.iSortCol_0 == "0") ? "0" : param.iSortCol_0;
@@ -148,7 +149,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -156,7 +157,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR PROPOSAL_JUDUL_PNPS = '%" + search + "%')";
+                search_clause += " OR LOWER(PROPOSAL_JUDUL_PNPS) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";

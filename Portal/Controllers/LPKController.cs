@@ -47,6 +47,10 @@ namespace Portal.Controllers
             order_field.Add("LPK_EMAIL");
             order_field.Add("LPK_PERIODE_AWAL");
             order_field.Add("LPK_PERIODE_AKHIR");
+            order_field.Add("LPK_LINGKUP_NAME");
+            order_field.Add("LPK_CONTACT_PERSON");
+            order_field.Add("JML_SNI");
+
 
             string order_key = (param.iSortCol_0 == "0") ? "0" : param.iSortCol_0;
             string order = (param.iSortCol_0 == "0") ? default_order : order_field[Convert.ToInt32(order_key)];
@@ -72,7 +76,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -80,7 +84,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR LPK_NAMA = '%" + search + "%')";
+                search_clause += " OR LOWER(LPK_NAMA) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -218,7 +222,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -226,7 +230,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR LPK_NAMA = '%" + search + "%')";
+                search_clause += " OR LOWER(LPK_NAMA) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";

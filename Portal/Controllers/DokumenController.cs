@@ -65,7 +65,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -73,7 +73,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR DOC_CREATE_DATE = '%" + search + "%')";
+                search_clause += " OR LOWER(DOC_CREATE_DATE) = LOWER('%" + search + "%'))";
             }
             
             string inject_clause_count = "";
@@ -93,7 +93,7 @@ namespace Portal.Controllers
             var result = from list in SelectedData
                          select new string[] 
             { 
-                Convert.ToString(list.DOC_CREATE_DATE),
+                //Convert.ToString(list.DOC_CREATE_DATE),
                 Convert.ToString(no++),
                 Convert.ToString(list.DOC_NAME),
                 Convert.ToString((Session["USER_ID"] != null)?"<a href='" + link.LINK_NAME + "" + list.DOC_FILE_PATH.Replace("/U", "U") + "" + list.DOC_FILE_NAME + "." + list.DOC_FILETYPE + "'><i class='fa fa-file'></i></a>":"<a href='javascript()'><i class='fa fa-file'></i></a>")                

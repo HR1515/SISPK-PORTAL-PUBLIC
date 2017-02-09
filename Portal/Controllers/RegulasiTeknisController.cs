@@ -44,6 +44,8 @@ namespace Portal.Controllers
             List<string> order_field = new List<string>();
             order_field.Add("SNI_NOMOR");
             order_field.Add("SNI_JUDUL");
+            order_field.Add("REGULATOR_CODE");
+            order_field.Add("RETEK_NO_SK");
 
             string order_key = (param.iSortCol_0 == "0") ? "0" : param.iSortCol_0;
             string order = (param.iSortCol_0 == "0") ? default_order : order_field[Convert.ToInt32(order_key)];
@@ -69,7 +71,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -77,7 +79,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -146,6 +148,10 @@ namespace Portal.Controllers
 
             List<string> order_field = new List<string>();
             order_field.Add("RETEK_NO_SK");
+            order_field.Add("RETEK_TENTANG");
+            order_field.Add("REGULATOR");
+            order_field.Add("RETEK_KETERANGAN");
+
 
             string order_key = (param.iSortCol_0 == "0") ? "0" : param.iSortCol_0;
             string order = (param.iSortCol_0 == "0") ? default_order : order_field[Convert.ToInt32(order_key)];
@@ -171,7 +177,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -179,7 +185,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR RETEK_NO_SK = '%" + search + "%')";
+                search_clause += " OR LOWER(RETEK_NO_SK) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";

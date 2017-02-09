@@ -100,7 +100,7 @@ namespace Portal.Controllers
 
             List<string> order_field = new List<string>();
             order_field.Add("ICS_CODE");
-            order_field.Add("ICS_NAME");
+            order_field.Add("ICS_NAME_IND");
 
 
 
@@ -128,7 +128,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -136,7 +136,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR ICS_CODE = '%" + search + "%')";
+                search_clause += " OR LOWER(ICS_CODE) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -1083,7 +1083,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -1091,7 +1091,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR KOMTEK_CODE = '%" + search + "%')";
+                search_clause += " OR LOWER(KOMTEK_CODE) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -1923,6 +1923,10 @@ namespace Portal.Controllers
             List<string> order_field = new List<string>();
             order_field.Add("DSK_DOC_NUMBER");
             order_field.Add("SNI_NOMOR");
+            order_field.Add("SNI_JUDUL");
+            order_field.Add("DSK_DOC_NAME");
+            order_field.Add("SNI_JUDUL_ENG");
+            order_field.Add("SNI_SK_NOMOR");
 
 
 
@@ -1950,7 +1954,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -1958,7 +1962,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR DSK_DOC_NUMBER = '%" + search + "%')";
+                search_clause += " OR LOWER(DSK_DOC_NUMBER) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -2044,7 +2048,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -2052,7 +2056,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_SK_YEAR_NAME = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_SK_YEAR_NAME) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -2066,11 +2070,11 @@ namespace Portal.Controllers
             var CountData = db.Database.SqlQuery<decimal>("SELECT CAST(COUNT(*) AS NUMBER) AS Jml FROM  VIEW_REKAP_SNI_BY_SK " + inject_clause_count);
             var SelectedData = db.Database.SqlQuery<VIEW_REKAP_SNI_BY_SK>(inject_clause_select);
 
-            //return Json(new { query = SelectedData }, JsonRequestBehavior.AllowGet);
+
             var no = 1;
             var result = from list in SelectedData
-                         select new string[] 
-            { 
+                         select new string[]
+            {
                 Convert.ToString(no++),
                 Convert.ToString("<a href='Sni_SK_Tahun?thn="+list.SNI_SK_YEAR_NAME+"'>"+list.SNI_SK_YEAR_NAME+"</a>"),
                 Convert.ToString((list.SNI_BARU != 0)?"<a href='Sni_SK_Baru_Tahun/"+list.SNI_SK_YEAR_NAME+"'>"+list.SNI_BARU+"</a>":""+list.SNI_BARU),
@@ -2088,6 +2092,7 @@ namespace Portal.Controllers
                 iTotalDisplayRecords = CountData,
                 aaData = result.ToArray()
             }, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult Sni_SK_Tahun(int thn = 0)
@@ -2774,6 +2779,8 @@ namespace Portal.Controllers
 
             List<string> order_field = new List<string>();
             order_field.Add("SNI_NOMOR");
+            order_field.Add("SNI_ID");
+            order_field.Add("SNI_JUDUL");
             order_field.Add("PROPOSAL_REV_MERIVISI_NOMOR");
 
 
@@ -2802,7 +2809,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -2810,7 +2817,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -2905,7 +2912,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -2913,7 +2920,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -2981,6 +2988,7 @@ namespace Portal.Controllers
 
             List<string> order_field = new List<string>();
             order_field.Add("SNI_NOMOR");
+            order_field.Add("SNI_JUDUL");
             order_field.Add("PROPOSAL_ADOPSI_TYPE");
             order_field.Add("PROPOSAL_ADOPSI_NOMOR_JUDUL");
 
@@ -3009,7 +3017,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -3017,7 +3025,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -3063,6 +3071,7 @@ namespace Portal.Controllers
 
             List<string> order_field = new List<string>();
             order_field.Add("SNI_NOMOR");
+            order_field.Add("SNI_JUDUL");
             order_field.Add("SNI_ID_ACUAN_NORMATIF");
 
 
@@ -3091,7 +3100,7 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -3099,7 +3108,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
@@ -3243,8 +3252,8 @@ namespace Portal.Controllers
                 {
                     if (fields != "")
                     {
-                        search_clause += fields + "  LIKE '%" + search + "%'";
-                        
+                        search_clause += "LOWER(" + fields + ")  LIKE LOWER('%" + search + "%')";
+
                         if (i < order_field.Count())
                         {
                             search_clause += " OR ";
@@ -3252,7 +3261,7 @@ namespace Portal.Controllers
                     }
                     i++;
                 }
-                search_clause += " OR SNI_NOMOR = '%" + search + "%')";
+                search_clause += " OR LOWER(SNI_NOMOR) = LOWER('%" + search + "%'))";
             }
 
             string inject_clause_count = "";
