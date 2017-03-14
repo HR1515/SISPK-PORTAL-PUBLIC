@@ -114,13 +114,14 @@ namespace Portal.Controllers
 
                 //Insert Data User Public to Log SYS_LOG
                 MixHelper.InsertLogReg(logcodePublic, objekPublic, 1);
-
+                string pass = AuthHelper.GenPassword(sysuser.USER_PASSWORD);
+                //string pass = AuthHelper.GenPassword("sispk");
                 //For Data User 
                 var fNameUser = "USER_ID,USER_ACCESS_ID,USER_NAME,USER_PASSWORD,USER_IS_ONLINE,USER_LAST_LOGIN,USER_CREATE_BY,USER_CREATE_DATE,USER_UPDATE_BY,USER_UPDATE_DATE,USER_STATUS,USER_LOG_CODE,USER_TYPE_ID,USER_REF_ID";
                 var fValueUser = "'" + lastIdUser + "', " +
                             "4, " +
                             "'" + sysuser.USER_NAME + "', " +
-                            "'" + AuthHelper.GenPassword(sysuser.USER_PASSWORD) + "', " +
+                            "'" + pass + "', " +
                             "''," +
                             "''," +
                             "'" + lastIdUser + "'," +
