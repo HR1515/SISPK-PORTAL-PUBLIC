@@ -3143,11 +3143,13 @@
       FROM "C##BSN_SISPK"."VIEW_USERS_PUBLIC" "VIEW_USERS_PUBLIC"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VIEW_WILAYAH_KABUPATEN" EntityType="SISPKModel.Store.VIEW_WILAYAH_KABUPATEN" store:Type="Views" store:Schema="C##BSN_SISPK" store:Name="VIEW_WILAYAH_KABUPATEN">
-            <DefiningQuery>SELECT 
-      "VIEW_WILAYAH_KABUPATEN"."WILAYAH_ID" AS "WILAYAH_ID", 
-      "VIEW_WILAYAH_KABUPATEN"."WILAYAH_PARENT_ID" AS "WILAYAH_PARENT_ID", 
-      "VIEW_WILAYAH_KABUPATEN"."WILAYAH_NAMA" AS "WILAYAH_NAMA"
-      FROM "C##BSN_SISPK"."VIEW_WILAYAH_KABUPATEN" "VIEW_WILAYAH_KABUPATEN"</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              "VIEW_WILAYAH_KABUPATEN"."WILAYAH_ID" AS "WILAYAH_ID",
+              "VIEW_WILAYAH_KABUPATEN"."WILAYAH_PARENT_ID" AS "WILAYAH_PARENT_ID",
+              "VIEW_WILAYAH_KABUPATEN"."WILAYAH_KODE" AS "WILAYAH_KODE",
+              "VIEW_WILAYAH_KABUPATEN"."WILAYAH_NAMA" AS "WILAYAH_NAMA"
+              FROM "C##BSN_SISPK"."VIEW_WILAYAH_KABUPATEN" "VIEW_WILAYAH_KABUPATEN"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VIEW_WILAYAH_PROVINSI" EntityType="SISPKModel.Store.VIEW_WILAYAH_PROVINSI" store:Type="Views" store:Schema="C##BSN_SISPK" store:Name="VIEW_WILAYAH_PROVINSI">
             <DefiningQuery>SELECT 
@@ -7135,6 +7137,7 @@
           </Key>
           <Property Name="WILAYAH_ID" Type="number" Nullable="false" />
           <Property Name="WILAYAH_PARENT_ID" Type="number" />
+          <Property Name="WILAYAH_KODE" Type="varchar2" MaxLength="255" />
           <Property Name="WILAYAH_NAMA" Type="varchar2" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -11004,6 +11007,7 @@
           </Key>
           <Property Type="Decimal" Name="WILAYAH_ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="WILAYAH_PARENT_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="WILAYAH_KODE" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="WILAYAH_NAMA" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VIEW_WILAYAH_PROVINSI">
@@ -14765,6 +14769,7 @@
             <EntityTypeMapping TypeName="SISPKModel.VIEW_WILAYAH_KABUPATEN">
               <MappingFragment StoreEntitySet="VIEW_WILAYAH_KABUPATEN">
                 <ScalarProperty Name="WILAYAH_NAMA" ColumnName="WILAYAH_NAMA" />
+                <ScalarProperty Name="WILAYAH_KODE" ColumnName="WILAYAH_KODE" />
                 <ScalarProperty Name="WILAYAH_PARENT_ID" ColumnName="WILAYAH_PARENT_ID" />
                 <ScalarProperty Name="WILAYAH_ID" ColumnName="WILAYAH_ID" />
               </MappingFragment>

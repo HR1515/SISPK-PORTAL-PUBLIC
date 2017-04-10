@@ -343,8 +343,9 @@ namespace Portal.Controllers
         public ActionResult lemsert_detail(int id = 0) {
             ViewData["moduleId"] = moduleId;
             var lemsert = (from a in db.VIEW_LPK where a.LPK_ID == id select a).SingleOrDefault();
+            var lpk_kota = Convert.ToString(lemsert.LPK_KABUPATENKOTA);
             ViewData["lemsert"] = lemsert;
-            ViewData["kab"] = (from c in db.VIEW_WILAYAH_KABUPATEN where c.WILAYAH_ID == lemsert.LPK_KABUPATENKOTA select c).SingleOrDefault();
+            ViewData["kab"] = (from c in db.VIEW_WILAYAH_KABUPATEN where c.WILAYAH_KODE == lpk_kota select c).SingleOrDefault();
             ViewData["prov"] = (from c in db.VIEW_WILAYAH_PROVINSI where c.WILAYAH_ID == lemsert.LPK_PROVINSI select c).SingleOrDefault();
             ViewData["detail"] = (from b in db.VIEW_LPK_DETAIL where b.LPK_LINGKUP_LPK_ID == id && b.LPK_LINGKUP_STATUS == 1 select b).ToList();
             ViewData["sni"] = (from a in db.VIEW_LPK_SNI where a.LPK_DETAIL_SNI_LPK_ID == id && a.LPK_DETAIL_SNI_STATUS == 1 select a).ToList();
@@ -355,14 +356,19 @@ namespace Portal.Controllers
         public ActionResult lemins_detail(int id = 0) {
             ViewData["moduleId"] = moduleId;
             var lemins = (from a in db.VIEW_LPK where a.LPK_ID == id select a).SingleOrDefault();
+            var lpk_kota = Convert.ToString(lemins.LPK_KABUPATENKOTA);
             ViewData["lemins"] = lemins;
-            ViewData["kab"] = (from c in db.VIEW_WILAYAH_KABUPATEN where c.WILAYAH_ID == lemins.LPK_KABUPATENKOTA select c).SingleOrDefault();
+            ViewData["kab"] = (from c in db.VIEW_WILAYAH_KABUPATEN where c.WILAYAH_KODE == lpk_kota select c).SingleOrDefault();
             ViewData["prov"] = (from c in db.VIEW_WILAYAH_PROVINSI where c.WILAYAH_ID == lemins.LPK_PROVINSI select c).SingleOrDefault();
             ViewData["detail"] = (from b in db.VIEW_LPK_DETAIL where b.LPK_LINGKUP_LPK_ID == id && b.LPK_LINGKUP_STATUS == 1 select b).ToList();
             ViewData["sni"] = (from a in db.VIEW_LPK_SNI where a.LPK_DETAIL_SNI_LPK_ID == id && a.LPK_DETAIL_SNI_STATUS == 1 select a).ToList();
             ViewData["scope"] = (from s in db.VIEW_LPK_SCOPE where s.LPK_SCOPE_LPK_ID == id && s.LPK_SCOPE_STATUS == 1 select s).ToList();
             var link = (from a in portaldb.SYS_LINK where a.LINK_IS_USE == 1 select a).SingleOrDefault();
             ViewData["link"] = link;
+
+            //var kab1 = db.Database.SqlQuery<VIEW_WILAYAH_KABUPATEN>("SELECT * FROM VIEW_WILAYAH_KABUPATEN WHERE WILAYAH_KODE =  " + lemins.LPK_KABUPATENKOTA ).FirstOrDefault();
+            //var q = "SELECT * FROM VIEW_WILAYAH_KABUPATEN WHERE WILAYAH_KODE =  " + lemins.LPK_KABUPATENKOTA;
+            //return Content(lp_k);
             return View();
         }
 

@@ -16,6 +16,7 @@ namespace Portal.Models
     {
         public decimal WILAYAH_ID { get; set; }
         public Nullable<decimal> WILAYAH_PARENT_ID { get; set; }
+        public string WILAYAH_KODE { get; set; }
         public string WILAYAH_NAMA { get; set; }
     }
 }

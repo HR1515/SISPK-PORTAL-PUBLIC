@@ -134,7 +134,7 @@ namespace Portal.Controllers
             var start = (param.iDisplayStart == 0) ? 0 : param.iDisplayStart;
 
 
-            string where_clause = " POLLING_STATUS = 1 AND POLLING_TYPE = 7";
+            string where_clause = " POLLING_STATUS = 1 AND (POLLING_TYPE = 7 OR POLLING_TYPE = 12)";
 
             string search_clause = "";
             if (search != "")
