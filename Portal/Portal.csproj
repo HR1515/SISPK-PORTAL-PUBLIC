@@ -55,9 +55,9 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\oraclexe\app\oracle\product\11.2.0\client\odp.net\bin\4\Oracle.DataAccess.dll</HintPath>
+      <HintPath>..\..\..\app\bsnoracle\product\11.2.0\client_1\odp.net\bin\4\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="ReCaptcha, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReCaptchaForASP.1.0.0\lib\ReCaptcha.dll</HintPath>
@@ -298,7 +298,7 @@
       <DependentUpon>SISPKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MASTER_WILAYAH.cs">
-      <DependentUpon>SISPKModel.tt</DependentUpon>
+      <DependentUpon>PortalBSNModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PortalBSNModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -365,7 +365,7 @@
       <DependentUpon>SISPKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SYS_LINK.cs">
-      <DependentUpon>SISPKModel.tt</DependentUpon>
+      <DependentUpon>PortalBSNModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SYS_LOGS.cs">
       <DependentUpon>SISPKModel.tt</DependentUpon>
@@ -387,6 +387,9 @@
     </Compile>
     <Compile Include="Models\SYS_USER_PUBLIC.cs">
       <DependentUpon>SISPKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tabel_test.cs">
+      <DependentUpon>PortalBSNModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRX_DOCUMENTS.cs">
       <DependentUpon>SISPKModel.tt</DependentUpon>

@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="PortalBSNModel.SYS_LINK" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalBSNModel.SYS_MENU_PORTAL" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalBSNModel.VIEW_MENU_PORTAL" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalBSNModel.tabel_test" Width="1.5" PointX="3.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
