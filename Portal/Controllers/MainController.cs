@@ -47,7 +47,7 @@ namespace Portal.Controllers
             ViewData["profile"] = db.Database.SqlQuery<PORTAL_PROFILE>("select * from PORTAL_PROFILE where rownum = 1").SingleOrDefault();
 
             ViewData["slider"] = (from a in db.PORTAL_SLIDER where a.SLIDER_IMAGE_IS_USE == 1 select a).ToList();
-            //ViewData["hit_counter"] = db.Database.SqlQuery<VIEW_HIT_COUNTERS>("select * from VIEW_HIT_COUNTERS where COUNTERID = 1").SingleOrDefault();
+            ViewData["hit_counter"] = db.Database.SqlQuery<VIEW_HIT_COUNTERS>("select * from VIEW_HIT_COUNTERS where COUNTERID = 1").SingleOrDefault();
             //return Json(new { hit = ViewData["hit_counter"] }, JsonRequestBehavior.AllowGet);
             //var ANGKAKOMTEK = db.Database.SqlQuery<MASTER_KOMITE_TEKNIS>("select count(MKT.KOMTEK_ID) AS JML_KOMTEK from MASTER_KOMITE_TEKNIS MKT WHERE MKT.KOMTEK_PARENT_CODE = '0' AND MKT.KOMTEK_STATUS = 1");
             //var angkakomtek = (from angka_komtek in portaldb.VIEW_KOMTEK_ANGKA select angka_komtek).SingleOrDefault();
