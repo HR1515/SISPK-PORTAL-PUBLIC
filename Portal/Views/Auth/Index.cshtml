@@ -13,7 +13,7 @@
         <div class="sidebar col-md-3 col-sm-3">
             <ul class="list-group margin-bottom-25 sidebar-menu">
                 @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Login/Register</a></li>*@
-                <li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/resetpassword")'"><i class="fa fa-angle-right"></i>Reset Password</a></li>
+                @*<li class="list-group-item clearfix"><a href="javascript:;" onclick="window.location='@Url.Content("~/auth/resetpassword")'"><i class="fa fa-angle-right"></i>Reset Password</a></li>*@
                 @*<li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> My account</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Address book</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wish list</a></li>
@@ -75,8 +75,10 @@
                     <div class="form-group">
                         <div class="col-lg-8 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" onclick="window.location='@Url.Content("~/auth/resetpasswordanda")'" class="btn btn-success">Lupa Password</button>
                         </div>
                     </div>
+                    @*<a href="javascript:;" onclick="window.location='@Url.Content("~/auth/resetpassword")'"><i class="fa fa-angle-right"></i>Reset Password</a>*@
                 </form>
             </div>
             <div class="col-md-5 col-sm-5 pull-right">

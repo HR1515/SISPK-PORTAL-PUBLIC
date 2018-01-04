@@ -47,7 +47,7 @@ namespace Portal.Controllers
             ViewData["profile"] = db.Database.SqlQuery<PORTAL_PROFILE>("select * from PORTAL_PROFILE where rownum = 1").SingleOrDefault();
 
             ViewData["slider"] = (from a in db.PORTAL_SLIDER where a.SLIDER_IMAGE_IS_USE == 1 select a).ToList();
-            //ViewData["hit_counter"] = db.Database.SqlQuery<VIEW_HIT_COUNTERS>("select * from VIEW_HIT_COUNTERS where COUNTERID = 1").SingleOrDefault();
+            ViewData["hit_counter"] = db.Database.SqlQuery<VIEW_HIT_COUNTERS>("select * from VIEW_HIT_COUNTERS where COUNTERID = 1").SingleOrDefault();
             //return Json(new { hit = ViewData["hit_counter"] }, JsonRequestBehavior.AllowGet);
             //var ANGKAKOMTEK = db.Database.SqlQuery<MASTER_KOMITE_TEKNIS>("select count(MKT.KOMTEK_ID) AS JML_KOMTEK from MASTER_KOMITE_TEKNIS MKT WHERE MKT.KOMTEK_PARENT_CODE = '0' AND MKT.KOMTEK_STATUS = 1");
             //var angkakomtek = (from angka_komtek in portaldb.VIEW_KOMTEK_ANGKA select angka_komtek).SingleOrDefault();
@@ -72,6 +72,11 @@ namespace Portal.Controllers
         [HttpPost]
         public ActionResult Register(SYS_USER_PUBLIC sysuser_public, SYS_USER sysuser, string jawaban = "", string browser = "")
         {
+            var DATAUSER = new VIEW_USERS_PUBLIC();
+            string username = sysuser.USER_NAME;
+            //var DATAUSER = portaldb.Database.SqlQuery<decimal>("SELECT COUNT(*) FROM  VIEW_USERS_PUBLIC WHERE  USER_NAME = '" + username + "' AND USER_STATUS = 1 AND ACCESS_STATUS = 1").SingleOrDefault(); ;
+            DATAUSER = (from it in portaldb.VIEW_USERS_PUBLIC where it.USER_NAME == username && it.USER_STATUS == 1 && it.ACCESS_STATUS == 1 select it).FirstOrDefault();
+            //return Content(""+DATAUSER);
             if (Session["Captcha"] == null || Session["Captcha"].ToString() != jawaban)
             {
                 var MsgError = "Jawaban Captcha salah";
@@ -81,90 +86,101 @@ namespace Portal.Controllers
             }
             else
             {
-                var logcodePublic = MixHelper.GetLogCode();
-                var logcodeUser = MixHelper.GetLogCode();
-                int lastidUserPublic = MixHelper.GetSequence("SYS_USER_PUBLIC");
-                int lastIdUser = MixHelper.GetSequence("SYS_USER");
-                var datenow = MixHelper.ConvertDateNow();
+                if (DATAUSER != null)
+                {
+                    var MsgError = "Username Sudah Terdaftar";
+                    TempData["isError"] = 1;
+                    TempData["MessageError"] = MsgError;
+                    return RedirectToAction("Register");
+                }
+                else
+                {
+                    var logcodePublic = MixHelper.GetLogCode();
+                    var logcodeUser = MixHelper.GetLogCode();
+                    int lastidUserPublic = MixHelper.GetSequence("SYS_USER_PUBLIC");
+                    int lastIdUser = MixHelper.GetSequence("SYS_USER");
+                    var datenow = MixHelper.ConvertDateNow();
 
-                //For Data User Public
-                var KodeActivasi = GenPassword(sysuser_public.USER_PUBLIC_KTPSIM);
-                var fNamePublic = "USER_PUBLIC_ID,USER_PUBLIC_KTPSIM,USER_PUBLIC_NOKK,USER_PUBLIC_NAMA_LENGKAP,USER_PUBLIC_EMAIL,USER_PUBLIC_TELPON,USER_PUBLIC_STAKEHOLDER,USER_PUBLIC_PROVINSI_ID,USER_PUBLIC_KOTAKAB_ID,USER_PUBLIC_CREATE_BY,USER_PUBLIC_CREATE_DATE,USER_PUBLIC_UPDATE_BY,USER_PUBLIC_UPDATE_DATE,USER_PUBLIC_TOKEN_KEY,USER_PUBLIC_ACTIVATION_KEY,USER_PUBLIC_LOG_CODE,USER_PUBLIC_STATUS,USER_PUBLIC_LINK_ACTIVATION";
-                var fValuePublic = "'" + lastidUserPublic + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_KTPSIM + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_NOKK + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_NAMA_LENGKAP + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_EMAIL + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_TELPON + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_STAKEHOLDER + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_PROVINSI_ID + "', " +
-                                    "'" + sysuser_public.USER_PUBLIC_KOTAKAB_ID + "', " +
-                                    "'" + lastidUserPublic + "'," +
-                                    datenow + "," +
-                                    "''," +
-                                    "''," +
-                                    "'" + RandomPassHelper.Generate(20) + "'," +
-                                    "'" + KodeActivasi + "'," +
-                                    "'" + logcodePublic + "'," +
-                                    "1," +
-                                    "'" + @Request.Url.GetLeftPart(UriPartial.Authority) + "/main/useraktivasi/" + KodeActivasi + "'";
-                //Insert to Tabel SYS_USER_PUBLIC
-                var insertPublic = portaldb.Database.ExecuteSqlCommand("INSERT INTO SYS_USER_PUBLIC (" + fNamePublic + ") VALUES (" + fValuePublic.Replace("''", "NULL") + ")");
-                String objekPublic = fValuePublic.Replace("'", "-");
+                    //For Data User Public
+                    var KodeActivasi = GenPassword(sysuser_public.USER_PUBLIC_KTPSIM);
+                    var fNamePublic = "USER_PUBLIC_ID,USER_PUBLIC_KTPSIM,USER_PUBLIC_NOKK,USER_PUBLIC_NAMA_LENGKAP,USER_PUBLIC_EMAIL,USER_PUBLIC_TELPON,USER_PUBLIC_STAKEHOLDER,USER_PUBLIC_PROVINSI_ID,USER_PUBLIC_KOTAKAB_ID,USER_PUBLIC_CREATE_BY,USER_PUBLIC_CREATE_DATE,USER_PUBLIC_UPDATE_BY,USER_PUBLIC_UPDATE_DATE,USER_PUBLIC_TOKEN_KEY,USER_PUBLIC_ACTIVATION_KEY,USER_PUBLIC_LOG_CODE,USER_PUBLIC_STATUS,USER_PUBLIC_LINK_ACTIVATION";
+                    var fValuePublic = "'" + lastidUserPublic + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_KTPSIM + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_NOKK + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_NAMA_LENGKAP + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_EMAIL + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_TELPON + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_STAKEHOLDER + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_PROVINSI_ID + "', " +
+                                        "'" + sysuser_public.USER_PUBLIC_KOTAKAB_ID + "', " +
+                                        "'" + lastidUserPublic + "'," +
+                                        datenow + "," +
+                                        "''," +
+                                        "''," +
+                                        "'" + RandomPassHelper.Generate(20) + "'," +
+                                        "'" + KodeActivasi + "'," +
+                                        "'" + logcodePublic + "'," +
+                                        "1," +
+                                        "'" + @Request.Url.GetLeftPart(UriPartial.Authority) + "/main/useraktivasi/" + KodeActivasi + "'";
+                    //Insert to Tabel SYS_USER_PUBLIC
+                    var insertPublic = portaldb.Database.ExecuteSqlCommand("INSERT INTO SYS_USER_PUBLIC (" + fNamePublic + ") VALUES (" + fValuePublic.Replace("''", "NULL") + ")");
+                    String objekPublic = fValuePublic.Replace("'", "-");
 
-                //Insert Data User Public to Log SYS_LOG
-                MixHelper.InsertLogReg(logcodePublic, objekPublic, 1);
-                string pass = AuthHelper.GenPassword(sysuser.USER_PASSWORD);
-                //string pass = AuthHelper.GenPassword("sispk");
-                //For Data User 
-                var fNameUser = "USER_ID,USER_ACCESS_ID,USER_NAME,USER_PASSWORD,USER_IS_ONLINE,USER_LAST_LOGIN,USER_CREATE_BY,USER_CREATE_DATE,USER_UPDATE_BY,USER_UPDATE_DATE,USER_STATUS,USER_LOG_CODE,USER_TYPE_ID,USER_REF_ID";
-                var fValueUser = "'" + lastIdUser + "', " +
-                            "4, " +
-                            "'" + sysuser.USER_NAME + "', " +
-                            "'" + pass + "', " +
-                            "''," +
-                            "''," +
-                            "'" + lastIdUser + "'," +
-                            datenow + "," +
-                            "''," +
-                            "''," +
-                            "1, " +
-                            "'" + logcodeUser + "'," +
-                            "3, " +
-                            "'" + lastidUserPublic + "'";
-                //Insert to Tabel SYS_USER_PUBLIC
+                    //Insert Data User Public to Log SYS_LOG
+                    MixHelper.InsertLogReg(logcodePublic, objekPublic, 1);
+                    string pass = AuthHelper.GenPassword(sysuser.USER_PASSWORD);
+                    //string pass = AuthHelper.GenPassword("sispk");
+                    //For Data User 
+                    var fNameUser = "USER_ID,USER_ACCESS_ID,USER_NAME,USER_PASSWORD,USER_IS_ONLINE,USER_LAST_LOGIN,USER_CREATE_BY,USER_CREATE_DATE,USER_UPDATE_BY,USER_UPDATE_DATE,USER_STATUS,USER_LOG_CODE,USER_TYPE_ID,USER_REF_ID";
+                    var fValueUser = "'" + lastIdUser + "', " +
+                                "4, " +
+                                "'" + sysuser.USER_NAME + "', " +
+                                "'" + pass + "', " +
+                                "''," +
+                                "''," +
+                                "'" + lastIdUser + "'," +
+                                datenow + "," +
+                                "''," +
+                                "''," +
+                                "1, " +
+                                "'" + logcodeUser + "'," +
+                                "3, " +
+                                "'" + lastidUserPublic + "'";
+                    //Insert to Tabel SYS_USER_PUBLIC
 
-                //return Json(new { query = "INSERT INTO SYS_USER (" + fNameUser + ") VALUES (" + fValueUser.Replace("''", "NULL") + ")" });
-                var insertUser = portaldb.Database.ExecuteSqlCommand("INSERT INTO SYS_USER (" + fNameUser + ") VALUES (" + fValueUser.Replace("''", "NULL") + ")");
-                String objekUser = fValueUser.Replace("'", "-");
+                    //return Json(new { query = "INSERT INTO SYS_USER (" + fNameUser + ") VALUES (" + fValueUser.Replace("''", "NULL") + ")" });
+                    var insertUser = portaldb.Database.ExecuteSqlCommand("INSERT INTO SYS_USER (" + fNameUser + ") VALUES (" + fValueUser.Replace("''", "NULL") + ")");
+                    String objekUser = fValueUser.Replace("'", "-");
 
-                //Insert Data User to Log SYS_LOG
-                MixHelper.InsertLogReg(logcodeUser, objekUser, 1);
+                    //Insert Data User to Log SYS_LOG
+                    MixHelper.InsertLogReg(logcodeUser, objekUser, 1);
 
-                //Send Account Activation to Email
-                var email = (from t in db.SYS_EMAIL where t.EMAIL_IS_USE == 1 select t).SingleOrDefault();
+                    //Send Account Activation to Email
+                    var email = (from t in db.SYS_EMAIL where t.EMAIL_IS_USE == 1 select t).SingleOrDefault();
 
-                SendMailHelper.MailUsername = email.EMAIL_NAME;     //"aleh.mail@gmail.com";
-                SendMailHelper.MailPassword = email.EMAIL_PASSWORD; //"r4h45143uy";
+                    SendMailHelper.MailUsername = email.EMAIL_NAME;     //"aleh.mail@gmail.com";
+                    SendMailHelper.MailPassword = email.EMAIL_PASSWORD; //"r4h45143uy";
 
-                SendMailHelper mailer = new SendMailHelper();
-                mailer.ToEmail = sysuser_public.USER_PUBLIC_EMAIL;
-                mailer.Subject = "Registrasi Member Baru - Sistem Informasi SNI";
-                var isiEmail = "Terimakasih telah Melakukan Registrasi pada sistem kami. <br />";
-                isiEmail += "Username   : "+sysuser.USER_NAME+"<br />";
-                isiEmail += "Password   : " + sysuser.USER_PASSWORD + "<br />";
-                //isiEmail += "Detail aktivasi akun anda sedang Menunggu Persetujuan administrator <br />";
-                //isiEmail += "Apabila data akun anda disetujui oleh administrator maka anda akan menerima email aktivasi <br />";
-                isiEmail += "Sekarang Anda bisa melakukan login di Sistem Informasi SNI <br />";
-                isiEmail += "Demikian Informasi yang kami sampaikan, atas kerjasamanya kami ucapkan terimakasih. <br />";
-                isiEmail += "<span style='text-align:right;font-weight:bold;margin-top:20px;'>Web Administrator</span>";
+                    SendMailHelper mailer = new SendMailHelper();
+                    mailer.ToEmail = sysuser_public.USER_PUBLIC_EMAIL;
+                    mailer.Subject = "Registrasi Member Baru - Sistem Informasi SNI";
+                    var isiEmail = "Terimakasih telah Melakukan Registrasi pada sistem kami. <br />";
+                    isiEmail += "Username   : " + sysuser.USER_NAME + "<br />";
+                    isiEmail += "Password   : " + sysuser.USER_PASSWORD + "<br />";
+                    //isiEmail += "Detail aktivasi akun anda sedang Menunggu Persetujuan administrator <br />";
+                    //isiEmail += "Apabila data akun anda disetujui oleh administrator maka anda akan menerima email aktivasi <br />";
+                    isiEmail += "Sekarang Anda bisa melakukan login di Sistem Informasi SNI <br />";
+                    isiEmail += "Demikian Informasi yang kami sampaikan, atas kerjasamanya kami ucapkan terimakasih. <br />";
+                    isiEmail += "<span style='text-align:right;font-weight:bold;margin-top:20px;'>Web Administrator</span>";
 
-                mailer.Body = isiEmail;
-                mailer.IsHtml = true;
-                mailer.Send();
+                    mailer.Body = isiEmail;
+                    mailer.IsHtml = true;
+                    mailer.Send();
 
-                TempData["MailMember"] = sysuser_public.USER_PUBLIC_EMAIL;
-                return RedirectToAction("RegSukses");
+                    TempData["MailMember"] = sysuser_public.USER_PUBLIC_EMAIL;
+                    return RedirectToAction("RegSukses");
+                }
+                
             }
         }
 

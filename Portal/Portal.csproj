@@ -5145,6 +5145,7 @@
     <Content Include="Views\Auth\EditUsulan.cshtml" />
     <Content Include="Views\PNPS\Update.cshtml" />
     <Content Include="Views\Auth\Update.cshtml" />
+    <Content Include="Views\Auth\ResetPasswordAnda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
