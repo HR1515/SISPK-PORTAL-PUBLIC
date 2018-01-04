@@ -159,7 +159,13 @@
 </div>
 
 <script type="text/javascript">
-	jQuery(document).ready(function () {
+    function peringatan_login() {
+        alert('Login Terlebih Dahulu!!\n\nTerimakasih kepada para pengunjung website BSN yang telah memanfaatkan fulltext akses seluruh koleksi digital SNI melalui SNI Online selama 2 tahun (2010-2012). Mulai Tahun 2013, website BSN akan menyediakan full text akses SNI yang baru ditetapkan selama 1 tahun. SNI hasil adopsi badan standar asing tidak dapat kami tampilkan semua secara fulltext, terkait peraturan hak cipta di masing-masing Organisasi Pengembang Standar. Dokumen SNI yang tidak tersedia secara online dapat diperoleh pada Layanan Informasi Terpadu BSN(sesuai ketentuan yang berlaku) di: Perpustakaan BSN, email:dokinfo@bsn.go.id, phone: +62 21 3927422 ext 222');
+
+        location('/auth/index');
+    }
+    jQuery(document).ready(function () {
+        
 		$('#btn-daftar').click(function () {
 			var table = $('#list-data').dataTable();
 			table.dataTable().fnDestroy();

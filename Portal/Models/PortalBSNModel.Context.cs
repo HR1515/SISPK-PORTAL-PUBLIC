@@ -32,6 +32,7 @@ namespace Portal.Models
         public DbSet<SYS_LINK> SYS_LINK { get; set; }
         public DbSet<SYS_MENU_PORTAL> SYS_MENU_PORTAL { get; set; }
         public DbSet<VIEW_MENU_PORTAL> VIEW_MENU_PORTAL { get; set; }
+        public DbSet<tabel_test> tabel_test { get; set; }
     
         public virtual int PROC_SYS_SEQUENCE_FIXER()
         {
