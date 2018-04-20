@@ -249,12 +249,12 @@ namespace Portal.Controllers
             var username = formcollection["USER_NAME"];
             var usermail = formcollection["USER_PUBLIC_EMAIL"];
 
-            int cek = portaldb.Database.SqlQuery<int>("SELECT COUNT(1) AS JML FROM	VIEW_USERS_PUBLIC WHERE USER_ACCESS_ID = 4 AND USER_NAME = '" + username + "' AND ACCESS_STATUS = 1 AND USER_STATUS = 1").SingleOrDefault();
+            int cek = portaldb.Database.SqlQuery<int>("SELECT COUNT(1) AS JML FROM	VIEW_USERS_PUBLIC WHERE USER_ACCESS_ID = 4 AND USER_NAME = '" + username + "' AND USER_PUBLIC_EMAIL = '" + usermail + "' AND ACCESS_STATUS = 1 AND USER_STATUS = 1").SingleOrDefault();
 
             //var tomail = (from a in portaldb.VIEW_USERS_PUBLIC where a.USER_PUBLIC_KTPSIM == ktp select a).SingleOrDefault();
             //var tomail = portaldb.VIEW_USERS_PUBLIC.SqlQuery("SELECT * FROM VIEW_USERS_PUBLIC where USER_PUBLIC_KTPSIM = " + ktp + " AND ACCESS_ID = 4 AND USER_STATUS = 1").SingleOrDefault();
             var tomail = usermail;
-            var DATAUSER = (from it in portaldb.VIEW_USERS_PUBLIC where it.USER_NAME == username && it.USER_STATUS == 1 && it.ACCESS_STATUS == 1 select it).FirstOrDefault();
+            var DATAUSER = (from it in portaldb.VIEW_USERS_PUBLIC where it.USER_NAME == username && it.USER_PUBLIC_EMAIL == usermail && it.USER_STATUS == 1 && it.ACCESS_STATUS == 1 select it).FirstOrDefault();
             //return Json(new
             //{
             //    draw = tomail
@@ -283,7 +283,7 @@ namespace Portal.Controllers
             }
             else
             {
-                var MsgError = "Mohon Maaf anda tidak tedaftar di Sistem kami";
+                var MsgError = "Mohon Maaf Username/Email anda tidak tedaftar di Sistem kami";
                 TempData["isError"] = 1;
                 TempData["MessageError"] = MsgError;
             }
@@ -355,6 +355,16 @@ namespace Portal.Controllers
         public ActionResult NewPassword(int id = 0) {
             ViewData["moduleId"] = moduleId;
             ViewData["id"] = id;
+            var isError = @TempData["isError"];
+            if (isError != null)
+            {
+                ViewData["Error"] = @TempData["MessageError"];
+            }
+            var isSuccess = @TempData["issuccess"];
+            if (isSuccess != null)
+            {
+                ViewData["Success"] = @TempData["MailMember"];
+            }
             return View();
         }
 
@@ -362,31 +372,49 @@ namespace Portal.Controllers
         public ActionResult NewPassword(FormCollection formcollection) {
             var id = Convert.ToInt32(formcollection["id"]);
             var password = formcollection["USER_PASSWORD"];
-            var usr_pblc = (from a in portaldb.VIEW_USERS_PUBLIC where a.USER_ID == id && a.USER_ACCESS_ID == 4 select a).SingleOrDefault();
-            var update = "UPDATE SYS_USER SET USER_PASSWORD = '" + GenPassword(password) + "' where USER_ID =" + usr_pblc.USER_ID;
-            //return Json(new { a = update }, JsonRequestBehavior.AllowGet);
-            portaldb.Database.ExecuteSqlCommand(update);
-            var email = (from t in portaldb.SYS_EMAIL where t.EMAIL_IS_USE == 1 select t).SingleOrDefault();
-            var link = (from s in portaldb.SYS_LINK where s.LINK_IS_USE == 1 select s).SingleOrDefault();
+            var password_konf = formcollection["USER_PASSWORD_KONFIRM"];
+            var user_email = formcollection["USER_PUBLIC_EMAIL"];
 
-            SendMailHelper.MailUsername = email.EMAIL_NAME;
-            SendMailHelper.MailPassword = email.EMAIL_PASSWORD;
+            int cek = portaldb.Database.SqlQuery<int>("SELECT COUNT(1) AS JML FROM	VIEW_USERS_PUBLIC WHERE USER_ACCESS_ID = 4 AND USER_ID = '" + id + "' AND USER_PUBLIC_EMAIL = '" + user_email + "' AND ACCESS_STATUS = 1 AND USER_STATUS = 1").SingleOrDefault();
 
-            SendMailHelper mailer = new SendMailHelper();
-            mailer.ToEmail = usr_pblc.USER_PUBLIC_EMAIL;
-            mailer.Subject = "Notifikasi New Password - Sistem Informasi SNI";
-            var isiEmail   = " perubahan password anda sudah dilakukan  dengan username : " + usr_pblc.USER_NAME + " <br />";
-            isiEmail      += " Password baru anda adalah " + password + " <br />";
+            //cek email sesuai atau tidak
+            if (cek != 0)
+            {
+                
+                var usr_pblc = (from a in portaldb.VIEW_USERS_PUBLIC where a.USER_ID == id && a.USER_ACCESS_ID == 4 select a).SingleOrDefault();
+                var update = "UPDATE SYS_USER SET USER_PASSWORD = '" + GenPassword(password) + "' where USER_ID =" + usr_pblc.USER_ID;
+                //return Json(new { a = update }, JsonRequestBehavior.AllowGet);
+                portaldb.Database.ExecuteSqlCommand(update);
+                var email = (from t in portaldb.SYS_EMAIL where t.EMAIL_IS_USE == 1 select t).SingleOrDefault();
+                var link = (from s in portaldb.SYS_LINK where s.LINK_IS_USE == 1 select s).SingleOrDefault();
 
-            isiEmail += "Silahkan klik tautan <a href='" + link.LINK_NAME + "/auth/index' target='_blank'>berikut</a> untuk login ke SISTEM INFORMASI SNI<br />";
+                SendMailHelper.MailUsername = email.EMAIL_NAME;
+                SendMailHelper.MailPassword = email.EMAIL_PASSWORD;
 
-            mailer.Body = isiEmail;
-            mailer.IsHtml = true;
-            mailer.Send();
-            var successs = "Silahkan cek email anda, Pesan verifikasi ubah password sudah dikirim";
-            TempData["MailMember"] = successs;
+                SendMailHelper mailer = new SendMailHelper();
+                mailer.ToEmail = usr_pblc.USER_PUBLIC_EMAIL;
+                mailer.Subject = "Notifikasi New Password - Sistem Informasi SNI";
+                var isiEmail = " perubahan password anda sudah dilakukan  dengan username : " + usr_pblc.USER_NAME + " <br />";
+                isiEmail += " Password baru anda adalah " + password + " <br />";
 
-            return RedirectToAction("Index");
+                isiEmail += "Silahkan klik tautan <a href='" + link.LINK_NAME + "/auth/index' target='_blank'>berikut</a> untuk login ke SISTEM INFORMASI SNI<br />";
+
+                mailer.Body = isiEmail;
+                mailer.IsHtml = true;
+                mailer.Send();
+                var successs = "Silahkan cek email anda, Pesan verifikasi ubah password sudah dikirim";
+                TempData["issuccess"] = 1;
+                TempData["MailMember"] = successs;
+            } else
+            {
+                var MsgError = "Mohon Maaf Email anda tidak tedaftar di Sistem kami";
+                TempData["isError"] = 1;
+                TempData["MessageError"] = MsgError;
+            }
+
+            
+
+            return RedirectToAction("NewPassword");
         }
 
         public ActionResult AccessDenied()
