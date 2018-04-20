@@ -14,7 +14,7 @@ namespace Portal.Controllers
     {
         //
         // GET: /Dokumen/
-        private int moduleId = 36;
+        private int moduleId = 36; 
         private SISPKEntities db = new SISPKEntities();
         private PortalBsnEntities portaldb = new PortalBsnEntities();
 
